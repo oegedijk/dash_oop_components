@@ -4,11 +4,17 @@
 
 ## Install
 
-`pip install dash_oop_components
+`pip install dash_oop_components`
 
 ## Example of use
 
 ```python
+import dash_html_components as html
+import dash_core_components as dcc
+import dash_bootstrap_components as dbc
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
+
 import pandas as pd
 import plotly.express as px
 ```
@@ -234,23 +240,63 @@ app = DashApp(db, external_stylesheets=[dbc.themes.BOOTSTRAP])
 ```
 
 ```python
-app.run()
+print(app.to_yaml())
 ```
 
-    Dash is running on http://127.0.0.1:8050/
+    dash_app:
+      name: DashApp
+      module: dash_oop_components.core
+      params:
+        dashboard_component:
+          dash_component:
+            name: CovidDashboard
+            module: __main__
+            params:
+              plot_factory:
+                dash_figure_factory:
+                  name: CovidPlots
+                  module: __main__
+                  params:
+                    datafile: covid.csv
+                    include_countries:
+                    - United_States_of_America
+                    - Italy
+                    - China
+                    - Spain
+                    - Germany
+                    - France
+                    - Iran
+                    - United_Kingdom
+                    - Switzerland
+                    - Netherlands
+                    - South_Korea
+                    - Belgium
+                    - Austria
+                    - Canada
+                    - Portugal
+                    - Brazil
+                    - Norway
+                    - Australia
+                    - Israel
+              hide_country_dropdowns: true
+              countries:
+              - Netherlands
+              - Belgium
+              - Germany
+              hide_metric_dropdowns: false
+              metric: cases
+        port: 8050
+        mode: dash
+        kwargs:
+          external_stylesheets:
+          - https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css
     
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
+
+
+```python
+#app.run()
+```
+
     Dash is running on http://127.0.0.1:8050/
     
     Dash is running on http://127.0.0.1:8050/
@@ -265,24 +311,17 @@ app.run()
 
 
      * Running on http://127.0.0.1:8050/ (Press CTRL+C to quit)
-    127.0.0.1 - - [24/Oct/2020 21:49:25] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:28] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:29] "[37mGET / HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:29] "[37mGET /_dash-layout HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:29] "[37mGET /_dash-dependencies HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:29] "[37mPOST /_dash-update-component HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:29] "[37mPOST /_dash-update-component HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:29] "[37mPOST /_dash-update-component HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:29] "[37mPOST /_dash-update-component HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:31] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:34] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:36] "[37mPOST /_dash-update-component HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:38] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:38] "[37mPOST /_dash-update-component HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:40] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:43] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:46] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
-    127.0.0.1 - - [24/Oct/2020 21:49:49] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
+    127.0.0.1 - - [24/Oct/2020 22:37:01] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
+    127.0.0.1 - - [24/Oct/2020 22:37:03] "[37mGET / HTTP/1.1[0m" 200 -
+    127.0.0.1 - - [24/Oct/2020 22:37:04] "[37mGET /_dash-layout HTTP/1.1[0m" 200 -
+    127.0.0.1 - - [24/Oct/2020 22:37:04] "[37mGET /_dash-dependencies HTTP/1.1[0m" 200 -
+    127.0.0.1 - - [24/Oct/2020 22:37:04] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
+    127.0.0.1 - - [24/Oct/2020 22:37:04] "[37mPOST /_dash-update-component HTTP/1.1[0m" 200 -
+    127.0.0.1 - - [24/Oct/2020 22:37:04] "[37mPOST /_dash-update-component HTTP/1.1[0m" 200 -
+    127.0.0.1 - - [24/Oct/2020 22:37:05] "[37mPOST /_dash-update-component HTTP/1.1[0m" 200 -
+    127.0.0.1 - - [24/Oct/2020 22:37:05] "[37mPOST /_dash-update-component HTTP/1.1[0m" 200 -
+    127.0.0.1 - - [24/Oct/2020 22:37:07] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
+    127.0.0.1 - - [24/Oct/2020 22:37:10] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
 
 
 ## Store App config and reload
@@ -296,48 +335,5 @@ app2 = DashApp.from_yaml("covid_dashboard.yaml")
 ```
 
 ```python
-app2.run()
+#app2.run()
 ```
-
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-     * Serving Flask app "__main__" (lazy loading)
-     * Environment: production
-    [31m   WARNING: This is a development server. Do not use it in a production deployment.[0m
-    [2m   Use a production WSGI server instead.[0m
-     * Debug mode: off
-
-
-     * Running on http://127.0.0.1:8050/ (Press CTRL+C to quit)
-
-
-```python
-1+1
-```
-
-
-
-
-    2
-
-

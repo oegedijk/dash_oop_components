@@ -1,6 +1,6 @@
 dash_app:
   name: DashApp
-  module: __main__
+  module: dash_oop_components.core
   params:
     dashboard_component:
       dash_component:
