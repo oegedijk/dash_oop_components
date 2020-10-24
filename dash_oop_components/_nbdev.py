@@ -2,9 +2,13 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {}
+index = {"DashComponentBase": "00_core.ipynb",
+         "DashFigureFactory": "00_core.ipynb",
+         "DashComponent": "00_core.ipynb",
+         "add_docstring": "00_core.ipynb",
+         "DashApp": "00_core.ipynb"}
 
-modules = []
+modules = ["core.py"]
 
 doc_url = "https://oegedijk.github.io/dash_oop_components/"
 

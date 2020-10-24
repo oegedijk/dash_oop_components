@@ -1,0 +1,13 @@
+dash_component:
+  name: Dashboard
+  module: __main__
+  params:
+    ff:
+      dash_figure_factory:
+        name: FigFact
+        module: __main__
+        params:
+          greeting1: hello
+          greeting2: gutentag
+    title: Dashboard
+    header: Greetings!

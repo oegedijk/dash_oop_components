@@ -1,0 +1,47 @@
+dash_app:
+  name: DashApp
+  module: __main__
+  params:
+    dashboard_component:
+      dash_component:
+        name: CovidDashboard
+        module: __main__
+        params:
+          plot_factory:
+            dash_figure_factory:
+              name: CovidPlots
+              module: __main__
+              params:
+                datafile: covid.csv
+                include_countries:
+                - United_States_of_America
+                - Italy
+                - China
+                - Spain
+                - Germany
+                - France
+                - Iran
+                - United_Kingdom
+                - Switzerland
+                - Netherlands
+                - South_Korea
+                - Belgium
+                - Austria
+                - Canada
+                - Portugal
+                - Brazil
+                - Norway
+                - Australia
+                - Israel
+          hide_country_dropdowns: true
+          countries:
+          - Netherlands
+          - Belgium
+          - Germany
+          hide_metric_dropdowns: false
+          metric: cases
+    port: 8050
+    mode: dash
+    kwargs:
+      external_stylesheets:
+      - https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css

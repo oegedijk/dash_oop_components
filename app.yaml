@@ -1,0 +1,21 @@
+dash_app:
+  name: DashApp
+  module: __main__
+  params:
+    dashboard_component:
+      dash_component:
+        name: Dashboard
+        module: __main__
+        params:
+          ff:
+            dash_figure_factory:
+              name: FigFact
+              module: __main__
+              params:
+                greeting1: hello
+                greeting2: gutentag
+          title: Dashboard
+          header: Greetings!
+    port: 8050
+    mode: dash
+    kwargs: {}
