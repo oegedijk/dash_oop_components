@@ -5,7 +5,7 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 index = {"DashComponentBase": "00_core.ipynb",
          "DashFigureFactory": "00_core.ipynb",
          "DashComponent": "00_core.ipynb",
-         "add_docstring": "00_core.ipynb",
+         "concat_docstring": "00_core.ipynb",
          "DashApp": "00_core.ipynb"}
 
 modules = ["core.py"]
