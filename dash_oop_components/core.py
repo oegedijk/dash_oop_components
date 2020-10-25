@@ -266,7 +266,10 @@ class DashComponent(DashComponentBase):
             return element
 
     def register_components(self):
-        """register subcomponents so that their callbacks will be registered"""
+        """register subcomponents so that their callbacks will be registered
+
+        Searches self.__dict__, finds all DashComponents and adds them to self._components
+        """
         if not hasattr(self, '_components'):
             self._components = []
         for comp in self.__dict__.values():
@@ -279,7 +282,7 @@ class DashComponent(DashComponentBase):
         return None
 
     def _register_callbacks(self, app):
-        """register callbacks specific to this ExplainerComponent"""
+        """register callbacks specific to this ExplainerComponent."""
         pass
 
     def register_callbacks(self, app):
@@ -321,9 +324,12 @@ def concat_docstring(source=None):
 # Cell
 
 class DashApp(DashComponentBase):
-    """Wrapper class for dash apps.
-    Allows you to set a dash server definition and store the configuration to file,
-    and load"""
+    """Wrapper class for dash apps. Assigns layout and callbacks from
+    a DashComponent to a Dash app, and runs it.
+
+    Can run both Dash and JupyterDash apps.
+
+    """
     @concat_docstring(dash.Dash)
     def __init__(self, dashboard_component, port=8050, mode='dash', **kwargs):
         """
@@ -359,10 +365,9 @@ class DashApp(DashComponentBase):
             params=self._stored_params))
 
     def flask_server(self):
+        """returns flask server inside self.app, for building wsgi apps"""
         return self.app.server
 
     def run(self, port=None):
         """Run the dash app"""
         self.app.run_server(port=port if port is not None else self.port)
-
-

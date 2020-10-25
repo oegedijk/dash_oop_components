@@ -209,24 +209,9 @@ print(app.to_yaml())
 (turn cell below into codecell to actually run)
 
 ```python
-if not False:
+if not True:
     app.run()
 ```
-
-    Dash is running on http://127.0.0.1:8050/
-    
-    Dash is running on http://127.0.0.1:8050/
-    
-     * Serving Flask app "__main__" (lazy loading)
-     * Environment: production
-    [31m   WARNING: This is a development server. Do not use it in a production deployment.[0m
-    [2m   Use a production WSGI server instead.[0m
-     * Debug mode: off
-
-
-     * Running on http://127.0.0.1:8050/ (Press CTRL+C to quit)
-    127.0.0.1 - - [25/Oct/2020 20:02:55] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
-
 
 ### reload dashboard from config:
 
