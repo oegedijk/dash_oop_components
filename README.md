@@ -40,6 +40,15 @@ A basic `DashFigureFactory` that loads a covid dataset, and provides a single pl
 ## CovidPlots: a DashFigureFactory
 
 ```python
+#!pip install pandas plotly-express
+```
+
+```python
+import pandas as pd
+import plotly_express as px
+```
+
+```python
 class CovidPlots(DashFigureFactory):
     def __init__(self, datafile="covid.csv"):
         super().__init__()
