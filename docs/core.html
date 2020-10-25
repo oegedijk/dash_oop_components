@@ -99,7 +99,7 @@ Proved .to_config(), to_yaml(), .from_config() and .from_yaml() methods</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DashFigureFactory" class="doc_header"><code>class</code> <code>DashFigureFactory</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L172" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashFigureFactory</code>(<strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
+<h2 id="DashFigureFactory" class="doc_header"><code>class</code> <code>DashFigureFactory</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L175" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashFigureFactory</code>(<strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
 </blockquote>
 <p>Helper class to store data for a dashboard and provide e.g. plotting functions.</p>
 <p>You should seperate the datastorage/plotting logic from the dashboard logic.
@@ -141,7 +141,7 @@ All data/plotting logic goes into a DashFigureFactory.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DashComponent" class="doc_header"><code>class</code> <code>DashComponent</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L196" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashComponent</code>(<strong><code>title</code></strong>=<em><code>'Dash'</code></em>, <strong><code>name</code></strong>=<em><code>None</code></em>, <strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
+<h2 id="DashComponent" class="doc_header"><code>class</code> <code>DashComponent</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L199" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashComponent</code>(<strong><code>title</code></strong>=<em><code>'Dash'</code></em>, <strong><code>name</code></strong>=<em><code>None</code></em>, <strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
 </blockquote>
 <p>DashComponent is a bundle of a dash layout and callbacks that
 can make use of DashFigureFactory objects.</p>
@@ -196,7 +196,7 @@ But remember to add <code>+self.name</code> to all id's.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="concat_docstring" class="doc_header"><code>concat_docstring</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L302" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>concat_docstring</code>(<strong><code>source</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="concat_docstring" class="doc_header"><code>concat_docstring</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L305" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>concat_docstring</code>(<strong><code>source</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Decorator: <code>__doc__</code> from <code>source</code> to <strong>doc</strong></p>
 
@@ -228,7 +228,7 @@ But remember to add <code>+self.name</code> to all id's.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DashApp" class="doc_header"><code>class</code> <code>DashApp</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L327" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashApp</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
+<h2 id="DashApp" class="doc_header"><code>class</code> <code>DashApp</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L330" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashApp</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
 </blockquote>
 <p>Wrapper class for dash apps.
 Allows you to set a dash server definition and store the configuration to file,
