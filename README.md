@@ -8,16 +8,18 @@
 
 ## Purpose
 
-This library allows you to write clean, modular, composable, re-usable and fully configurable dash code.
+Plotly's [dash](dash.plotly.com) is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps quite declarative, which for large projects can lead to code that become unwieldy and hard to maintain.
+
+This library provides three object-oriented wrappers for organizing your dash code that allow you to write clean, modular, composable, re-usable and fully configurable dash code.
 
 It includes:
 - `DashFigureFactory`: a wrapper for your data/plotting functionality.
-- `DashComponent`: a self-contained, modular, configurable unit of code that combines a layout with callbacks.
-    - These components are composable, meaning that other `DashComponent`s can consist of multiple subcomponents.
+- `DashComponent`: a self-contained, modular, configurable unit that combines a layout with callbacks.
     - Makes use of a `DashFigureFactory` for plots or other data output
+    - DashComponents are composable, meaning that other `DashComponent`s can consist of multiple subcomponents.
 - `DashApp`: Build a dashboard out of `DashComponent` and run it.
 
-All the components:
+All three wrappers:
 - Automatically store all params to attributes and to a ._stored_params dict
 - Allow you to store its' config to a `.yaml` file, including import details, and can then  
     be fully reloaded from a config file.
@@ -33,33 +35,25 @@ This allows you to:
 - Parametrize your dashboard so that you (or others) can make change to the dashboard
     without having to edit the code.
 
+## To import:
+
+```python
+from dash_oop_components import DashFigureFactory, DashComponent, DashApp
+```
+
 ## Example:
 
-```python
-#!pip install pandas plotly-express
-```
-
-```python
-import dash_html_components as html
-import dash_core_components as dcc
-import dash_bootstrap_components as dbc
-
-from dash.dependencies import Input, Output, State
-from dash.exceptions import PreventUpdate
-
-import pandas as pd
-import plotly.express as px
-```
+A similar dashboard has been deployed to [https://dash-oop-demo.herokuapp.com/](https://dash-oop-demo.herokuapp.com/)
 
 ### CovidPlots: a DashFigureFactory
 
-A basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality: `plot_time_series()`.
+First we define a basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality, namely `plot_time_series(countries, metric)`. Make sure to call `super().__init__()` in order to params to attributes (that's why datafile gets automatically assigned to self.datafile), and store them to a `._stored_params` dict so that they can be exported to a config file.
 
 ```python
 class CovidPlots(DashFigureFactory):
     def __init__(self, datafile="covid.csv"):
         super().__init__()
-        self.df = pd.read_csv(datafile)
+        self.df = pd.read_csv(self.datafile)
         
         self.countries = self.df.countriesAndTerritories.unique().tolist()
         self.metrics = ['cases', 'deaths']
@@ -72,11 +66,22 @@ class CovidPlots(DashFigureFactory):
             color='countriesAndTerritories',
             labels={'countriesAndTerritories':'Countries', 'dateRep':'date'},
             )
+    
+figure_factory = CovidPlots("covid.csv")
+print(figure_factory.to_yaml())
 ```
+
+    dash_figure_factory:
+      name: CovidPlots
+      module: __main__
+      params:
+        datafile: covid.csv
+    
+
 
 ### CovidTimeSeries: a DashComponent
 
-A `DashComponent` that takes a plot_factory and build a layout with two dropdowns and a graph:
+Then we define a `DashComponent` that takes a plot_factory and build a layout with two dropdowns and a graph:
 
 ```python
 class CovidTimeSeries(DashComponent):
@@ -127,6 +132,8 @@ class CovidTimeSeries(DashComponent):
 A `DashComponent` that combines two `CovidTimeSeries` into a single layout. 
 Both subcomponents are assigned different initial values.
 
+Callbacks of subcomponents get automatically registered. Additional callbacks should be defined under `self._register_callbacks(app)` (**note the underscore!**)
+
 ```python
 class DuoPlots(DashComponent):
     def __init__(self, plot_factory):
@@ -137,8 +144,6 @@ class DuoPlots(DashComponent):
         self.plot_right = CovidTimeSeries(plot_factory, 
                                           countries=['Italy', 'Germany', 'Sweden'], 
                                           metric='deaths')
-        
-        self.register_components(self.plot_left, self.plot_right)
         
     def layout(self):
         return dbc.Container([
@@ -151,30 +156,9 @@ class DuoPlots(DashComponent):
                 ])
             ])
         ], fluid=True)
-```
-
-### Start dashboard:
-
-Load the plot_factory and show its config:
-
-```python
-plot_factory = CovidPlots(datafile="covid.csv")
-print(plot_factory.to_yaml())
-```
-
-    dash_figure_factory:
-      name: CovidPlots
-      module: __main__
-      params:
-        datafile: covid.csv
     
-
-
-Load the `CovidDashboard`, by passing the `plot_factory` and accepting the default parameters for `europe_countries` and `asia_countries`:
-
-```python
-dashboard_component = DuoPlots(plot_factory)
-print(dashboard_component.to_yaml())
+dashboard = DuoPlots(figure_factory)
+print(dashboard.to_yaml())
 ```
 
     dash_component:
@@ -190,10 +174,12 @@ print(dashboard_component.to_yaml())
     
 
 
-Pass the `dashboard_component` to the `DashApp`, and add the bootstrap stylesheet that is needed to correctly display all the `dbc.Row`s and `dbc.Col`s:
+### Start dashboard:
+
+Pass the `dashboard` to the `DashApp`, and add the bootstrap stylesheet that is needed to correctly display all the `dbc.Row`s and `dbc.Col`s:
 
 ```python
-app = DashApp(dashboard_component, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = DashApp(dashboard, external_stylesheets=[dbc.themes.BOOTSTRAP])
 print(app.to_yaml())
 ```
 
@@ -223,8 +209,24 @@ print(app.to_yaml())
 (turn cell below into codecell to actually run)
 
 ```python
-app2.run()
+if not False:
+    app.run()
 ```
+
+    Dash is running on http://127.0.0.1:8050/
+    
+    Dash is running on http://127.0.0.1:8050/
+    
+     * Serving Flask app "__main__" (lazy loading)
+     * Environment: production
+    [31m   WARNING: This is a development server. Do not use it in a production deployment.[0m
+    [2m   Use a production WSGI server instead.[0m
+     * Debug mode: off
+
+
+     * Running on http://127.0.0.1:8050/ (Press CTRL+C to quit)
+    127.0.0.1 - - [25/Oct/2020 20:02:55] "[37mGET /_reload-hash HTTP/1.1[0m" 200 -
+
 
 ### reload dashboard from config:
 
@@ -267,8 +269,8 @@ print(app2.to_yaml())
 
 And if we run it it still works!
 
-(turn into code cell to actually run)
 
 ```python
-app2.run()
+if not True: # remove to run
+    app2.run()
 ```

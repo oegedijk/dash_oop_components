@@ -31,6 +31,13 @@ nb_path: "01_Example.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>This dashboard has been deployed to <a href="https://dash-oop-demo.herokuapp.com/">https://dash-oop-demo.herokuapp.com/</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Dashboard-Design">Dashboard Design<a class="anchor-link" href="#Dashboard-Design"> </a></h1><p>The dashboard consists one <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> and four <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a>s.</p>
 <ol>
 <li><strong>CovidPlots</strong>: <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> that stores a covid dataset and can plot both timeseries and piecharts for a select number of countries for either cases or deaths.</li>
@@ -66,74 +73,6 @@ nb_path: "01_Example.ipynb"
 </div>
 </div>
 </div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install pandas plotly-express
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Requirement already satisfied: pandas in ./venv/lib/python3.8/site-packages (1.1.3)
-Requirement already satisfied: plotly-express in ./venv/lib/python3.8/site-packages (0.4.1)
-Requirement already satisfied: pytz&gt;=2017.2 in ./venv/lib/python3.8/site-packages (from pandas) (2020.1)
-Requirement already satisfied: python-dateutil&gt;=2.7.3 in ./venv/lib/python3.8/site-packages (from pandas) (2.8.1)
-Requirement already satisfied: numpy&gt;=1.15.4 in ./venv/lib/python3.8/site-packages (from pandas) (1.19.2)
-Requirement already satisfied: plotly&gt;=4.1.0 in ./venv/lib/python3.8/site-packages (from plotly-express) (4.12.0)
-Requirement already satisfied: patsy&gt;=0.5 in ./venv/lib/python3.8/site-packages (from plotly-express) (0.5.1)
-Requirement already satisfied: scipy&gt;=0.18 in ./venv/lib/python3.8/site-packages (from plotly-express) (1.5.3)
-Requirement already satisfied: statsmodels&gt;=0.9.0 in ./venv/lib/python3.8/site-packages (from plotly-express) (0.12.0)
-Requirement already satisfied: six&gt;=1.5 in ./venv/lib/python3.8/site-packages (from python-dateutil&gt;=2.7.3-&gt;pandas) (1.15.0)
-Requirement already satisfied: retrying&gt;=1.3.3 in ./venv/lib/python3.8/site-packages (from plotly&gt;=4.1.0-&gt;plotly-express) (1.3.3)
-<span class="ansi-yellow-fg">WARNING: You are using pip version 20.1.1; however, version 20.2.4 is available.
-You should consider upgrading via the &#39;/Users/oege/projects/dash_oop_components/venv/bin/python -m pip install --upgrade pip&#39; command.</span>
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">dash_html_components</span> <span class="k">as</span> <span class="nn">html</span>
-<span class="kn">import</span> <span class="nn">dash_core_components</span> <span class="k">as</span> <span class="nn">dcc</span>
-<span class="kn">import</span> <span class="nn">dash_bootstrap_components</span> <span class="k">as</span> <span class="nn">dbc</span>
-
-<span class="kn">from</span> <span class="nn">dash.dependencies</span> <span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">State</span>
-<span class="kn">from</span> <span class="nn">dash.exceptions</span> <span class="kn">import</span> <span class="n">PreventUpdate</span>
-
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="CovidPlots">CovidPlots<a class="anchor-link" href="#CovidPlots"> </a></h2><p>First we build a plot factory that holds the dataframe, and has two plotting functions:</p>
@@ -154,11 +93,11 @@ You should consider upgrading via the &#39;/Users/oege/projects/dash_oop_compone
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">CovidPlots</span><span class="p">(</span><span class="n">DashFigureFactory</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datafile</span><span class="o">=</span><span class="s2">&quot;covid.csv&quot;</span><span class="p">,</span> <span class="n">include_countries</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datafile</span><span class="o">=</span><span class="s2">&quot;covid.csv&quot;</span><span class="p">,</span> <span class="n">exclude_countries</span><span class="o">=</span><span class="p">[]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">datafile</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">include_countries</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">countriesAndTerritories</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">include_countries</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">exclude_countries</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">countriesAndTerritories</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">exclude_countries</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">countries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">countriesAndTerritories</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cases&#39;</span><span class="p">,</span> <span class="s1">&#39;deaths&#39;</span><span class="p">]</span>
         
@@ -179,9 +118,32 @@ You should consider upgrading via the &#39;/Users/oege/projects/dash_oop_compone
             <span class="n">hole</span><span class="o">=.</span><span class="mi">3</span><span class="p">,</span>
             <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;countriesAndTerritories&#39;</span><span class="p">:</span><span class="s1">&#39;Countries&#39;</span><span class="p">}</span>
             <span class="p">)</span> 
+    
+<span class="n">plot_factory</span> <span class="o">=</span> <span class="n">CovidPlots</span><span class="p">(</span><span class="n">datafile</span><span class="o">=</span><span class="s2">&quot;covid.csv&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">plot_factory</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">())</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>dash_figure_factory:
+  name: CovidPlots
+  module: __main__
+  params:
+    datafile: covid.csv
+    exclude_countries: []
+
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -367,18 +329,17 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="CovidComponent">CovidComponent<a class="anchor-link" href="#CovidComponent"> </a></h2>
+<h2 id="CovidComposite">CovidComposite<a class="anchor-link" href="#CovidComposite"> </a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>A <code>CovidComponent</code> combines a <code>CovidTimeSeries</code> and <code>CovidPieChart</code> component into a single composite component.</p>
+<p>A <code>CovidComposite</code> combines a <code>CovidTimeSeries</code> and <code>CovidPieChart</code> component into a single composite component.</p>
 <ul>
 <li>The <code>plot_factory</code> gets passed down to the subcomponents</li>
-<li>The two subcomponents get registered with <code>self.register_component()</code>, this will make sure that the callbacks of the subcomponents get registered with the app. </li>
 <li>The subcomponents are included in the layout with <code>self.timeseries.layout()</code> and <code>self.piechart.layout()</code>.</li>
-<li>An additional callback is added with <code>def _register_components(self, app)</code> that connects the dropdowns of the <code>CovidComponent</code> to the dropdowns of the subcomponents. (therefore the subcomponent dropdowns are also hidden)</li>
+<li>An additional callback is added with <code>def _register_components(self, app)</code> (<strong>note the underscore!</strong>) that connects the dropdowns of the <code>CovidComponent</code> to the dropdowns of the subcomponents. (therefore the subcomponent dropdowns are also hidden by setting <code>hide_country_dropdown=True</code> and <code>hide_metric_dropdown=True</code>)</li>
 </ul>
 
 </div>
@@ -418,8 +379,6 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
                 <span class="n">plot_factory</span><span class="p">,</span> 
                 <span class="n">hide_country_dropdown</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">countries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">countries</span><span class="p">,</span>
                 <span class="n">hide_metric_dropdown</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">)</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">register_components</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timeseries</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piechart</span><span class="p">)</span>
         
     <span class="k">def</span> <span class="nf">layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">([</span>
@@ -485,7 +444,7 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The final <code>CovidDashboard</code> consists of four <code>CovidComponent</code> subcomponents, each in its own tab, and each with a slightly different configuration.</p>
+<p>The final <code>CovidDashboard</code> consists of four <code>CovidComposites</code> subcomponents, each in its own tab, and each with a slightly different configuration.</p>
 <ul>
 <li>First tab only shows European counties, by passing <code>include_countries=[...]</code></li>
 <li>Second tab only shows Asian countries</li>
@@ -526,8 +485,6 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
                                           <span class="n">hide_metric_dropdown</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                           <span class="n">countries</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Italy&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">])</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">register_components</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">europe</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">asia</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cases_only</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">deaths_only</span><span class="p">)</span>
-        
     <span class="k">def</span> <span class="nf">layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">([</span>
             <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
@@ -557,9 +514,60 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
                 <span class="p">])</span>
             <span class="p">])</span>
         <span class="p">],</span> <span class="n">fluid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+<span class="n">dashboard</span> <span class="o">=</span> <span class="n">CovidDashboard</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dashboard</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">())</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>dash_component:
+  name: CovidDashboard
+  module: __main__
+  params:
+    plot_factory:
+      dash_figure_factory:
+        name: CovidPlots
+        module: __main__
+        params:
+          datafile: covid.csv
+          exclude_countries: []
+    europe_countries:
+    - Italy
+    - Spain
+    - Germany
+    - France
+    - Iran
+    - United_Kingdom
+    - Switzerland
+    - Netherlands
+    - Belgium
+    - Austria
+    - Portugal
+    - Norway
+    asia_countries:
+    - China
+    - Vietnam
+    - Malaysia
+    - Philippines
+    - Taiwan
+    - Myanmar
+    - Thailand
+    - South_Korea
+    - Japan
+
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -574,55 +582,7 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Load the plot factory:</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plot_factory</span> <span class="o">=</span> <span class="n">CovidPlots</span><span class="p">(</span><span class="n">datafile</span><span class="o">=</span><span class="s2">&quot;covid.csv&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Load the <code>CovidDashboard</code>, by passing the <code>plot_factory</code> and accepting the default parameters for <code>europe_countries</code> and <code>asia_countries</code>:</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dashboard_component</span> <span class="o">=</span> <span class="n">CovidDashboard</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Pass the <code>dashboard_component</code> to the <a href="/dash_oop_components/core.html#DashApp"><code>DashApp</code></a>, and add the bootstrap stylesheet that is needed to correctly display all the <code>dbc.Row</code>s and <code>dbc.Col</code>s:</p>
+<p>Pass the <code>dashboard</code> to the <a href="/dash_oop_components/core.html#DashApp"><code>DashApp</code></a>, and add the bootstrap stylesheet that is needed to correctly display all the <code>dbc.Row</code>s and <code>dbc.Col</code>s:</p>
 
 </div>
 </div>
@@ -647,7 +607,6 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>And finally we run the app:</p>
-<p>(uncomment to run)</p>
 
 </div>
 </div>
@@ -659,7 +618,8 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span> <span class="c1"># remove to run</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -910,7 +870,6 @@ This includes:</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>And if we run it it still works!</p>
-<p>(uncomment to run)</p>
 
 </div>
 </div>
@@ -922,7 +881,8 @@ This includes:</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span> <span class="c1"># remove to run</span>
+    <span class="n">app2</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 
     </div>

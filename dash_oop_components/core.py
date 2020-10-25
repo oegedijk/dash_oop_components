@@ -265,21 +265,13 @@ class DashComponent(DashComponentBase):
         else:
             return element
 
-    def register_components(self, *components):
+    def register_components(self):
         """register subcomponents so that their callbacks will be registered"""
         if not hasattr(self, '_components'):
             self._components = []
-        for comp in components:
-            if isinstance(comp, DashComponent):
+        for comp in self.__dict__.values():
+            if isinstance(comp, DashComponent) and comp not in self._components:
                 self._components.append(comp)
-            elif hasattr(comp, '__iter__'):
-                for subcomp in comp:
-                    if isinstance(subcomp, DashComponent):
-                        self._components.append(subcomp)
-                    else:
-                        print(f"{subcomp.__name__} is not a DashComponent so not adding to self.components")
-            else:
-                print(f"{comp.__name__} is not an DashComponent so not adding to self.components")
 
     def layout(self):
         """layout to be defined by the particular ExplainerComponent instance.
@@ -294,8 +286,9 @@ class DashComponent(DashComponentBase):
         """First register callbacks of all subcomponents, then call
         _register_callbacks(app)
         """
-        if not hasattr(self, '_components'):
-            self._components = []
+#         if not hasattr(self, '_components'):
+#             self._components = []
+        self.register_components()
         for comp in self._components:
             comp.register_callbacks(app)
         self._register_callbacks(app)
@@ -365,6 +358,11 @@ class DashApp(DashComponentBase):
             module=self.__class__.__module__,
             params=self._stored_params))
 
+    def flask_server(self):
+        return self.app.server
+
     def run(self, port=None):
         """Run the dash app"""
         self.app.run_server(port=port if port is not None else self.port)
+
+
