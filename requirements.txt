@@ -1,0 +1,7 @@
+dash 
+dash-bootstrap-components
+shortuuid
+oyaml
+jupyter_dash
+pandas
+plotly-express

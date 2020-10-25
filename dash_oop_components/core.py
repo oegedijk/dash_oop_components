@@ -80,6 +80,9 @@ class DashComponentBase(ABC):
             dont_config = False
 
         for name, value in child_dict.items():
+            if name in {'dash_component', 'dash_figure_factory', 'dash_app'}:
+                raise ValueError(f"Please do not use {name} as a parameter name, "
+                                 "as this results in a confusing and hard to parse config.")
             if not dont_attr and name not in no_store and name not in no_attr:
                 setattr(self, name, value)
             if not dont_config and name not in no_store and name not in no_config:

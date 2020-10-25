@@ -35,10 +35,6 @@ This allows you to:
 
 # Example:
 
-A basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality: `plot_time_series()`.
-
-## CovidPlots: a DashFigureFactory
-
 ```python
 #!pip install pandas plotly-express
 ```
@@ -54,6 +50,10 @@ from dash.exceptions import PreventUpdate
 import pandas as pd
 import plotly.express as px
 ```
+
+## CovidPlots: a DashFigureFactory
+
+A basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality: `plot_time_series()`.
 
 ```python
 class CovidPlots(DashFigureFactory):
@@ -74,9 +74,9 @@ class CovidPlots(DashFigureFactory):
             )
 ```
 
-A `DashComponent` that takes a plot_factory and build a layout with two dropdowns and a graph:
-
 ## CovidTimeSeries: a DashComponent
+
+A `DashComponent` that takes a plot_factory and build a layout with two dropdowns and a graph:
 
 ```python
 class CovidTimeSeries(DashComponent):
@@ -131,8 +131,12 @@ Both subcomponents are assigned different initial values.
 class DuoPlots(DashComponent):
     def __init__(self, plot_factory):
         super().__init__()
-        self.plot_left = CovidTimeSeries(plot_factory, countries=['China', 'Vietnam', 'Taiwan'], metric='cases')
-        self.plot_right = CovidTimeSeries(plot_factory, countries=['Italy', 'Germany', 'Sweden'], metric='deaths')
+        self.plot_left = CovidTimeSeries(plot_factory, 
+                                         countries=['China', 'Vietnam', 'Taiwan'], 
+                                         metric='cases')
+        self.plot_right = CovidTimeSeries(plot_factory, 
+                                          countries=['Italy', 'Germany', 'Sweden'], 
+                                          metric='deaths')
         
         self.register_components(self.plot_left, self.plot_right)
         

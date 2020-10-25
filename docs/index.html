@@ -89,19 +89,6 @@ nb_path: "index.ipynb"
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>A basic <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> that loads a covid dataset, and provides a single plotting functionality: <code>plot_time_series()</code>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="CovidPlots:-a-DashFigureFactory">CovidPlots: a DashFigureFactory<a class="anchor-link" href="#CovidPlots:-a-DashFigureFactory"> </a></h2>
-</div>
-</div>
-</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -144,6 +131,19 @@ nb_path: "index.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="CovidPlots:-a-DashFigureFactory">CovidPlots: a DashFigureFactory<a class="anchor-link" href="#CovidPlots:-a-DashFigureFactory"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A basic <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> that loads a covid dataset, and provides a single plotting functionality: <code>plot_time_series()</code>.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -178,14 +178,14 @@ nb_path: "index.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>A <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a> that takes a plot_factory and build a layout with two dropdowns and a graph:</p>
-
+<h2 id="CovidTimeSeries:-a-DashComponent">CovidTimeSeries: a DashComponent<a class="anchor-link" href="#CovidTimeSeries:-a-DashComponent"> </a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="CovidTimeSeries:-a-DashComponent">CovidTimeSeries: a DashComponent<a class="anchor-link" href="#CovidTimeSeries:-a-DashComponent"> </a></h2>
+<p>A <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a> that takes a plot_factory and build a layout with two dropdowns and a graph:</p>
+
 </div>
 </div>
 </div>
@@ -265,8 +265,12 @@ Both subcomponents are assigned different initial values.</p>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">DuoPlots</span><span class="p">(</span><span class="n">DashComponent</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_factory</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plot_left</span> <span class="o">=</span> <span class="n">CovidTimeSeries</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">,</span> <span class="n">countries</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Vietnam&#39;</span><span class="p">,</span> <span class="s1">&#39;Taiwan&#39;</span><span class="p">],</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;cases&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plot_right</span> <span class="o">=</span> <span class="n">CovidTimeSeries</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">,</span> <span class="n">countries</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Italy&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;Sweden&#39;</span><span class="p">],</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;deaths&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_left</span> <span class="o">=</span> <span class="n">CovidTimeSeries</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">,</span> 
+                                         <span class="n">countries</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Vietnam&#39;</span><span class="p">,</span> <span class="s1">&#39;Taiwan&#39;</span><span class="p">],</span> 
+                                         <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;cases&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_right</span> <span class="o">=</span> <span class="n">CovidTimeSeries</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">,</span> 
+                                          <span class="n">countries</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Italy&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;Sweden&#39;</span><span class="p">],</span> 
+                                          <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;deaths&#39;</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">register_components</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_left</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_right</span><span class="p">)</span>
         
