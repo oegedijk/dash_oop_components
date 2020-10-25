@@ -6,7 +6,7 @@
 
 `pip install dash_oop_components`
 
-# Purpose
+## Purpose
 
 This library allows you to write clean, modular, composable, re-usable and fully configurable dash code.
 
@@ -33,7 +33,7 @@ This allows you to:
 - Parametrize your dashboard so that you (or others) can make change to the dashboard
     without having to edit the code.
 
-# Example:
+## Example:
 
 ```python
 #!pip install pandas plotly-express
@@ -51,7 +51,7 @@ import pandas as pd
 import plotly.express as px
 ```
 
-## CovidPlots: a DashFigureFactory
+### CovidPlots: a DashFigureFactory
 
 A basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality: `plot_time_series()`.
 
@@ -74,7 +74,7 @@ class CovidPlots(DashFigureFactory):
             )
 ```
 
-## CovidTimeSeries: a DashComponent
+### CovidTimeSeries: a DashComponent
 
 A `DashComponent` that takes a plot_factory and build a layout with two dropdowns and a graph:
 
@@ -123,7 +123,7 @@ class CovidTimeSeries(DashComponent):
             raise PreventUpdate
 ```
 
-## DuoPlots: a composition of two subcomponents
+### DuoPlots: a composition of two subcomponents
 A `DashComponent` that combines two `CovidTimeSeries` into a single layout. 
 Both subcomponents are assigned different initial values.
 
@@ -153,7 +153,7 @@ class DuoPlots(DashComponent):
         ], fluid=True)
 ```
 
-## Start dashboard:
+### Start dashboard:
 
 Load the plot_factory and show its config:
 
@@ -220,13 +220,13 @@ print(app.to_yaml())
     
 
 
-Uncomment o run the dashboard:
+(turn cell below into codecell to actually run)
 
 ```python
-#app.run()
+app2.run()
 ```
 
-## reload dashboard from config:
+### reload dashboard from config:
 
 ```python
 app.to_yaml("covid_dashboard.yaml")
@@ -267,8 +267,8 @@ print(app2.to_yaml())
 
 And if we run it it still works!
 
-(uncomment to run)
+(turn into code cell to actually run)
 
 ```python
-#app2.run()
+app2.run()
 ```
