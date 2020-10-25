@@ -11,27 +11,33 @@
 This library allows you to write clean, modular, composable, re-usable and fully configurable dash code.
 
 It includes:
-- 'DashFigureFactory`: a wrapper for your data/plotting functionality.
+- `DashFigureFactory`: a wrapper for your data/plotting functionality.
 - `DashComponent`: a self-contained, modular, configurable unit of code that combines a layout with callbacks.
     - These components are composable, meaning that other `DashComponent`s can consist of multiple subcomponents.
     - Makes use of a `DashFigureFactory` for plots or other data output
 - `DashApp`: Build a dashboard out of `DashComponent` and run it.
 
-All these components allow you to store its' config to a `.yaml` file, and can be fully reloaded
-from that same config file.
+All the components:
+- Automatically store all params to attributes and to a ._stored_params dict
+- Allow you to store its' config to a `.yaml` file, including import details, and can then  
+    be fully reloaded from a config file.
 
-
-
-    - Store a component config to yaml, and reload the same component from yaml
-It allows you to:
-    - Seperate the data/plotting logic from the dashboard interactions logic, by putting all 
-        the plotting functionality inside a `DashFigureFactory`. The configuration (e.g. filenames, etc), 
-        
-    - Build self-contained re-usable `DashComponents`
+This allows you to:
+- Seperate the data/plotting logic from the dashboard interactions logic, by putting all 
+    the plotting functionality inside a `DashFigureFactory`. 
+- Build self-contained, configurable, re-usable `DashComponents`
+- Compose dashboards that consists of multiple `DashComponents` that each may 
+    consists of multiple `DashComponents`, etc.
+- Store all the configuration needed to rebuild and run a particular dashboard to 
+    a single configuration `.yaml` file
+- Parametrize your dashboard so that you (or others) can make change to the dashboard
+    without having to edit the code.
 
 # Example:
 
 A basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality: `plot_time_series()`.
+
+## CovidPlots: a DashFigureFactory
 
 ```python
 class CovidPlots(DashFigureFactory):
@@ -51,6 +57,10 @@ class CovidPlots(DashFigureFactory):
             labels={'countriesAndTerritories':'Countries', 'dateRep':'date'},
             )
 ```
+
+A `DashComponent` that takes a plot_factory and build a layout with two dropdowns and a graph:
+
+## CovidTimeSeries: a DashComponent
 
 ```python
 class CovidTimeSeries(DashComponent):
@@ -97,7 +107,35 @@ class CovidTimeSeries(DashComponent):
             raise PreventUpdate
 ```
 
+## DuoPlots: a composition of two subcomponents
+A `DashComponent` that combines two `CovidTimeSeries` into a single layout. 
+Both subcomponents are assigned different initial values.
+
+```python
+class DuoPlots(DashComponent):
+    def __init__(self, plot_factory):
+        super().__init__()
+        self.plot_left = CovidTimeSeries(plot_factory, countries=['China', 'Vietnam', 'Taiwan'], metric='cases')
+        self.plot_right = CovidTimeSeries(plot_factory, countries=['Italy', 'Germany', 'Sweden'], metric='deaths')
+        
+        self.register_components(self.plot_left, self.plot_right)
+        
+    def layout(self):
+        return dbc.Container([
+            dbc.Row([
+                dbc.Col([
+                    self.plot_left.layout()
+                ]),
+                dbc.Col([
+                    self.plot_right.layout()
+                ])
+            ])
+        ], fluid=True)
+```
+
 ## Start dashboard:
+
+Load the plot_factory and show its config:
 
 ```python
 plot_factory = CovidPlots(datafile="covid.csv")
@@ -115,12 +153,12 @@ print(plot_factory.to_yaml())
 Load the `CovidDashboard`, by passing the `plot_factory` and accepting the default parameters for `europe_countries` and `asia_countries`:
 
 ```python
-dashboard_component = CovidTimeSeries(plot_factory)
+dashboard_component = DuoPlots(plot_factory)
 print(dashboard_component.to_yaml())
 ```
 
     dash_component:
-      name: CovidTimeSeries
+      name: DuoPlots
       module: __main__
       params:
         plot_factory:
@@ -129,10 +167,6 @@ print(dashboard_component.to_yaml())
             module: __main__
             params:
               datafile: covid.csv
-        hide_country_dropdown: false
-        countries: null
-        hide_metric_dropdown: false
-        metric: cases
     
 
 
@@ -149,7 +183,7 @@ print(app.to_yaml())
       params:
         dashboard_component:
           dash_component:
-            name: CovidTimeSeries
+            name: DuoPlots
             module: __main__
             params:
               plot_factory:
@@ -158,10 +192,6 @@ print(app.to_yaml())
                   module: __main__
                   params:
                     datafile: covid.csv
-              hide_country_dropdown: false
-              countries: null
-              hide_metric_dropdown: false
-              metric: cases
         port: 8050
         mode: dash
         kwargs:
@@ -173,7 +203,7 @@ print(app.to_yaml())
 Uncomment o run the dashboard:
 
 ```python
-# app.run()
+#app.run()
 ```
 
 ## reload dashboard from config:
@@ -198,7 +228,7 @@ print(app2.to_yaml())
       params:
         dashboard_component:
           dash_component:
-            name: CovidTimeSeries
+            name: DuoPlots
             module: __main__
             params:
               plot_factory:
@@ -207,10 +237,6 @@ print(app2.to_yaml())
                   module: __main__
                   params:
                     datafile: covid.csv
-              hide_country_dropdown: false
-              countries: null
-              hide_metric_dropdown: false
-              metric: cases
         port: 8050
         mode: dash
         kwargs:

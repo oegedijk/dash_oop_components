@@ -4,7 +4,7 @@ dash_app:
   params:
     dashboard_component:
       dash_component:
-        name: CovidTimeSeries
+        name: DuoPlots
         module: __main__
         params:
           plot_factory:
@@ -13,10 +13,6 @@ dash_app:
               module: __main__
               params:
                 datafile: covid.csv
-          hide_country_dropdown: false
-          countries: null
-          hide_metric_dropdown: false
-          metric: cases
     port: 8050
     mode: dash
     kwargs:
