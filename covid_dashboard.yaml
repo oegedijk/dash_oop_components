@@ -4,7 +4,7 @@ dash_app:
   params:
     dashboard_component:
       dash_component:
-        name: CovidDashboard
+        name: CovidTimeSeries
         module: __main__
         params:
           plot_factory:
@@ -13,30 +13,10 @@ dash_app:
               module: __main__
               params:
                 datafile: covid.csv
-                include_countries: []
-          europe_countries:
-          - Italy
-          - Spain
-          - Germany
-          - France
-          - Iran
-          - United_Kingdom
-          - Switzerland
-          - Netherlands
-          - Belgium
-          - Austria
-          - Portugal
-          - Norway
-          asia_countries:
-          - China
-          - Vietnam
-          - Malaysia
-          - Philippines
-          - Taiwan
-          - Myanmar
-          - Thailand
-          - South_Korea
-          - Japan
+          hide_country_dropdown: false
+          countries: null
+          hide_metric_dropdown: false
+          metric: cases
     port: 8050
     mode: dash
     kwargs:
