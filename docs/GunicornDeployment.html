@@ -144,7 +144,7 @@ nb_path: "02_GunicornDeployment.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In some cases you might be doing some expensive calculations inside your <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> that you do not want to run everytime you restart a dashboard as it would break the gunicorn timeout window.</p>
+<p>In some cases you might be doing some expensive calculations inside your <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> that you do not want to run everytime you restart a dashboard as it would break the gunicorn timeout window. The solution is to build the plot_factory, pickle it, and then load it form the pickle file when you start the dashboard:</p>
 
 </div>
 </div>
@@ -157,12 +157,13 @@ nb_path: "02_GunicornDeployment.ipynb"
 <span class="kn">from</span> <span class="nn">dash_oop_components</span> <span class="kn">import</span> <span class="n">DashApp</span>
 
 <span class="n">plot_factory</span> <span class="o">=</span> <span class="n">CovidPlots</span><span class="p">(</span><span class="n">datafile</span><span class="o">=</span><span class="s2">&quot;covid.csv&quot;</span><span class="p">)</span>
-<span class="n">dashboard_component</span> <span class="o">=</span> <span class="n">CovidDashboard</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">)</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard_component</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="p">[</span><span class="n">FLATLY</span><span class="p">])</span>
-
-<span class="n">plot_factory</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;plot_factory.pkl&quot;</span><span class="p">)</span>
 <span class="n">plot_factory</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s1">&#39;plot_factory.yaml&#39;</span><span class="p">)</span>
+<span class="n">plot_factory</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;plot_factory.pkl&quot;</span><span class="p">)</span>
+
+<span class="n">dashboard_component</span> <span class="o">=</span> <span class="n">CovidDashboard</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">)</span>
 <span class="n">dashboard</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dash_component.yaml&quot;</span><span class="p">)</span>
+
+<span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard_component</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="p">[</span><span class="n">FLATLY</span><span class="p">])</span>
 <span class="n">db</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard.yaml&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -171,7 +172,7 @@ nb_path: "02_GunicornDeployment.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now you can load the plot_factory from disk. And you can use the fact that you can override parameters when loading with <code>.from_yaml()</code> by passing them as kwargs:</p>
+<p>Now you can load the plot_factory from disk. And you can use the fact that you can override parameters when loading with <code>.from_yaml()</code> by passing them as <code>**kwargs</code>:</p>
 
 </div>
 </div>
