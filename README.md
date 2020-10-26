@@ -49,7 +49,9 @@ from dash_oop_components import DashFigureFactory, DashComponent, DashApp
 
 An example dashboard can be found at [github.com/oegedijk/dash_oop_demo](https://github.com/oegedijk/dash_oop_demo) and has been deployed to [https://dash-oop-demo.herokuapp.com/](https://dash-oop-demo.herokuapp.com/)
 
-Below is the code for similar but slightly simpler example. Full explanation for the `dash_oop_demo` dashboard can be found [in the documentation](https://oegedijk.github.io/dash_oop_components/Example.html)
+Below is the code for similar but slightly simpler example. Full explanation for the `dash_oop_demo` dashboard can be found [in the documentation](https://oegedijk.github.io/dash_oop_components/Example.html).
+
+The example is a rewrite of this (https://www.youtube.com/watch?v=dgV3GGFMcTc)
 
 ### CovidPlots: a DashFigureFactory
 First we define a basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality, namely `plot_time_series(countries, metric)`. Make sure to call `super().__init__()` in order to store params to attributes (that's how the datafile parameters gets automatically assigned to self.datafile for example), and store them to a `._stored_params` dict so that they can later be exported to a config file.
