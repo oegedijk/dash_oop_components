@@ -1,0 +1,10 @@
+dash_figure_factory:
+  name: ListFactory
+  module: __main__
+  params:
+    list_input:
+    - this
+    - is
+    - a
+    - dumb
+    - example

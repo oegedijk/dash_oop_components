@@ -4,7 +4,7 @@ dash_app:
   params:
     dashboard_component:
       dash_component:
-        name: DuoPlots
+        name: CovidDashboard
         module: __main__
         params:
           plot_factory:
@@ -13,6 +13,30 @@ dash_app:
               module: __main__
               params:
                 datafile: covid.csv
+                exclude_countries: []
+          europe_countries:
+          - Italy
+          - Spain
+          - Germany
+          - France
+          - Iran
+          - United_Kingdom
+          - Switzerland
+          - Netherlands
+          - Belgium
+          - Austria
+          - Portugal
+          - Norway
+          asia_countries:
+          - China
+          - Vietnam
+          - Malaysia
+          - Philippines
+          - Taiwan
+          - Myanmar
+          - Thailand
+          - South_Korea
+          - Japan
     port: 8050
     mode: dash
     kwargs:

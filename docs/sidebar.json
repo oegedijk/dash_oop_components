@@ -1,7 +1,7 @@
 {
   "dash_oop_components": {
     "Overview": "/",
-    "dash_oop_components": "core.html",
+    "Library Documentation": "core.html",
     "Covid Dashboard Example": "Example.html"
   }
 }

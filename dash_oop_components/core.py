@@ -15,11 +15,15 @@ import oyaml as yaml
 
 import dash
 import jupyter_dash
-import dash_core_components as dcc
+
 import dash_bootstrap_components as dbc
+
+# Cell
+import dash_core_components as dcc
 import dash_html_components as html
 
-
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
 
 # Cell
 class DashComponentBase(ABC):
@@ -230,7 +234,7 @@ class DashComponent(DashComponentBase):
                         it's unique. Defaults to None.
         """
         super().__init__(no_store, no_attr, no_config)
-        self._convert_ff_params()
+        self._convert_ff_config_params()
 
         self.title = title
         self.name = name
@@ -239,7 +243,7 @@ class DashComponent(DashComponentBase):
 
         self._components = []
 
-    def _convert_ff_params(self):
+    def _convert_ff_config_params(self):
         """convert any DashFigureFactory in the ._stored_params dict to its config"""
         for k, v in self._stored_params.items():
             if isinstance(v, DashFigureFactory):
@@ -289,8 +293,6 @@ class DashComponent(DashComponentBase):
         """First register callbacks of all subcomponents, then call
         _register_callbacks(app)
         """
-#         if not hasattr(self, '_components'):
-#             self._components = []
         self.register_components()
         for comp in self._components:
             comp.register_callbacks(app)

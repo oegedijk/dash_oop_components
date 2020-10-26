@@ -10,7 +10,7 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: dash_oop_components
+      title: Library Documentation
       url: core.html
     - output: web,pdf
       title: Covid Dashboard Example
