@@ -6,9 +6,13 @@
 
 `pip install dash_oop_components`
 
+## Documentation
+
+Documentation can be found at: [https://oegedijk.github.io/dash_oop_components/](https://oegedijk.github.io/dash_oop_components/)
+
 ## Purpose
 
-Plotly's [dash](dash.plotly.com) is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps is quite declarative, which for large projects can lead to code that become unwieldy and hard to maintain.
+Plotly's [dash](dash.plotly.com) is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps is quite declarative, which for large projects can lead to code that becomes unwieldy and hard to maintain.
 
 This library provides three object-oriented wrappers for organizing your dash code that allow you to write clean, modular, composable, re-usable and fully configurable dash code.
 
@@ -43,7 +47,9 @@ from dash_oop_components import DashFigureFactory, DashComponent, DashApp
 
 ## Example:
 
-A similar dashboard has been deployed to [https://dash-oop-demo.herokuapp.com/](https://dash-oop-demo.herokuapp.com/)
+An example dashboard can be found at [github.com/oegedijk/dash_oop_demo](https://github.com/oegedijk/dash_oop_demo) and has been deployed to [https://dash-oop-demo.herokuapp.com/](https://dash-oop-demo.herokuapp.com/)
+
+Below is the code for similar but slightly simpler example. Full explanation for the dash_oop_demo dashboard can be found [in the documentation](https://oegedijk.github.io/dash_oop_components/Example.html)
 
 ### CovidPlots: a DashFigureFactory
 

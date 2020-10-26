@@ -113,6 +113,26 @@ class DashComponentBase(ABC):
             return
         return yaml.dump(yaml_config)
 
+    def dump(self, filepath=None):
+        """store the object to disk.
+
+        Default serializer is pickle, however depending on file suffix,
+        dill or joblib will be used."""
+        filepath = str(filepath)
+        if filepath.endswith(".pkl") or filepath.endswith(".pickle"):
+            import pickle
+            pickle.dump(self, open(filepath, "wb"))
+        elif filepath.endswith(".dill"):
+            import dill
+            dill.dump(self, open(filepath, "wb"))
+        elif str(filepath).endswith(".joblib"):
+            import joblib
+            joblib.dump(self, filepath)
+        else:
+            filepath = filepath + ".pkl"
+            import pickle
+            pickle.dump(self, open(filepath, "wb"))
+
     @classmethod
     def from_config(cls, config, **update_params):
         """
@@ -172,6 +192,40 @@ class DashComponentBase(ABC):
         """
         config = yaml.safe_load(open(str(yaml_filepath), "r"))
         return cls.from_config(config, **update_params)
+
+    @classmethod
+    def from_file(cls, filepath):
+        """Load a DashComponentBase from file. Depending on the suffix of the filepath
+        will either load with pickle ('.pkl'), dill ('.dill') or joblib ('joblib').
+
+        If no suffix given, will try with pickle (and try adding ''.pkl')
+
+        Args:
+            filepath {str, Path} the location of the stored component
+
+        returns:
+            DashComponentBase
+        """
+        filepath = str(filepath)
+        if filepath.endswith(".pkl") or str(filepath).endswith(".pickle"):
+            import pickle
+            return pickle.load(open(filepath, "rb"))
+        elif filepath.endswith(".dill"):
+            import dill
+            return dill.load(open(filepath, "rb"))
+        elif filepath.endswith(".joblib"):
+            import joblib
+            return joblib.load(filepath)
+        else:
+            from pathlib import Path
+            filepath = Path(filepath)
+            if not filepath.exists():
+                if (filepath.parent / (filepath.name + ".pkl")).exists():
+                    filepath = filepath.parent / (filepath.name + ".pkl")
+                else:
+                    raise ValueError(f"Cannot find file: {str(filepath)}")
+            import pickle
+            return pickle.load(open(str(filepath), "rb"))
 
 
 # Cell
