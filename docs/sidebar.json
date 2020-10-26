@@ -2,6 +2,7 @@
   "dash_oop_components": {
     "Overview": "/",
     "Library Documentation": "core.html",
-    "Covid Dashboard Example": "Example.html"
+    "Covid Dashboard Example": "Example.html",
+    "Deploying with gunicorn": "GunicornDeployment.html"
   }
 }

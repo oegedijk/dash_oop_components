@@ -15,6 +15,9 @@ entries:
     - output: web,pdf
       title: Covid Dashboard Example
       url: Example.html
+    - output: web,pdf
+      title: Deploying with gunicorn
+      url: GunicornDeployment.html
     output: web
     title: dash_oop_components
   output: web
