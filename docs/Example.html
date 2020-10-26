@@ -339,7 +339,7 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
 <ul>
 <li>The <code>plot_factory</code> gets passed down to the subcomponents</li>
 <li>The subcomponents are included in the layout with <code>self.timeseries.layout()</code> and <code>self.piechart.layout()</code>.</li>
-<li>An additional callback is added with <code>def _register_components(self, app)</code> (<strong>note the underscore!</strong>) that connects the dropdowns of the <code>CovidComponent</code> to the dropdowns of the subcomponents. (therefore the subcomponent dropdowns are also hidden by setting <code>hide_country_dropdown=True</code> and <code>hide_metric_dropdown=True</code>)</li>
+<li>An additional callback is added with <code>def _register_components(self, app)</code> (<strong>note the underscore!</strong>) that connects the dropdowns of the <code>CovidComposite</code> to the dropdowns of the subcomponents. (therefore the subcomponent dropdowns are also hidden by setting <code>hide_country_dropdown=True</code> and <code>hide_metric_dropdown=True</code>)</li>
 </ul>
 
 </div>
@@ -352,7 +352,7 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">CovidComponent</span><span class="p">(</span><span class="n">DashComponent</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">CovidComposite</span><span class="p">(</span><span class="n">DashComponent</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_factory</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Covid Analysis&quot;</span><span class="p">,</span>
                  <span class="n">hide_country_dropdown</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
                  <span class="n">include_countries</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">countries</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
@@ -473,14 +473,14 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
                                   <span class="s1">&#39;Taiwan&#39;</span><span class="p">,</span> <span class="s1">&#39;Myanmar&#39;</span><span class="p">,</span> <span class="s1">&#39;Thailand&#39;</span><span class="p">,</span> <span class="s1">&#39;South_Korea&#39;</span><span class="p">,</span> <span class="s1">&#39;Japan&#39;</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">europe</span> <span class="o">=</span> <span class="n">CovidComponent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_factory</span><span class="p">,</span> <span class="s2">&quot;Europe&quot;</span><span class="p">,</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">europe</span> <span class="o">=</span> <span class="n">CovidComposite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_factory</span><span class="p">,</span> <span class="s2">&quot;Europe&quot;</span><span class="p">,</span> 
                                      <span class="n">include_countries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">europe_countries</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">asia</span> <span class="o">=</span> <span class="n">CovidComponent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_factory</span><span class="p">,</span> <span class="s2">&quot;Asia&quot;</span><span class="p">,</span> <span class="n">include_countries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">asia_countries</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cases_only</span> <span class="o">=</span> <span class="n">CovidComponent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_factory</span><span class="p">,</span> <span class="s2">&quot;Cases Only&quot;</span><span class="p">,</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">asia</span> <span class="o">=</span> <span class="n">CovidComposite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_factory</span><span class="p">,</span> <span class="s2">&quot;Asia&quot;</span><span class="p">,</span> <span class="n">include_countries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">asia_countries</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cases_only</span> <span class="o">=</span> <span class="n">CovidComposite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_factory</span><span class="p">,</span> <span class="s2">&quot;Cases Only&quot;</span><span class="p">,</span> 
                                          <span class="n">include_metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cases&#39;</span><span class="p">],</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;cases&#39;</span><span class="p">,</span>
                                          <span class="n">hide_metric_dropdown</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                          <span class="n">countries</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Italy&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">deaths_only</span> <span class="o">=</span> <span class="n">CovidComponent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_factory</span><span class="p">,</span> <span class="s2">&quot;Deaths Only&quot;</span><span class="p">,</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">deaths_only</span> <span class="o">=</span> <span class="n">CovidComposite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_factory</span><span class="p">,</span> <span class="s2">&quot;Deaths Only&quot;</span><span class="p">,</span> 
                                           <span class="n">include_metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;deaths&#39;</span><span class="p">],</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;deaths&#39;</span><span class="p">,</span>
                                           <span class="n">hide_metric_dropdown</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                           <span class="n">countries</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Italy&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">])</span>
@@ -618,7 +618,7 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span> <span class="c1"># remove to run</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">run_app</span><span class="p">:</span> <span class="c1"># remove to run</span>
     <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 
@@ -692,7 +692,7 @@ This includes:</p>
               module: __main__
               params:
                 datafile: covid.csv
-                include_countries: []
+                exclude_countries: []
           europe_countries:
           - Italy
           - Spain
@@ -827,7 +827,7 @@ This includes:</p>
               module: __main__
               params:
                 datafile: covid.csv
-                include_countries: []
+                exclude_countries: []
           europe_countries:
           - Italy
           - Spain
@@ -881,7 +881,7 @@ This includes:</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span> <span class="c1"># remove to run</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">run_app</span><span class="p">:</span>
     <span class="n">app2</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 
