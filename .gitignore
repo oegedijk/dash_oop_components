@@ -140,6 +140,7 @@ checklink/cookies.txt
 .gitconfig
 
 app.yaml
+dashboard.yaml
 covid_dashboard.yaml
 list_component.yaml
 t.pkl
