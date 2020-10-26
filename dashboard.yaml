@@ -1,13 +1,25 @@
-dash_component:
-  name: Dashboard
+dash_app:
+  name: DashApp
   module: __main__
   params:
-    ff:
-      dash_figure_factory:
-        name: FigFact
+    dashboard_component:
+      dash_component:
+        name: ListComposite
         module: __main__
         params:
-          greeting1: hello
-          greeting2: gutentag
-    title: Dashboard
-    header: Greetings!
+          list_factory:
+            dash_figure_factory:
+              name: ListFactory
+              module: __main__
+              params:
+                list_input:
+                - this
+                - is
+                - a
+                - dumb
+                - example
+          first_n1: 2
+          first_n2: 3
+    port: 8050
+    mode: dash
+    kwargs: {}

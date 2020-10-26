@@ -50,14 +50,14 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Plotly's <a href="dash.plotly.com">dash</a> is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps quite declarative, which for large projects can lead to code that become unwieldy and hard to maintain.</p>
+<p>Plotly's <a href="dash.plotly.com">dash</a> is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps is quite declarative, which for large projects can lead to code that become unwieldy and hard to maintain.</p>
 <p>This library provides three object-oriented wrappers for organizing your dash code that allow you to write clean, modular, composable, re-usable and fully configurable dash code.</p>
 <p>It includes:</p>
 <ul>
 <li><a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a>: a wrapper for your data/plotting functionality.</li>
-<li><a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a>: a self-contained, modular, configurable unit that combines a layout with callbacks.<ul>
+<li><a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a>: a self-contained, modular, configurable unit that combines a dash layout with dash callbacks.<ul>
 <li>Makes use of a <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> for plots or other data output</li>
-<li>DashComponents are composable, meaning that other <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a>s can consist of multiple subcomponents.</li>
+<li><code>DashComponents</code> are composable, meaning that you can nest them into new composite components.</li>
 </ul>
 </li>
 <li><a href="/dash_oop_components/core.html#DashApp"><code>DashApp</code></a>: Build a dashboard out of <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a> and run it.</li>
@@ -71,10 +71,10 @@ nb_path: "index.ipynb"
 <p>This allows you to:</p>
 <ul>
 <li>Seperate the data/plotting logic from the dashboard interactions logic, by putting all 
-  the plotting functionality inside a <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a>. </li>
+  the plotting functionality inside a <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> and all the dashboard layout and callback logic into <code>DashComponents</code>.</li>
 <li>Build self-contained, configurable, re-usable <code>DashComponents</code></li>
 <li>Compose dashboards that consists of multiple <code>DashComponents</code> that each may 
-  consists of multiple <code>DashComponents</code>, etc.</li>
+  consists of multiple nested <code>DashComponents</code>, etc.</li>
 <li>Store all the configuration needed to rebuild and run a particular dashboard to 
   a single configuration <code>.yaml</code> file</li>
 <li>Parametrize your dashboard so that you (or others) can make change to the dashboard
@@ -122,7 +122,7 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>First we define a basic <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> that loads a covid dataset, and provides a single plotting functionality, namely <code>plot_time_series(countries, metric)</code>. Make sure to call <code>super().__init__()</code> in order to params to attributes (that's why datafile gets automatically assigned to self.datafile), and store them to a <code>._stored_params</code> dict so that they can be exported to a config file.</p>
+<p>First we define a basic <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> that loads a covid dataset, and provides a single plotting functionality, namely <code>plot_time_series(countries, metric)</code>. Make sure to call <code>super().__init__()</code> in order to params to attributes (that's how the datafile parameters gets automatically assigned to self.datafile for example), and store them to a <code>._stored_params</code> dict so that they can later be exported to a config file.</p>
 
 </div>
 </div>
@@ -189,7 +189,15 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Then we define a <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a> that takes a plot_factory and build a layout with two dropdowns and a graph:</p>
+<p>Then we define a <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a> that takes a plot_factory and build a layout with two dropdowns and a graph.</p>
+<ul>
+<li>By calling <code>super().__init__()</code> all parameters are automatically stored to attributes (so that we can access 
+  e.g. <code>self.hide_country_dropdown</code>), and to a <code>._stored_params</code> dict.</li>
+<li>This layout makes use of the <code>make_hideable()</code> staticmethod, to conditionally 
+  wrap certain layout elements in a hidden div.</li>
+<li>Note that the callbacks are registered using <code>_register_callbacks(self, app)</code> (**note the underscore!)</li>
+<li>Note that the callback uses the plot_factory for the plotting logic.</li>
+</ul>
 
 </div>
 </div>
@@ -254,9 +262,18 @@ nb_path: "index.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="DuoPlots:-a-composition-of-two-subcomponents">DuoPlots: a composition of two subcomponents<a class="anchor-link" href="#DuoPlots:-a-composition-of-two-subcomponents"> </a></h3><p>A <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a> that combines two <code>CovidTimeSeries</code> into a single layout. 
-Both subcomponents are assigned different initial values.</p>
-<p>Callbacks of subcomponents get automatically registered. Additional callbacks should be defined under <code>self._register_callbacks(app)</code> (<strong>note the underscore!</strong>)</p>
+<h3 id="DuoPlots:-a-composition-of-two-subcomponents">DuoPlots: a composition of two subcomponents<a class="anchor-link" href="#DuoPlots:-a-composition-of-two-subcomponents"> </a></h3><p>A composite <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a> that combines two <code>CovidTimeSeries</code> into a single layout. 
+Both subcomponents are passed the same plot_factory but assigned different initial values.</p>
+<ul>
+<li>The layouts of subcomponents can be included in the composite layout with 
+  <code>self.plot_left.layout()</code> and <code>self.plot_right.layout()</code></li>
+<li>Composite callbacks should again be defined under <code>self._register_callbacks(app)</code> (<strong>note the underscore!</strong>)<ul>
+<li>calling <code>.register_callbacks(app)</code> first registers all callbacks of subcomponents, 
+  and then calls <code>_register_callbacks(app)</code>.</li>
+<li>composite callbacks can access elements of subcomponents by using the <code>subcomponent.name</code> fields in the ids.</li>
+</ul>
+</li>
+</ul>
 
 </div>
 </div>
@@ -325,6 +342,49 @@ Both subcomponents are assigned different initial values.</p>
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dashboard</span><span class="o">.</span><span class="n">register_components</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-66-202d56a6ee92&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>dashboard<span class="ansi-blue-fg">.</span>register_components<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/projects/dash_oop_components/dash_oop_components/core.py</span> in <span class="ansi-cyan-fg">register_components</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    275</span>         Searches self<span class="ansi-blue-fg">.</span>__dict__<span class="ansi-blue-fg">,</span> finds all DashComponents <span class="ansi-green-fg">and</span> adds them to self<span class="ansi-blue-fg">.</span>_components
+<span class="ansi-green-intense-fg ansi-bold">    276</span>         &#34;&#34;&#34;
+<span class="ansi-green-fg">--&gt; 277</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> hasattr<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;_components&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    278</span>             self<span class="ansi-blue-fg">.</span>_components <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">    279</span>         <span class="ansi-green-fg">for</span> comp <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>__dict__<span class="ansi-blue-fg">.</span>values<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-red-fg">KeyboardInterrupt</span>: </pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Start-dashboard:">Start dashboard:<a class="anchor-link" href="#Start-dashboard:"> </a></h3>
@@ -333,7 +393,12 @@ Both subcomponents are assigned different initial values.</p>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Pass the <code>dashboard</code> to the <a href="/dash_oop_components/core.html#DashApp"><code>DashApp</code></a>, and add the bootstrap stylesheet that is needed to correctly display all the <code>dbc.Row</code>s and <code>dbc.Col</code>s:</p>
+<p>Pass the <code>dashboard</code> to the <a href="/dash_oop_components/core.html#DashApp"><code>DashApp</code></a> to create a dash flask application.</p>
+<ul>
+<li>You can pass <code>mode='inline'</code>, <code>'external'</code> or <code>'jupyterlab'</code> when you are working in a notebook in order to keep
+  the notebook interactive while the app is running</li>
+<li>You can pass a port and any other dash parameters in the kwargs (e.g. here we include the bootstrap css from dbc)</li>
+</ul>
 
 </div>
 </div>
@@ -358,29 +423,43 @@ Both subcomponents are assigned different initial values.</p>
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>dash_app:
-  name: DashApp
-  module: dash_oop_components.core
-  params:
-    dashboard_component:
-      dash_component:
-        name: DuoPlots
-        module: __main__
-        params:
-          plot_factory:
-            dash_figure_factory:
-              name: CovidPlots
-              module: __main__
-              params:
-                datafile: covid.csv
-    port: 8050
-    mode: dash
-    kwargs:
-      external_stylesheets:
-      - https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-62-70a0fd5f486e&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>app <span class="ansi-blue-fg">=</span> DashApp<span class="ansi-blue-fg">(</span>dashboard<span class="ansi-blue-fg">,</span> external_stylesheets<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">[</span>dbc<span class="ansi-blue-fg">.</span>themes<span class="ansi-blue-fg">.</span>BOOTSTRAP<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> print<span class="ansi-blue-fg">(</span>app<span class="ansi-blue-fg">.</span>to_yaml<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
 
-</pre>
+<span class="ansi-green-fg">~/projects/dash_oop_components/dash_oop_components/core.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, dashboard_component, port, mode, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    344</span> 
+<span class="ansi-green-intense-fg ansi-bold">    345</span>         Returns<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 346</span><span class="ansi-red-fg">             </span>DashApp<span class="ansi-blue-fg">:</span> simply start <span class="ansi-blue-fg">.</span>run<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> to start the dashboard
+<span class="ansi-green-intense-fg ansi-bold">    347</span>         &#34;&#34;&#34;
+<span class="ansi-green-intense-fg ansi-bold">    348</span>         super<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>__init__<span class="ansi-blue-fg">(</span>child_depth<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">2</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/projects/dash_oop_components/dash_oop_components/core.py</span> in <span class="ansi-cyan-fg">_get_dash_app</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    353</span>         <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>mode <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">&#39;dash&#39;</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    354</span>             app <span class="ansi-blue-fg">=</span> dash<span class="ansi-blue-fg">.</span>Dash<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">**</span>self<span class="ansi-blue-fg">.</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 355</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">elif</span> self<span class="ansi-blue-fg">.</span>mode <span class="ansi-green-fg">in</span> <span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">&#39;inline&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;external&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;jupyterlab&#39;</span><span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    356</span>             app <span class="ansi-blue-fg">=</span> jupyter_dash<span class="ansi-blue-fg">.</span>JupyterDash<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">**</span>self<span class="ansi-blue-fg">.</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    357</span> 
+
+<span class="ansi-green-fg">~/projects/dash_oop_components/dash_oop_components/core.py</span> in <span class="ansi-cyan-fg">register_callbacks</span><span class="ansi-blue-fg">(self, app)</span>
+<span class="ansi-green-intense-fg ansi-bold">    293</span>         &#34;&#34;&#34;First register callbacks of all subcomponents, then call
+<span class="ansi-green-intense-fg ansi-bold">    294</span>         _register_callbacks<span class="ansi-blue-fg">(</span>app<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 295</span><span class="ansi-red-fg">         &#34;&#34;&#34;
+</span><span class="ansi-green-intense-fg ansi-bold">    296</span>         self<span class="ansi-blue-fg">.</span>register_components<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    297</span>         <span class="ansi-green-fg">for</span> comp <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>_components<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/projects/dash_oop_components/dash_oop_components/core.py</span> in <span class="ansi-cyan-fg">register_components</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    275</span>         Searches self<span class="ansi-blue-fg">.</span>__dict__<span class="ansi-blue-fg">,</span> finds all DashComponents <span class="ansi-green-fg">and</span> adds them to self<span class="ansi-blue-fg">.</span>_components
+<span class="ansi-green-intense-fg ansi-bold">    276</span>         &#34;&#34;&#34;
+<span class="ansi-green-fg">--&gt; 277</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> hasattr<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;_components&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    278</span>             self<span class="ansi-blue-fg">.</span>_components <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">    279</span>         <span class="ansi-green-fg">for</span> comp <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>__dict__<span class="ansi-blue-fg">.</span>values<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-red-fg">KeyboardInterrupt</span>: </pre>
 </div>
 </div>
 
@@ -404,7 +483,7 @@ Both subcomponents are assigned different initial values.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">run_app</span><span class="p">:</span>
     <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 

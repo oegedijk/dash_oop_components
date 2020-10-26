@@ -8,15 +8,15 @@
 
 ## Purpose
 
-Plotly's [dash](dash.plotly.com) is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps quite declarative, which for large projects can lead to code that become unwieldy and hard to maintain.
+Plotly's [dash](dash.plotly.com) is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps is quite declarative, which for large projects can lead to code that become unwieldy and hard to maintain.
 
 This library provides three object-oriented wrappers for organizing your dash code that allow you to write clean, modular, composable, re-usable and fully configurable dash code.
 
 It includes:
 - `DashFigureFactory`: a wrapper for your data/plotting functionality.
-- `DashComponent`: a self-contained, modular, configurable unit that combines a layout with callbacks.
+- `DashComponent`: a self-contained, modular, configurable unit that combines a dash layout with dash callbacks.
     - Makes use of a `DashFigureFactory` for plots or other data output
-    - DashComponents are composable, meaning that other `DashComponent`s can consist of multiple subcomponents.
+    - `DashComponents` are composable, meaning that you can nest them into new composite components.
 - `DashApp`: Build a dashboard out of `DashComponent` and run it.
 
 All three wrappers:
@@ -26,10 +26,10 @@ All three wrappers:
 
 This allows you to:
 - Seperate the data/plotting logic from the dashboard interactions logic, by putting all 
-    the plotting functionality inside a `DashFigureFactory`. 
+    the plotting functionality inside a `DashFigureFactory` and all the dashboard layout and callback logic into `DashComponents`.
 - Build self-contained, configurable, re-usable `DashComponents`
 - Compose dashboards that consists of multiple `DashComponents` that each may 
-    consists of multiple `DashComponents`, etc.
+    consists of multiple nested `DashComponents`, etc.
 - Store all the configuration needed to rebuild and run a particular dashboard to 
     a single configuration `.yaml` file
 - Parametrize your dashboard so that you (or others) can make change to the dashboard
@@ -47,7 +47,7 @@ A similar dashboard has been deployed to [https://dash-oop-demo.herokuapp.com/](
 
 ### CovidPlots: a DashFigureFactory
 
-First we define a basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality, namely `plot_time_series(countries, metric)`. Make sure to call `super().__init__()` in order to params to attributes (that's why datafile gets automatically assigned to self.datafile), and store them to a `._stored_params` dict so that they can be exported to a config file.
+First we define a basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality, namely `plot_time_series(countries, metric)`. Make sure to call `super().__init__()` in order to params to attributes (that's how the datafile parameters gets automatically assigned to self.datafile for example), and store them to a `._stored_params` dict so that they can later be exported to a config file.
 
 ```python
 class CovidPlots(DashFigureFactory):
@@ -81,7 +81,14 @@ print(figure_factory.to_yaml())
 
 ### CovidTimeSeries: a DashComponent
 
-Then we define a `DashComponent` that takes a plot_factory and build a layout with two dropdowns and a graph:
+Then we define a `DashComponent` that takes a plot_factory and build a layout with two dropdowns and a graph.
+
+- By calling `super().__init__()` all parameters are automatically stored to attributes (so that we can access 
+    e.g. `self.hide_country_dropdown`), and to a `._stored_params` dict.
+- This layout makes use of the `make_hideable()` staticmethod, to conditionally 
+    wrap certain layout elements in a hidden div.
+- Note that the callbacks are registered using `_register_callbacks(self, app)` (**note the underscore!)
+- Note that the callback uses the plot_factory for the plotting logic.
 
 ```python
 class CovidTimeSeries(DashComponent):
@@ -129,10 +136,15 @@ class CovidTimeSeries(DashComponent):
 ```
 
 ### DuoPlots: a composition of two subcomponents
-A `DashComponent` that combines two `CovidTimeSeries` into a single layout. 
-Both subcomponents are assigned different initial values.
+A composite `DashComponent` that combines two `CovidTimeSeries` into a single layout. 
+Both subcomponents are passed the same plot_factory but assigned different initial values.
 
-Callbacks of subcomponents get automatically registered. Additional callbacks should be defined under `self._register_callbacks(app)` (**note the underscore!**)
+- The layouts of subcomponents can be included in the composite layout with 
+    `self.plot_left.layout()` and `self.plot_right.layout()`
+- Composite callbacks should again be defined under `self._register_callbacks(app)` (**note the underscore!**)
+    - calling `.register_callbacks(app)` first registers all callbacks of subcomponents, 
+        and then calls `_register_callbacks(app)`.
+    - composite callbacks can access elements of subcomponents by using the `subcomponent.name` fields in the ids.
 
 ```python
 class DuoPlots(DashComponent):
@@ -174,42 +186,92 @@ print(dashboard.to_yaml())
     
 
 
+```python
+dashboard.register_components()
+```
+
+
+    ---------------------------------------------------------------------------
+
+    KeyboardInterrupt                         Traceback (most recent call last)
+
+    <ipython-input-66-202d56a6ee92> in <module>
+    ----> 1 dashboard.register_components()
+    
+
+    ~/projects/dash_oop_components/dash_oop_components/core.py in register_components(self)
+        275         Searches self.__dict__, finds all DashComponents and adds them to self._components
+        276         """
+    --> 277         if not hasattr(self, '_components'):
+        278             self._components = []
+        279         for comp in self.__dict__.values():
+
+
+    KeyboardInterrupt: 
+
+
 ### Start dashboard:
 
-Pass the `dashboard` to the `DashApp`, and add the bootstrap stylesheet that is needed to correctly display all the `dbc.Row`s and `dbc.Col`s:
+Pass the `dashboard` to the `DashApp` to create a dash flask application.
+
+- You can pass `mode='inline'`, `'external'` or `'jupyterlab'` when you are working in a notebook in order to keep
+    the notebook interactive while the app is running
+- You can pass a port and any other dash parameters in the kwargs (e.g. here we include the bootstrap css from dbc)
 
 ```python
 app = DashApp(dashboard, external_stylesheets=[dbc.themes.BOOTSTRAP])
 print(app.to_yaml())
 ```
 
-    dash_app:
-      name: DashApp
-      module: dash_oop_components.core
-      params:
-        dashboard_component:
-          dash_component:
-            name: DuoPlots
-            module: __main__
-            params:
-              plot_factory:
-                dash_figure_factory:
-                  name: CovidPlots
-                  module: __main__
-                  params:
-                    datafile: covid.csv
-        port: 8050
-        mode: dash
-        kwargs:
-          external_stylesheets:
-          - https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css
-    
+
+    ---------------------------------------------------------------------------
+
+    KeyboardInterrupt                         Traceback (most recent call last)
+
+    <ipython-input-62-70a0fd5f486e> in <module>
+    ----> 1 app = DashApp(dashboard, external_stylesheets=[dbc.themes.BOOTSTRAP])
+          2 print(app.to_yaml())
+
+
+    ~/projects/dash_oop_components/dash_oop_components/core.py in __init__(self, dashboard_component, port, mode, **kwargs)
+        344 
+        345         Returns:
+    --> 346             DashApp: simply start .run() to start the dashboard
+        347         """
+        348         super().__init__(child_depth=2)
+
+
+    ~/projects/dash_oop_components/dash_oop_components/core.py in _get_dash_app(self)
+        353         if self.mode == 'dash':
+        354             app = dash.Dash(**self.kwargs)
+    --> 355         elif self.mode in {'inline', 'external', 'jupyterlab'}:
+        356             app = jupyter_dash.JupyterDash(**self.kwargs)
+        357 
+
+
+    ~/projects/dash_oop_components/dash_oop_components/core.py in register_callbacks(self, app)
+        293         """First register callbacks of all subcomponents, then call
+        294         _register_callbacks(app)
+    --> 295         """
+        296         self.register_components()
+        297         for comp in self._components:
+
+
+    ~/projects/dash_oop_components/dash_oop_components/core.py in register_components(self)
+        275         Searches self.__dict__, finds all DashComponents and adds them to self._components
+        276         """
+    --> 277         if not hasattr(self, '_components'):
+        278             self._components = []
+        279         for comp in self.__dict__.values():
+
+
+    KeyboardInterrupt: 
 
 
 (turn cell below into codecell to actually run)
 
 ```python
-if not True:
+if run_app:
     app.run()
 ```
 
