@@ -330,9 +330,9 @@ class DashComponent(DashComponentBase):
         """
         if not hasattr(self, '_components'):
             self._components = []
-        for comp in self.__dict__.values():
-            if isinstance(comp, DashComponent) and comp not in self._components:
-                self._components.append(comp)
+        for k, v in self.__dict__.items():
+            if k != '_components' and isinstance(v, DashComponent) and v not in self._components:
+                self._components.append(v)
 
     def layout(self):
         """layout to be defined by the particular ExplainerComponent instance.

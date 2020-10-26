@@ -127,14 +127,7 @@ nb_path: "index.ipynb"
 <h3 id="CovidPlots:-a-DashFigureFactory">CovidPlots: a DashFigureFactory<a class="anchor-link" href="#CovidPlots:-a-DashFigureFactory"> </a></h3>
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>First we define a basic <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> that loads a covid dataset, and provides a single plotting functionality, namely <code>plot_time_series(countries, metric)</code>. Make sure to call <code>super().__init__()</code> in order to params to attributes (that's how the datafile parameters gets automatically assigned to self.datafile for example), and store them to a <code>._stored_params</code> dict so that they can later be exported to a config file.</p>
-
-</div>
-</div>
-</div>
+</div>First we define a basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality, namely `plot_time_series(countries, metric)`. Make sure to call `super().__init__()` in order to store params to attributes (that's how the datafile parameters gets automatically assigned to self.datafile for example), and store them to a `._stored_params` dict so that they can later be exported to a config file.
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -203,8 +196,12 @@ nb_path: "index.ipynb"
   e.g. <code>self.hide_country_dropdown</code>), and to a <code>._stored_params</code> dict.</li>
 <li>This layout makes use of the <code>make_hideable()</code> staticmethod, to conditionally 
   wrap certain layout elements in a hidden div.</li>
-<li>Note that the callbacks are registered using <code>_register_callbacks(self, app)</code> (**note the underscore!)</li>
-<li>Note that the callback uses the plot_factory for the plotting logic.</li>
+<li>Note that the layout element id's add <code>+self.name</code> to ensure they are unique in every layout<ul>
+<li><code>self.name</code> gets assigned a uuid random string of length 10 by <code>super().__init__()</code>.</li>
+</ul>
+</li>
+<li>Note that the callbacks are registered using <code>_register_callbacks(self, app)</code> (<strong>note the underscore!</strong>)</li>
+<li>Note that the callback uses the <code>plot_factory</code> for the plotting logic.</li>
 </ul>
 
 </div>
@@ -271,7 +268,7 @@ nb_path: "index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="DuoPlots:-a-composition-of-two-subcomponents">DuoPlots: a composition of two subcomponents<a class="anchor-link" href="#DuoPlots:-a-composition-of-two-subcomponents"> </a></h3><p>A composite <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a> that combines two <code>CovidTimeSeries</code> into a single layout. 
-Both subcomponents are passed the same plot_factory but assigned different initial values.</p>
+Both subcomponents are passed the same <code>plot_factory</code> but assigned different initial values.</p>
 <ul>
 <li>The layouts of subcomponents can be included in the composite layout with 
   <code>self.plot_left.layout()</code> and <code>self.plot_right.layout()</code></li>
@@ -350,52 +347,9 @@ Both subcomponents are passed the same plot_factory but assigned different initi
 </div>
     {% endraw %}
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dashboard</span><span class="o">.</span><span class="n">register_components</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-66-202d56a6ee92&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>dashboard<span class="ansi-blue-fg">.</span>register_components<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/projects/dash_oop_components/dash_oop_components/core.py</span> in <span class="ansi-cyan-fg">register_components</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">    275</span>         Searches self<span class="ansi-blue-fg">.</span>__dict__<span class="ansi-blue-fg">,</span> finds all DashComponents <span class="ansi-green-fg">and</span> adds them to self<span class="ansi-blue-fg">.</span>_components
-<span class="ansi-green-intense-fg ansi-bold">    276</span>         &#34;&#34;&#34;
-<span class="ansi-green-fg">--&gt; 277</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> hasattr<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;_components&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    278</span>             self<span class="ansi-blue-fg">.</span>_components <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">]</span>
-<span class="ansi-green-intense-fg ansi-bold">    279</span>         <span class="ansi-green-fg">for</span> comp <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>__dict__<span class="ansi-blue-fg">.</span>values<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-red-fg">KeyboardInterrupt</span>: </pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Start-dashboard:">Start dashboard:<a class="anchor-link" href="#Start-dashboard:"> </a></h3>
+<h3 id="Build-and-start-DashApp:">Build and start <a href="/dash_oop_components/core.html#DashApp"><code>DashApp</code></a>:<a class="anchor-link" href="#Build-and-start-DashApp:"> </a></h3>
 </div>
 </div>
 </div>
@@ -405,7 +359,7 @@ Both subcomponents are passed the same plot_factory but assigned different initi
 <ul>
 <li>You can pass <code>mode='inline'</code>, <code>'external'</code> or <code>'jupyterlab'</code> when you are working in a notebook in order to keep
   the notebook interactive while the app is running</li>
-<li>You can pass a port and any other dash parameters in the kwargs (e.g. here we include the bootstrap css from dbc)</li>
+<li>You can pass a <code>port</code> and any other dash parameters in the <code>**kwargs</code> (e.g. here we include the bootstrap css from <code>dash_bootstrap_components</code>)</li>
 </ul>
 
 </div>
@@ -431,43 +385,29 @@ Both subcomponents are passed the same plot_factory but assigned different initi
 
 <div class="output_area">
 
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-62-70a0fd5f486e&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>app <span class="ansi-blue-fg">=</span> DashApp<span class="ansi-blue-fg">(</span>dashboard<span class="ansi-blue-fg">,</span> external_stylesheets<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">[</span>dbc<span class="ansi-blue-fg">.</span>themes<span class="ansi-blue-fg">.</span>BOOTSTRAP<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> print<span class="ansi-blue-fg">(</span>app<span class="ansi-blue-fg">.</span>to_yaml<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>dash_app:
+  name: DashApp
+  module: dash_oop_components.core
+  params:
+    dashboard_component:
+      dash_component:
+        name: DuoPlots
+        module: __main__
+        params:
+          plot_factory:
+            dash_figure_factory:
+              name: CovidPlots
+              module: __main__
+              params:
+                datafile: covid.csv
+    port: 8050
+    mode: dash
+    kwargs:
+      external_stylesheets:
+      - https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css
 
-<span class="ansi-green-fg">~/projects/dash_oop_components/dash_oop_components/core.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, dashboard_component, port, mode, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    344</span> 
-<span class="ansi-green-intense-fg ansi-bold">    345</span>         Returns<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 346</span><span class="ansi-red-fg">             </span>DashApp<span class="ansi-blue-fg">:</span> simply start <span class="ansi-blue-fg">.</span>run<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> to start the dashboard
-<span class="ansi-green-intense-fg ansi-bold">    347</span>         &#34;&#34;&#34;
-<span class="ansi-green-intense-fg ansi-bold">    348</span>         super<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>__init__<span class="ansi-blue-fg">(</span>child_depth<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">2</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/projects/dash_oop_components/dash_oop_components/core.py</span> in <span class="ansi-cyan-fg">_get_dash_app</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">    353</span>         <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>mode <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">&#39;dash&#39;</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    354</span>             app <span class="ansi-blue-fg">=</span> dash<span class="ansi-blue-fg">.</span>Dash<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">**</span>self<span class="ansi-blue-fg">.</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">--&gt; 355</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">elif</span> self<span class="ansi-blue-fg">.</span>mode <span class="ansi-green-fg">in</span> <span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">&#39;inline&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;external&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;jupyterlab&#39;</span><span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    356</span>             app <span class="ansi-blue-fg">=</span> jupyter_dash<span class="ansi-blue-fg">.</span>JupyterDash<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">**</span>self<span class="ansi-blue-fg">.</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    357</span> 
-
-<span class="ansi-green-fg">~/projects/dash_oop_components/dash_oop_components/core.py</span> in <span class="ansi-cyan-fg">register_callbacks</span><span class="ansi-blue-fg">(self, app)</span>
-<span class="ansi-green-intense-fg ansi-bold">    293</span>         &#34;&#34;&#34;First register callbacks of all subcomponents, then call
-<span class="ansi-green-intense-fg ansi-bold">    294</span>         _register_callbacks<span class="ansi-blue-fg">(</span>app<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">--&gt; 295</span><span class="ansi-red-fg">         &#34;&#34;&#34;
-</span><span class="ansi-green-intense-fg ansi-bold">    296</span>         self<span class="ansi-blue-fg">.</span>register_components<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    297</span>         <span class="ansi-green-fg">for</span> comp <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>_components<span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/projects/dash_oop_components/dash_oop_components/core.py</span> in <span class="ansi-cyan-fg">register_components</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">    275</span>         Searches self<span class="ansi-blue-fg">.</span>__dict__<span class="ansi-blue-fg">,</span> finds all DashComponents <span class="ansi-green-fg">and</span> adds them to self<span class="ansi-blue-fg">.</span>_components
-<span class="ansi-green-intense-fg ansi-bold">    276</span>         &#34;&#34;&#34;
-<span class="ansi-green-fg">--&gt; 277</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> hasattr<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;_components&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    278</span>             self<span class="ansi-blue-fg">.</span>_components <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">]</span>
-<span class="ansi-green-intense-fg ansi-bold">    279</span>         <span class="ansi-green-fg">for</span> comp <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>__dict__<span class="ansi-blue-fg">.</span>values<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-red-fg">KeyboardInterrupt</span>: </pre>
+</pre>
 </div>
 </div>
 
@@ -477,13 +417,6 @@ Both subcomponents are passed the same plot_factory but assigned different initi
 </div>
     {% endraw %}
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>(turn cell below into codecell to actually run)</p>
-
-</div>
-</div>
-</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -614,7 +547,7 @@ Both subcomponents are passed the same plot_factory but assigned different initi
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span> <span class="c1"># remove to run</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">run_app</span><span class="p">:</span> <span class="c1"># remove to run</span>
     <span class="n">app2</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 

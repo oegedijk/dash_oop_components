@@ -52,9 +52,7 @@ An example dashboard can be found at [github.com/oegedijk/dash_oop_demo](https:/
 Below is the code for similar but slightly simpler example. Full explanation for the dash_oop_demo dashboard can be found [in the documentation](https://oegedijk.github.io/dash_oop_components/Example.html)
 
 ### CovidPlots: a DashFigureFactory
-
-First we define a basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality, namely `plot_time_series(countries, metric)`. Make sure to call `super().__init__()` in order to params to attributes (that's how the datafile parameters gets automatically assigned to self.datafile for example), and store them to a `._stored_params` dict so that they can later be exported to a config file.
-
+First we define a basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality, namely `plot_time_series(countries, metric)`. Make sure to call `super().__init__()` in order to store params to attributes (that's how the datafile parameters gets automatically assigned to self.datafile for example), and store them to a `._stored_params` dict so that they can later be exported to a config file.
 ```python
 class CovidPlots(DashFigureFactory):
     def __init__(self, datafile="covid.csv"):
@@ -93,8 +91,10 @@ Then we define a `DashComponent` that takes a plot_factory and build a layout wi
     e.g. `self.hide_country_dropdown`), and to a `._stored_params` dict.
 - This layout makes use of the `make_hideable()` staticmethod, to conditionally 
     wrap certain layout elements in a hidden div.
-- Note that the callbacks are registered using `_register_callbacks(self, app)` (**note the underscore!)
-- Note that the callback uses the plot_factory for the plotting logic.
+- Note that the layout element id's add `+self.name` to ensure they are unique in every layout
+    - `self.name` gets assigned a uuid random string of length 10 by `super().__init__()`.
+- Note that the callbacks are registered using `_register_callbacks(self, app)` (**note the underscore!**)
+- Note that the callback uses the `plot_factory` for the plotting logic.
 
 ```python
 class CovidTimeSeries(DashComponent):
@@ -143,7 +143,7 @@ class CovidTimeSeries(DashComponent):
 
 ### DuoPlots: a composition of two subcomponents
 A composite `DashComponent` that combines two `CovidTimeSeries` into a single layout. 
-Both subcomponents are passed the same plot_factory but assigned different initial values.
+Both subcomponents are passed the same `plot_factory` but assigned different initial values.
 
 - The layouts of subcomponents can be included in the composite layout with 
     `self.plot_left.layout()` and `self.plot_right.layout()`
@@ -192,89 +192,41 @@ print(dashboard.to_yaml())
     
 
 
-```python
-dashboard.register_components()
-```
-
-
-    ---------------------------------------------------------------------------
-
-    KeyboardInterrupt                         Traceback (most recent call last)
-
-    <ipython-input-66-202d56a6ee92> in <module>
-    ----> 1 dashboard.register_components()
-    
-
-    ~/projects/dash_oop_components/dash_oop_components/core.py in register_components(self)
-        275         Searches self.__dict__, finds all DashComponents and adds them to self._components
-        276         """
-    --> 277         if not hasattr(self, '_components'):
-        278             self._components = []
-        279         for comp in self.__dict__.values():
-
-
-    KeyboardInterrupt: 
-
-
-### Start dashboard:
+### Build and start `DashApp`:
 
 Pass the `dashboard` to the `DashApp` to create a dash flask application.
 
 - You can pass `mode='inline'`, `'external'` or `'jupyterlab'` when you are working in a notebook in order to keep
     the notebook interactive while the app is running
-- You can pass a port and any other dash parameters in the kwargs (e.g. here we include the bootstrap css from dbc)
+- You can pass a `port` and any other dash parameters in the `**kwargs` (e.g. here we include the bootstrap css from `dash_bootstrap_components`)
 
 ```python
 app = DashApp(dashboard, external_stylesheets=[dbc.themes.BOOTSTRAP])
 print(app.to_yaml())
 ```
 
+    dash_app:
+      name: DashApp
+      module: dash_oop_components.core
+      params:
+        dashboard_component:
+          dash_component:
+            name: DuoPlots
+            module: __main__
+            params:
+              plot_factory:
+                dash_figure_factory:
+                  name: CovidPlots
+                  module: __main__
+                  params:
+                    datafile: covid.csv
+        port: 8050
+        mode: dash
+        kwargs:
+          external_stylesheets:
+          - https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css
+    
 
-    ---------------------------------------------------------------------------
-
-    KeyboardInterrupt                         Traceback (most recent call last)
-
-    <ipython-input-62-70a0fd5f486e> in <module>
-    ----> 1 app = DashApp(dashboard, external_stylesheets=[dbc.themes.BOOTSTRAP])
-          2 print(app.to_yaml())
-
-
-    ~/projects/dash_oop_components/dash_oop_components/core.py in __init__(self, dashboard_component, port, mode, **kwargs)
-        344 
-        345         Returns:
-    --> 346             DashApp: simply start .run() to start the dashboard
-        347         """
-        348         super().__init__(child_depth=2)
-
-
-    ~/projects/dash_oop_components/dash_oop_components/core.py in _get_dash_app(self)
-        353         if self.mode == 'dash':
-        354             app = dash.Dash(**self.kwargs)
-    --> 355         elif self.mode in {'inline', 'external', 'jupyterlab'}:
-        356             app = jupyter_dash.JupyterDash(**self.kwargs)
-        357 
-
-
-    ~/projects/dash_oop_components/dash_oop_components/core.py in register_callbacks(self, app)
-        293         """First register callbacks of all subcomponents, then call
-        294         _register_callbacks(app)
-    --> 295         """
-        296         self.register_components()
-        297         for comp in self._components:
-
-
-    ~/projects/dash_oop_components/dash_oop_components/core.py in register_components(self)
-        275         Searches self.__dict__, finds all DashComponents and adds them to self._components
-        276         """
-    --> 277         if not hasattr(self, '_components'):
-        278             self._components = []
-        279         for comp in self.__dict__.values():
-
-
-    KeyboardInterrupt: 
-
-
-(turn cell below into codecell to actually run)
 
 ```python
 if run_app:
@@ -324,6 +276,6 @@ And if we run it it still works!
 
 
 ```python
-if not True: # remove to run
+if run_app: # remove to run
     app2.run()
 ```
