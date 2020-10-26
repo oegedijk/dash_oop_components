@@ -51,7 +51,7 @@ An example dashboard can be found at [github.com/oegedijk/dash_oop_demo](https:/
 
 Below is the code for similar but slightly simpler example. Full explanation for the `dash_oop_demo` dashboard can be found [in the documentation](https://oegedijk.github.io/dash_oop_components/Example.html).
 
-The example is a rewrite of this (https://www.youtube.com/watch?v=dgV3GGFMcTc)
+The example is a rewrite of this [Charming Data dash instruction video](https://www.youtube.com/watch?v=dgV3GGFMcTc) (go check out his other vids, they're awesome!).
 
 ### CovidPlots: a DashFigureFactory
 First we define a basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality, namely `plot_time_series(countries, metric)`. Make sure to call `super().__init__()` in order to store params to attributes (that's how the datafile parameters gets automatically assigned to self.datafile for example), and store them to a `._stored_params` dict so that they can later be exported to a config file.
