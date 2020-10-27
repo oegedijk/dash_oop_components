@@ -81,7 +81,7 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DashComponentBase" class="doc_header"><code>class</code> <code>DashComponentBase</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L29" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashComponentBase</code>(<strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>, <strong><code>child_depth</code></strong>=<em><code>3</code></em>) :: <code>ABC</code></p>
+<h2 id="DashComponentBase" class="doc_header"><code>class</code> <code>DashComponentBase</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L32" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashComponentBase</code>(<strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>, <strong><code>child_depth</code></strong>=<em><code>3</code></em>) :: <code>ABC</code></p>
 </blockquote>
 <p>Base class for all dash_oop_components classes.</p>
 <p>Stores parameter of child classes to attributes and ._stored_params.
@@ -115,7 +115,7 @@ Proved .to_config(), to_yaml(), .from_config() and .from_yaml() methods</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponentBase.to_config" class="doc_header"><code>DashComponentBase.to_config</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L95" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponentBase.to_config</code>()</p>
+<h4 id="DashComponentBase.to_config" class="doc_header"><code>DashComponentBase.to_config</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L98" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponentBase.to_config</code>()</p>
 </blockquote>
 <p>returns a dict with class name, module and params</p>
 
@@ -127,7 +127,7 @@ Proved .to_config(), to_yaml(), .from_config() and .from_yaml() methods</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponentBase.to_yaml" class="doc_header"><code>DashComponentBase.to_yaml</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L104" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponentBase.to_yaml</code>(<strong><code>filepath</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="DashComponentBase.to_yaml" class="doc_header"><code>DashComponentBase.to_yaml</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L107" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponentBase.to_yaml</code>(<strong><code>filepath</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>stores a yaml configuration to disk.</p>
 <p>If no filepath is given, returns a str of the yaml config.</p>
@@ -140,7 +140,7 @@ Proved .to_config(), to_yaml(), .from_config() and .from_yaml() methods</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponentBase.from_config" class="doc_header"><code>DashComponentBase.from_config</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L136" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponentBase.from_config</code>(<strong><code>config</code></strong>, <strong>**<code>update_params</code></strong>)</p>
+<h4 id="DashComponentBase.from_config" class="doc_header"><code>DashComponentBase.from_config</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L139" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponentBase.from_config</code>(<strong><code>config</code></strong>, <strong>**<code>update_params</code></strong>)</p>
 </blockquote>
 <p>Loads a dash_oop_component class from a configuration dict.</p>
 <p>Args:
@@ -157,7 +157,7 @@ Proved .to_config(), to_yaml(), .from_config() and .from_yaml() methods</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponentBase.from_config" class="doc_header"><code>DashComponentBase.from_config</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L136" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponentBase.from_config</code>(<strong><code>config</code></strong>, <strong>**<code>update_params</code></strong>)</p>
+<h4 id="DashComponentBase.from_config" class="doc_header"><code>DashComponentBase.from_config</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L139" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponentBase.from_config</code>(<strong><code>config</code></strong>, <strong>**<code>update_params</code></strong>)</p>
 </blockquote>
 <p>Loads a dash_oop_component class from a configuration dict.</p>
 <p>Args:
@@ -230,7 +230,7 @@ Proved .to_config(), to_yaml(), .from_config() and .from_yaml() methods</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;dash_component&#39;: {&#39;name&#39;: &#39;T&#39;, &#39;module&#39;: &#39;__main__&#39;, &#39;params&#39;: {&#39;a&#39;: 2, &#39;b&#39;: 3, &#39;kwargs&#39;: {}}}}
+<pre>{&#39;dash_component&#39;: {&#39;class_name&#39;: &#39;T&#39;, &#39;module&#39;: &#39;__main__&#39;, &#39;params&#39;: {&#39;a&#39;: 2, &#39;b&#39;: 3, &#39;kwargs&#39;: {}}}}
 </pre>
 </div>
 </div>
@@ -269,7 +269,7 @@ Proved .to_config(), to_yaml(), .from_config() and .from_yaml() methods</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>dash_component:
-  name: T
+  class_name: T
   module: __main__
   params:
     a: 2
@@ -302,7 +302,7 @@ Proved .to_config(), to_yaml(), .from_config() and .from_yaml() methods</p>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">t</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="mi">2</span>
 <span class="k">assert</span> <span class="n">t</span><span class="o">.</span><span class="n">b</span> <span class="o">==</span> <span class="mi">3</span>
-<span class="k">assert</span> <span class="n">t</span><span class="o">.</span><span class="n">to_config</span><span class="p">()[</span><span class="s1">&#39;dash_component&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;T&quot;</span>
+<span class="k">assert</span> <span class="n">t</span><span class="o">.</span><span class="n">to_config</span><span class="p">()[</span><span class="s1">&#39;dash_component&#39;</span><span class="p">][</span><span class="s1">&#39;class_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;T&quot;</span>
 <span class="k">assert</span> <span class="n">t</span><span class="o">.</span><span class="n">to_config</span><span class="p">()[</span><span class="s1">&#39;dash_component&#39;</span><span class="p">][</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span>
 <span class="k">assert</span> <span class="n">t</span><span class="o">.</span><span class="n">to_config</span><span class="p">()[</span><span class="s1">&#39;dash_component&#39;</span><span class="p">][</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">a</span>
 <span class="k">assert</span> <span class="n">t</span><span class="o">.</span><span class="n">to_config</span><span class="p">()[</span><span class="s1">&#39;dash_component&#39;</span><span class="p">][</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">b</span>
@@ -355,7 +355,7 @@ Proved .to_config(), to_yaml(), .from_config() and .from_yaml() methods</p>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">t2</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;T.yaml&quot;</span><span class="p">)</span>
 
-<span class="k">assert</span> <span class="n">t2</span><span class="o">.</span><span class="n">to_config</span><span class="p">()[</span><span class="s1">&#39;dash_component&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;T&quot;</span>
+<span class="k">assert</span> <span class="n">t2</span><span class="o">.</span><span class="n">to_config</span><span class="p">()[</span><span class="s1">&#39;dash_component&#39;</span><span class="p">][</span><span class="s1">&#39;class_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;T&quot;</span>
 <span class="k">assert</span> <span class="n">t2</span><span class="o">.</span><span class="n">to_config</span><span class="p">()[</span><span class="s1">&#39;dash_component&#39;</span><span class="p">][</span><span class="s1">&#39;module&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span>
 <span class="k">assert</span> <span class="n">t2</span><span class="o">.</span><span class="n">to_config</span><span class="p">()[</span><span class="s1">&#39;dash_component&#39;</span><span class="p">][</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">a</span>
 <span class="k">assert</span> <span class="n">t2</span><span class="o">.</span><span class="n">to_config</span><span class="p">()[</span><span class="s1">&#39;dash_component&#39;</span><span class="p">][</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">b</span>
@@ -460,7 +460,7 @@ Proved .to_config(), to_yaml(), .from_config() and .from_yaml() methods</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>dash_component:
-  name: T
+  class_name: T
   module: __main__
   params:
     a: 2
@@ -508,7 +508,7 @@ Proved .to_config(), to_yaml(), .from_config() and .from_yaml() methods</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>dash_component:
-  name: T
+  class_name: T
   module: __main__
   params:
     a: 2
@@ -559,7 +559,7 @@ Proved .to_config(), to_yaml(), .from_config() and .from_yaml() methods</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DashFigureFactory" class="doc_header"><code>class</code> <code>DashFigureFactory</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L233" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashFigureFactory</code>(<strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
+<h2 id="DashFigureFactory" class="doc_header"><code>class</code> <code>DashFigureFactory</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L245" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashFigureFactory</code>(<strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
 </blockquote>
 <p>Helper class to store data for a dashboard and provide e.g. plotting functions.</p>
 <p>You should seperate the datastorage/plotting logic from the dashboard logic.
@@ -625,8 +625,8 @@ All data/plotting logic goes into a DashFigureFactory.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lf</span> <span class="o">=</span> <span class="n">ListFactory</span><span class="p">([</span><span class="s2">&quot;this&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;dumb&quot;</span><span class="p">,</span> <span class="s2">&quot;example&quot;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">lf</span><span class="o">.</span><span class="n">return_list</span><span class="p">())</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_factory</span> <span class="o">=</span> <span class="n">ListFactory</span><span class="p">([</span><span class="s2">&quot;this&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;dumb&quot;</span><span class="p">,</span> <span class="s2">&quot;example&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">list_factory</span><span class="o">.</span><span class="n">return_list</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -657,7 +657,7 @@ All data/plotting logic goes into a DashFigureFactory.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">lf</span><span class="o">.</span><span class="n">to_config</span><span class="p">())</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">list_factory</span><span class="o">.</span><span class="n">to_config</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -670,7 +670,7 @@ All data/plotting logic goes into a DashFigureFactory.</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;dash_figure_factory&#39;: {&#39;name&#39;: &#39;ListFactory&#39;, &#39;module&#39;: &#39;__main__&#39;, &#39;params&#39;: {&#39;list_input&#39;: [&#39;this&#39;, &#39;is&#39;, &#39;a&#39;, &#39;dumb&#39;, &#39;example&#39;]}}}
+<pre>{&#39;dash_figure_factory&#39;: {&#39;class_name&#39;: &#39;ListFactory&#39;, &#39;module&#39;: &#39;__main__&#39;, &#39;params&#39;: {&#39;list_input&#39;: [&#39;this&#39;, &#39;is&#39;, &#39;a&#39;, &#39;dumb&#39;, &#39;example&#39;]}}}
 </pre>
 </div>
 </div>
@@ -688,7 +688,7 @@ All data/plotting logic goes into a DashFigureFactory.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">lf</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">())</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">list_factory</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -702,7 +702,7 @@ All data/plotting logic goes into a DashFigureFactory.</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>dash_figure_factory:
-  name: ListFactory
+  class_name: ListFactory
   module: __main__
   params:
     list_input:
@@ -729,9 +729,9 @@ All data/plotting logic goes into a DashFigureFactory.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">lf</span><span class="o">.</span><span class="n">list_input</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;dumb&#39;</span><span class="p">,</span> <span class="s1">&#39;example&#39;</span><span class="p">]</span>
-<span class="k">assert</span> <span class="n">lf</span><span class="o">.</span><span class="n">return_list</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;dumb&#39;</span><span class="p">,</span> <span class="s1">&#39;example&#39;</span><span class="p">]</span>
-<span class="k">assert</span> <span class="n">lf</span><span class="o">.</span><span class="n">return_list</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">list_factory</span><span class="o">.</span><span class="n">list_input</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;dumb&#39;</span><span class="p">,</span> <span class="s1">&#39;example&#39;</span><span class="p">]</span>
+<span class="k">assert</span> <span class="n">list_factory</span><span class="o">.</span><span class="n">return_list</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;dumb&#39;</span><span class="p">,</span> <span class="s1">&#39;example&#39;</span><span class="p">]</span>
+<span class="k">assert</span> <span class="n">list_factory</span><span class="o">.</span><span class="n">return_list</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -755,7 +755,7 @@ All data/plotting logic goes into a DashFigureFactory.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lf</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;ff.yaml&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_factory</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;list_factory.yaml&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -772,11 +772,11 @@ All data/plotting logic goes into a DashFigureFactory.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lf2</span> <span class="o">=</span> <span class="n">DashFigureFactory</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;ff.yaml&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_factory2</span> <span class="o">=</span> <span class="n">DashFigureFactory</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;list_factory.yaml&quot;</span><span class="p">)</span>
 
-<span class="k">assert</span> <span class="n">lf2</span><span class="o">.</span><span class="n">list_input</span> <span class="o">==</span> <span class="n">lf</span><span class="o">.</span><span class="n">list_input</span>
-<span class="k">assert</span> <span class="n">lf2</span><span class="o">.</span><span class="n">return_list</span><span class="p">()</span> <span class="o">==</span> <span class="n">lf</span><span class="o">.</span><span class="n">return_list</span><span class="p">()</span>
-<span class="k">assert</span> <span class="n">lf2</span><span class="o">.</span><span class="n">return_list</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">lf</span><span class="o">.</span><span class="n">return_list</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">list_factory2</span><span class="o">.</span><span class="n">list_input</span> <span class="o">==</span> <span class="n">list_factory</span><span class="o">.</span><span class="n">list_input</span>
+<span class="k">assert</span> <span class="n">list_factory2</span><span class="o">.</span><span class="n">return_list</span><span class="p">()</span> <span class="o">==</span> <span class="n">list_factory</span><span class="o">.</span><span class="n">return_list</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">list_factory2</span><span class="o">.</span><span class="n">return_list</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">list_factory</span><span class="o">.</span><span class="n">return_list</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -806,6 +806,8 @@ All data/plotting logic goes into a DashFigureFactory.</p>
   (which means that callbacks of all subcomponents will also automatically be registered)</li>
 <li>a <code>make_hideable</code> staticmethod that makes it easy to hide parts of a layout 
   depending on configuration bools</li>
+<li>a <code>querystring()</code> method that allows you to store the state of your dashboard in the url querystring,
+  and then load the state of the dashboard back from that url.</li>
 </ul>
 <p>It inherits from <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a> so:</p>
 <ul>
@@ -816,6 +818,8 @@ All data/plotting logic goes into a DashFigureFactory.</p>
 <ul>
 <li>add <code>+self.name</code> to all id's in your layout to make sure layout id's are unique.</li>
 <li>define your callbacks in <code>_register_callbacks(self, app)</code> (<strong>note the underscore!</strong>)</li>
+<li>If you're storing layout elements in the querystring, set the self.name to something definitive,
+  as otherwise each run it gets assigned a new random uuid string</li>
 </ul>
 
 </div>
@@ -839,7 +843,7 @@ All data/plotting logic goes into a DashFigureFactory.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DashComponent" class="doc_header"><code>class</code> <code>DashComponent</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L257" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashComponent</code>(<strong><code>title</code></strong>=<em><code>'Dash'</code></em>, <strong><code>name</code></strong>=<em><code>None</code></em>, <strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
+<h2 id="DashComponent" class="doc_header"><code>class</code> <code>DashComponent</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L269" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashComponent</code>(<strong><code>title</code></strong>=<em><code>'Dash'</code></em>, <strong><code>name</code></strong>=<em><code>None</code></em>, <strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
 </blockquote>
 <p>DashComponent is a bundle of a dash layout and callbacks that
 can make use of DashFigureFactory objects.</p>
@@ -868,7 +872,7 @@ But remember to add <code>+self.name</code> to all id's.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.make_hideable" class="doc_header"><code>DashComponent.make_hideable</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L306" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.make_hideable</code>(<strong><code>element</code></strong>, <strong><code>hide</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="DashComponent.make_hideable" class="doc_header"><code>DashComponent.make_hideable</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L327" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.make_hideable</code>(<strong><code>element</code></strong>, <strong><code>hide</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>helper function to optionally not display an element in a layout.</p>
 <p>Example:
@@ -886,7 +890,48 @@ But remember to add <code>+self.name</code> to all id's.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.layout" class="doc_header"><code>DashComponent.layout</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L337" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.layout</code>()</p>
+<h4 id="DashComponent.querystring" class="doc_header"><code>DashComponent.querystring</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L347" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.querystring</code>(<strong><code>params</code></strong>, <strong>*<code>attrs</code></strong>)</p>
+</blockquote>
+<p>wrapper function that applies params loaded from querystrings
+to the underlying dash layout function's attributes attrs. By
+default it only applies to the "value" attribute.</p>
+<p>Use:
+    To only track the value attribute:
+        self.querystring(params)(dcc.Input)(id="input-"+self.name, value=1)</p>
+
+<pre><code>To track specific attribute(s):
+
+    self.querystring(params, "value", "min", "max")(dcc.Slider)(id="input-"+self.name)
+
+</code></pre>
+<p>if params=='_store_querystring_params':
+    stores a list of tuple(id, attribute) to be tracked in the querystring
+    to self._querystring_params. All (nested) querystring parameters can
+    be accessed with .get_querystring_params()</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="DashComponent.get_querystring_params" class="doc_header"><code>DashComponent.get_querystring_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L402" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.get_querystring_params</code>()</p>
+</blockquote>
+<p>Returns a list of tuple(id, attribute) of all element attributes
+in all (sub-)components that have been wrapper by self.querystring()
+and should be tracked in the url querystring.</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="DashComponent.layout" class="doc_header"><code>DashComponent.layout</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L436" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.layout</code>(<strong><code>params</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>layout to be defined by the particular ExplainerComponent instance.
 All element id's should append +self.name to make sure they are unique.</p>
@@ -899,7 +944,7 @@ All element id's should append +self.name to make sure they are unique.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent._register_callbacks" class="doc_header"><code>DashComponent._register_callbacks</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L342" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent._register_callbacks</code>(<strong><code>app</code></strong>)</p>
+<h4 id="DashComponent._register_callbacks" class="doc_header"><code>DashComponent._register_callbacks</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L441" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent._register_callbacks</code>(<strong><code>app</code></strong>)</p>
 </blockquote>
 <p>register callbacks specific to this ExplainerComponent.</p>
 
@@ -911,7 +956,7 @@ All element id's should append +self.name to make sure they are unique.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.register_callbacks" class="doc_header"><code>DashComponent.register_callbacks</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L346" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.register_callbacks</code>(<strong><code>app</code></strong>)</p>
+<h4 id="DashComponent.register_callbacks" class="doc_header"><code>DashComponent.register_callbacks</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L445" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.register_callbacks</code>(<strong><code>app</code></strong>)</p>
 </blockquote>
 <p>First register callbacks of all subcomponents, then call
 _register_callbacks(app)</p>
@@ -959,9 +1004,17 @@ _register_callbacks(app)</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>Each <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a> gets assigned a random uuid identifier <code>self.name</code>. 
-  These can be added to all elements in the layout to make sure 
-  the layout of each component is unique.</li>
+<li>You can pass a name to a <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a> to be used as a unique suffix for all the layout id's.
+  If you don't pass a name, a random uuid identifier <code>self.name</code> gets generated instead. However if 
+  you are going to track querystrings, it's best to pass a specific name.</li>
+<li>You can store the state of your dashboard to the url querystring by wrapping the
+  elements that you would like to track in a self.querystrings(params) wrapper. <ul>
+<li>The state of the querystring will be passed down to the layout function as <code>params</code>.</li>
+<li>You pass these params to self.querystring, and indicate which elements of the layour function
+  you would like to track and reload from state.</li>
+<li>If no attributes are listed, by default "value" gets tracked</li>
+</ul>
+</li>
 <li>callbacks should be defined in <code>_register_callbacks(app)</code> (<strong>note the underscore!</strong>)<ul>
 <li>the <code>register_callbacks(app)</code> will then first register all callbacks 
   of subcomponents and then call this <code>_register_callbacks(app)</code> method.</li>
@@ -980,12 +1033,12 @@ _register_callbacks(app)</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">ListComponent</span><span class="p">(</span><span class="n">DashComponent</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_factory</span><span class="p">,</span> <span class="n">first_n</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_factory</span><span class="p">,</span> <span class="n">first_n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         
-    <span class="k">def</span> <span class="nf">layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
-            <span class="n">dcc</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">querystring</span><span class="p">(</span><span class="n">params</span><span class="p">)(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Input</span><span class="p">)(</span>
                 <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;input-first-n-&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
                 <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;number&quot;</span><span class="p">,</span> 
                 <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">first_n</span><span class="p">,</span>
@@ -1020,7 +1073,7 @@ _register_callbacks(app)</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lc</span> <span class="o">=</span> <span class="n">ListComponent</span><span class="p">(</span><span class="n">lf</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_component</span> <span class="o">=</span> <span class="n">ListComponent</span><span class="p">(</span><span class="n">list_factory</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1037,25 +1090,7 @@ _register_callbacks(app)</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">lc</span><span class="o">.</span><span class="n">list_factory</span><span class="o">.</span><span class="n">return_list</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;dumb&#39;</span><span class="p">,</span> <span class="s1">&#39;example&#39;</span><span class="p">]</span>
-<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lc</span><span class="o">.</span><span class="n">layout</span><span class="p">(),</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">lc</span><span class="o">.</span><span class="n">to_config</span><span class="p">())</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_component</span><span class="o">.</span><span class="n">_stored_params</span>
 </pre></div>
 
     </div>
@@ -1067,10 +1102,16 @@ _register_callbacks(app)</p>
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;dash_component&#39;: {&#39;name&#39;: &#39;ListComponent&#39;, &#39;module&#39;: &#39;__main__&#39;, &#39;params&#39;: {&#39;list_factory&#39;: {&#39;dash_figure_factory&#39;: {&#39;name&#39;: &#39;ListFactory&#39;, &#39;module&#39;: &#39;__main__&#39;, &#39;params&#39;: {&#39;list_input&#39;: [&#39;this&#39;, &#39;is&#39;, &#39;a&#39;, &#39;dumb&#39;, &#39;example&#39;]}}}, &#39;first_n&#39;: 2}}}
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;list_factory&#39;: {&#39;dash_figure_factory&#39;: {&#39;class_name&#39;: &#39;ListFactory&#39;,
+   &#39;module&#39;: &#39;__main__&#39;,
+   &#39;params&#39;: {&#39;list_input&#39;: [&#39;this&#39;, &#39;is&#39;, &#39;a&#39;, &#39;dumb&#39;, &#39;example&#39;]}}},
+ &#39;first_n&#39;: 2,
+ &#39;name&#39;: &#39;1&#39;}</pre>
 </div>
+
 </div>
 
 </div>
@@ -1086,7 +1127,59 @@ _register_callbacks(app)</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">lc</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">())</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_component</span><span class="o">.</span><span class="n">get_querystring_params</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;input-first-n-1&#39;, &#39;value&#39;)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">list_component</span><span class="o">.</span><span class="n">list_factory</span><span class="o">.</span><span class="n">return_list</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;dumb&#39;</span><span class="p">,</span> <span class="s1">&#39;example&#39;</span><span class="p">]</span>
+<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">list_component</span><span class="o">.</span><span class="n">layout</span><span class="p">(),</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">list_component</span><span class="o">.</span><span class="n">get_querystring_params</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">list_component</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -1100,12 +1193,12 @@ _register_callbacks(app)</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>dash_component:
-  name: ListComponent
+  class_name: ListComponent
   module: __main__
   params:
     list_factory:
       dash_figure_factory:
-        name: ListFactory
+        class_name: ListFactory
         module: __main__
         params:
           list_input:
@@ -1115,6 +1208,7 @@ _register_callbacks(app)</p>
           - dumb
           - example
     first_n: 2
+    name: &#39;1&#39;
 
 </pre>
 </div>
@@ -1140,7 +1234,7 @@ _register_callbacks(app)</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lc</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;list_component.yaml&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_component</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;list_component.yaml&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1157,7 +1251,7 @@ _register_callbacks(app)</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lc2</span> <span class="o">=</span> <span class="n">ListComponent</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;list_component.yaml&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_component2</span> <span class="o">=</span> <span class="n">ListComponent</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;list_component.yaml&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1174,54 +1268,7 @@ _register_callbacks(app)</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">lc2</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">())</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>dash_component:
-  name: ListComponent
-  module: __main__
-  params:
-    list_factory:
-      dash_figure_factory:
-        name: ListFactory
-        module: __main__
-        params:
-          list_input:
-          - this
-          - is
-          - a
-          - dumb
-          - example
-    first_n: 2
-
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">lc2</span><span class="o">.</span><span class="n">list_factory</span><span class="o">.</span><span class="n">return_list</span><span class="p">()</span> <span class="o">==</span> <span class="n">lc</span><span class="o">.</span><span class="n">list_factory</span><span class="o">.</span><span class="n">return_list</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">list_component2</span><span class="o">.</span><span class="n">list_factory</span><span class="o">.</span><span class="n">return_list</span><span class="p">()</span> <span class="o">==</span> <span class="n">list_component</span><span class="o">.</span><span class="n">list_factory</span><span class="o">.</span><span class="n">return_list</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -1270,16 +1317,16 @@ _register_callbacks(app)</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">ListComposite</span><span class="p">(</span><span class="n">DashComponent</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_factory</span><span class="p">,</span> <span class="n">first_n1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">first_n2</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_factory</span><span class="p">,</span> <span class="n">first_n1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">first_n2</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">list1</span> <span class="o">=</span> <span class="n">ListComponent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_factory</span><span class="p">,</span> <span class="n">first_n</span><span class="o">=</span><span class="n">first_n1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">list2</span> <span class="o">=</span> <span class="n">ListComponent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_factory</span><span class="p">,</span> <span class="n">first_n</span><span class="o">=</span><span class="n">first_n2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list1</span> <span class="o">=</span> <span class="n">ListComponent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_factory</span><span class="p">,</span> <span class="n">first_n</span><span class="o">=</span><span class="n">first_n1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list2</span> <span class="o">=</span> <span class="n">ListComponent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_factory</span><span class="p">,</span> <span class="n">first_n</span><span class="o">=</span><span class="n">first_n2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;2&quot;</span><span class="p">)</span>
         
-    <span class="k">def</span> <span class="nf">layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
             <span class="n">html</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Reset&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;reset-button-&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">list1</span><span class="o">.</span><span class="n">layout</span><span class="p">(),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">list2</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">list1</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">params</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">list2</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
         <span class="p">])</span>
     
     <span class="k">def</span> <span class="nf">_register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
@@ -1308,10 +1355,43 @@ _register_callbacks(app)</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_composite</span> <span class="o">=</span> <span class="n">ListComposite</span><span class="p">(</span><span class="n">lf</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_composite</span> <span class="o">=</span> <span class="n">ListComposite</span><span class="p">(</span><span class="n">list_factory</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;main&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_composite</span><span class="o">.</span><span class="n">get_querystring_params</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;input-first-n-1&#39;, &#39;value&#39;), (&#39;input-first-n-2&#39;, &#39;value&#39;)]</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -1339,12 +1419,12 @@ _register_callbacks(app)</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>dash_component:
-  name: ListComposite
+  class_name: ListComposite
   module: __main__
   params:
     list_factory:
       dash_figure_factory:
-        name: ListFactory
+        class_name: ListFactory
         module: __main__
         params:
           list_input:
@@ -1355,6 +1435,7 @@ _register_callbacks(app)</p>
           - example
     first_n1: 2
     first_n2: 3
+    name: main
 
 </pre>
 </div>
@@ -1415,7 +1496,7 @@ _register_callbacks(app)</p>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>Div([Button(children=&#39;Reset&#39;, id=&#39;reset-button-6XTHp8Enax&#39;), Div([Input(id=&#39;input-first-n-AZvtonEWTf&#39;, value=2, type=&#39;number&#39;, max=5, min=0), Div(children=&#39;this is&#39;, id=&#39;output-div-AZvtonEWTf&#39;)]), Div([Input(id=&#39;input-first-n-DjiSw4Yn7u&#39;, value=3, type=&#39;number&#39;, max=5, min=0), Div(children=&#39;this is a&#39;, id=&#39;output-div-DjiSw4Yn7u&#39;)])])</pre>
+<pre>Div([Button(children=&#39;Reset&#39;, id=&#39;reset-button-main&#39;), Div([Input(id=&#39;input-first-n-1&#39;, value=2, type=&#39;number&#39;, max=5, min=0), Div(children=&#39;this is&#39;, id=&#39;output-div-1&#39;)]), Div([Input(id=&#39;input-first-n-2&#39;, value=3, type=&#39;number&#39;, max=5, min=0), Div(children=&#39;this is a&#39;, id=&#39;output-div-2&#39;)])])</pre>
 </div>
 
 </div>
@@ -1470,9 +1551,162 @@ _register_callbacks(app)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="concat_docstring" class="doc_header"><code>concat_docstring</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L357" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>concat_docstring</code>(<strong><code>source</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="concat_docstring" class="doc_header"><code>concat_docstring</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L456" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>concat_docstring</code>(<strong><code>source</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Decorator: <code>__doc__</code> from <code>source</code> to <strong>doc</strong></p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="parse_url_to_params" class="doc_header"><code>parse_url_to_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L479" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_url_to_params</code>(<strong><code>url</code></strong>)</p>
+</blockquote>
+<p>Returns a dict that summarizes the state of the app at the time that the
+querystring url was generated. Lists are (somewhat hackily) detected
+by the first char=='['), get evaluated using ast. Numbers are
+appropriately cast as either int or float.</p>
+<p>Params:
+    url (str): url to be parsed. The querystring parameters should
+        come in pairs e.g.:?input-id=value&amp;binput-id=1</p>
+<p>Returns:
+    dict: dictionary with the component_id as key and a list
+        of (param, value) pairs (e.g. {'input-id': [('value', 1)]}</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="parse_url_to_qs_and_vals" class="doc_header"><code>parse_url_to_qs_and_vals</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L528" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_url_to_qs_and_vals</code>(<strong><code>url</code></strong>)</p>
+</blockquote>
+<p>Returns a dict that summarizes the state of the app at the time that the
+querystring url was generated. Lists are (somewhat hackily) detected
+by the first char=='['), get evaluated using ast. Numbers are
+appropriately cast as either int or float.</p>
+<p>Params:
+    url (str): url to be parsed. The querystring parameters should
+        come in pairs e.g.:?input-id=value&amp;binput-id=1</p>
+<p>Returns:
+    dict: dictionary with the component_id as key and a list
+        of (param, value) pairs (e.g. {'input-id': [('value', 1)]}</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="encode_querystring_params_to_url" class="doc_header"><code>encode_querystring_params_to_url</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L578" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>encode_querystring_params_to_url</code>(<strong><code>querystring_params</code></strong>, <strong><code>values</code></strong>)</p>
+</blockquote>
+<p>encodes a list of querystring_params and a list of values to
+a url.</p>
+<p>Params:
+    querystring_params (list[tuples]): format e.g.
+        [('input-id', 'value'), ('input-id', 'type')]
+    values (list): list of values to be encoded, e.g.
+        [1, 'number']</p>
+<p>Returns:
+    str: url of format ?input-id=value&amp;binput-id=1&amp;input-id=type&amp;binput-id='number'</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="update_url_with_new_params" class="doc_header"><code>update_url_with_new_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L598" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>update_url_with_new_params</code>(<strong><code>old_url</code></strong>, <strong><code>qs_params</code></strong>, <strong><code>vals</code></strong>)</p>
+</blockquote>
 
 </div>
 
@@ -1509,7 +1743,7 @@ _register_callbacks(app)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DashApp" class="doc_header"><code>class</code> <code>DashApp</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L382" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashApp</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
+<h2 id="DashApp" class="doc_header"><code>class</code> <code>DashApp</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L611" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashApp</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong><code>querystrings</code></strong>=<em><code>False</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
 </blockquote>
 <p>Wrapper class for dash apps. Assigns layout and callbacks from
 a DashComponent to a Dash app, and runs it.</p>
@@ -1523,13 +1757,14 @@ a DashComponent to a Dash app, and runs it.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashApp.__init__" class="doc_header"><code>DashApp.__init__</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L389" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.__init__</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+<h4 id="DashApp.__init__" class="doc_header"><code>DashApp.__init__</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L618" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.__init__</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong><code>querystrings</code></strong>=<em><code>False</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 <pre><code>    Args:
         dashboard_component (DashComponent): component to be run
         port (int): port to run the server
         mode ({'dash', 'external', 'inline', 'jupyterlab'}): type of dash server to start
+        querystrings (bool): save state to querystring and load from querystring
         kwargs: all kwargs will be passed down to dash.Dash. See below the docstring of dash.Dash
 
     Returns:
@@ -1537,8 +1772,7 @@ a DashComponent to a Dash app, and runs it.</p>
 
 
 </code></pre>
-<p>-----------------------</p>
-<p>Docstring from Dash</p>
+<p>"Docstring from Dash</p>
 <p>Dash is a framework for building analytical web applications.
     No JavaScript required.</p>
 
@@ -1681,7 +1915,7 @@ clientside callback.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashApp.flask_server" class="doc_header"><code>DashApp.flask_server</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L423" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.flask_server</code>()</p>
+<h4 id="DashApp.flask_server" class="doc_header"><code>DashApp.flask_server</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L687" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.flask_server</code>()</p>
 </blockquote>
 <p>returns flask server inside self.app, for building wsgi apps</p>
 
@@ -1693,7 +1927,7 @@ clientside callback.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashApp.run" class="doc_header"><code>DashApp.run</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L427" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.run</code>(<strong><code>port</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="DashApp.run" class="doc_header"><code>DashApp.run</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L691" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.run</code>(<strong><code>port</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Run the dash app</p>
 
@@ -1727,7 +1961,7 @@ clientside callback.</code></pre>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">list_composite</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">list_composite</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;external&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">9000</span><span class="p">,</span> <span class="n">querystrings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1767,6 +2001,20 @@ clientside callback.</code></pre>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Dash app running on http://127.0.0.1:9000/
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1798,17 +2046,17 @@ clientside callback.</code></pre>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>dash_app:
-  name: DashApp
+  class_name: DashApp
   module: __main__
   params:
     dashboard_component:
       dash_component:
-        name: ListComposite
+        class_name: ListComposite
         module: __main__
         params:
           list_factory:
             dash_figure_factory:
-              name: ListFactory
+              class_name: ListFactory
               module: __main__
               params:
                 list_input:
@@ -1819,9 +2067,12 @@ clientside callback.</code></pre>
                 - example
           first_n1: 2
           first_n2: 3
-    port: 8050
-    mode: dash
-    kwargs: {}
+          name: main
+    port: 9000
+    mode: external
+    querystrings: true
+    kwargs:
+      suppress_callback_exceptions: true
 
 </pre>
 </div>
@@ -1882,6 +2133,20 @@ clientside callback.</code></pre>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Dash app running on http://127.0.0.1:9000/
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -1908,6 +2173,7 @@ clientside callback.</code></pre>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Converted 00_core.ipynb.
 Converted 01_Example.ipynb.
+Converted 02_GunicornDeployment.ipynb.
 Converted index.ipynb.
 </pre>
 </div>

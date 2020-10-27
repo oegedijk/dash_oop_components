@@ -38,6 +38,7 @@ This allows you to:
     a single configuration `.yaml` file
 - Parametrize your dashboard so that you (or others) can make change to the dashboard
     without having to edit the code.
+- Plus: track the state of your dashboard with querystrings and reload the state from url!
 
 ## To import:
 
@@ -54,7 +55,9 @@ Below is the code for similar but slightly simpler example. Full explanation for
 The example is a rewrite of this [Charming Data dash instruction video](https://www.youtube.com/watch?v=dgV3GGFMcTc) (go check out his other vids, they're awesome!).
 
 ### CovidPlots: a DashFigureFactory
+
 First we define a basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality, namely `plot_time_series(countries, metric)`. Make sure to call `super().__init__()` in order to store params to attributes (that's how the datafile parameters gets automatically assigned to self.datafile for example), and store them to a `._stored_params` dict so that they can later be exported to a config file.
+
 ```python
 class CovidPlots(DashFigureFactory):
     def __init__(self, datafile="covid.csv"):
@@ -78,7 +81,7 @@ print(figure_factory.to_yaml())
 ```
 
     dash_figure_factory:
-      name: CovidPlots
+      class_name: CovidPlots
       module: __main__
       params:
         datafile: covid.csv
@@ -93,6 +96,8 @@ Then we define a `DashComponent` that takes a plot_factory and build a layout wi
     e.g. `self.hide_country_dropdown`), and to a `._stored_params` dict.
 - This layout makes use of the `make_hideable()` staticmethod, to conditionally 
     wrap certain layout elements in a hidden div.
+- We track the state of the dropdowns "value" attribute by wrapping it in 
+    `self.querystring(params)(dcc.Dropdown)(..)`, and passing the params down to the layout function.
 - Note that the layout element id's add `+self.name` to ensure they are unique in every layout
     - `self.name` gets assigned a uuid random string of length 10 by `super().__init__()`.
 - Note that the callbacks are registered using `_register_callbacks(self, app)` (**note the underscore!**)
@@ -102,25 +107,25 @@ Then we define a `DashComponent` that takes a plot_factory and build a layout wi
 class CovidTimeSeries(DashComponent):
     def __init__(self, plot_factory, 
                  hide_country_dropdown=False, countries=None, 
-                 hide_metric_dropdown=False, metric='cases'):
+                 hide_metric_dropdown=False, metric='cases', name=None):
         super().__init__()
         
         if not self.countries:
             self.countries = self.plot_factory.countries
         
-    def layout(self):
+    def layout(self, params=None):
         return dbc.Container([
             dbc.Row([
                 dbc.Col([
                     html.H3("Covid Time Series"),
                     self.make_hideable(
-                        dcc.Dropdown(
+                        self.querystring(params)(dcc.Dropdown)(
                             id='timeseries-metric-dropdown-'+self.name,
                             options=[{'label': metric, 'value': metric} for metric in ['cases', 'deaths']],
                             value=self.metric,
                         ), hide=self.hide_metric_dropdown),
                     self.make_hideable(
-                        dcc.Dropdown(
+                        self.querystring(params)(dcc.Dropdown)(
                             id='timeseries-country-dropdown-'+self.name,
                             options=[{'label': country, 'value': country} for country in self.plot_factory.countries],
                             value=self.countries,
@@ -138,7 +143,7 @@ class CovidTimeSeries(DashComponent):
             Input('timeseries-metric-dropdown-'+self.name, 'value')
         )
         def update_timeseries_plot(countries, metric):
-            if countries and metric:
+            if countries and metric is not None:
                 return self.plot_factory.plot_time_series(countries, metric)
             raise PreventUpdate
 ```
@@ -148,11 +153,15 @@ A composite `DashComponent` that combines two `CovidTimeSeries` into a single la
 Both subcomponents are passed the same `plot_factory` but assigned different initial values.
 
 - The layouts of subcomponents can be included in the composite layout with 
-    `self.plot_left.layout()` and `self.plot_right.layout()`
+    `self.plot_left.layout(params)` and `self.plot_right.layout(params)`
 - Composite callbacks should again be defined under `self._register_callbacks(app)` (**note the underscore!**)
     - calling `.register_callbacks(app)` first registers all callbacks of subcomponents, 
         and then calls `_register_callbacks(app)`.
     - composite callbacks can access elements of subcomponents by using the `subcomponent.name` fields in the ids.
+- When tracking the state of the dashboard in the querystring it is important to name your components, so that 
+    the next time you start the dashboard the elements will have the same id's. In this case we 
+    pass `name="left"` and `name="right"`.
+- Make sure to pass the params parameter of the layout down to the subcomponent layouts!
 
 ```python
 class DuoPlots(DashComponent):
@@ -160,19 +169,19 @@ class DuoPlots(DashComponent):
         super().__init__()
         self.plot_left = CovidTimeSeries(plot_factory, 
                                          countries=['China', 'Vietnam', 'Taiwan'], 
-                                         metric='cases')
+                                         metric='cases', name='left')
         self.plot_right = CovidTimeSeries(plot_factory, 
                                           countries=['Italy', 'Germany', 'Sweden'], 
-                                          metric='deaths')
+                                          metric='deaths', name='right')
         
-    def layout(self):
+    def layout(self, params=None):
         return dbc.Container([
             dbc.Row([
                 dbc.Col([
-                    self.plot_left.layout()
+                    self.plot_left.layout(params)
                 ]),
                 dbc.Col([
-                    self.plot_right.layout()
+                    self.plot_right.layout(params)
                 ])
             ])
         ], fluid=True)
@@ -182,15 +191,16 @@ print(dashboard.to_yaml())
 ```
 
     dash_component:
-      name: DuoPlots
+      class_name: DuoPlots
       module: __main__
       params:
         plot_factory:
           dash_figure_factory:
-            name: CovidPlots
+            class_name: CovidPlots
             module: __main__
             params:
               datafile: covid.csv
+        name: 7HmT3rgLrM
     
 
 
@@ -200,33 +210,37 @@ Pass the `dashboard` to the `DashApp` to create a dash flask application.
 
 - You can pass `mode='inline'`, `'external'` or `'jupyterlab'` when you are working in a notebook in order to keep
     the notebook interactive while the app is running
+- By passing `querystrings=True` you automatically keep track of the state of the dashboard int the url querystring
 - You can pass a `port` and any other dash parameters in the `**kwargs` (e.g. here we include the bootstrap css from `dash_bootstrap_components`)
 
 ```python
-app = DashApp(dashboard, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = DashApp(dashboard, querystrings=True, external_stylesheets=[dbc.themes.BOOTSTRAP])
 print(app.to_yaml())
 ```
 
     dash_app:
-      name: DashApp
+      class_name: DashApp
       module: dash_oop_components.core
       params:
         dashboard_component:
           dash_component:
-            name: DuoPlots
+            class_name: DuoPlots
             module: __main__
             params:
               plot_factory:
                 dash_figure_factory:
-                  name: CovidPlots
+                  class_name: CovidPlots
                   module: __main__
                   params:
                     datafile: covid.csv
+              name: 7HmT3rgLrM
         port: 8050
         mode: dash
+        querystrings: true
         kwargs:
           external_stylesheets:
           - https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css
+          suppress_callback_exceptions: true
     
 
 
@@ -252,25 +266,28 @@ print(app2.to_yaml())
 ```
 
     dash_app:
-      name: DashApp
+      class_name: DashApp
       module: dash_oop_components.core
       params:
         dashboard_component:
           dash_component:
-            name: DuoPlots
+            class_name: DuoPlots
             module: __main__
             params:
               plot_factory:
                 dash_figure_factory:
-                  name: CovidPlots
+                  class_name: CovidPlots
                   module: __main__
                   params:
                     datafile: covid.csv
+              name: 69CtSVuHee
         port: 8050
         mode: dash
+        querystrings: true
         kwargs:
           external_stylesheets:
           - https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css
+          suppress_callback_exceptions: true
     
 
 

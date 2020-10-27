@@ -6,6 +6,10 @@ index = {"DashComponentBase": "00_core.ipynb",
          "DashFigureFactory": "00_core.ipynb",
          "DashComponent": "00_core.ipynb",
          "concat_docstring": "00_core.ipynb",
+         "parse_url_to_params": "00_core.ipynb",
+         "parse_url_to_qs_and_vals": "00_core.ipynb",
+         "encode_querystring_params_to_url": "00_core.ipynb",
+         "update_url_with_new_params": "00_core.ipynb",
          "DashApp": "00_core.ipynb"}
 
 modules = ["core.py"]
