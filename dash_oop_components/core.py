@@ -645,6 +645,11 @@ class DashApp(DashComponentBase):
             app.layout = self.dashboard_component.layout()
 
         else:
+            try:
+                self.dashboard_component.layout(None)
+            except:
+                raise ValueError("The layout method method of dashboard_component does not take "
+                                 "a params parameter. Please rewrite as `def layout(self, params=None):` !")
             app.layout = html.Div([
                         dcc.Location(id='url', refresh=False),
                         html.Div(id='page-layout')
