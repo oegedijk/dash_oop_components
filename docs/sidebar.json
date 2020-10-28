@@ -3,6 +3,7 @@
     "Overview": "/",
     "Library Documentation": "core.html",
     "Covid Dashboard Example": "Example.html",
+    "Tracking state of your app in url querystrings": "querystrings.html",
     "Deploying with gunicorn": "GunicornDeployment.html"
   }
 }

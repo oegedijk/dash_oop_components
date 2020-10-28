@@ -16,6 +16,9 @@ entries:
       title: Covid Dashboard Example
       url: Example.html
     - output: web,pdf
+      title: Tracking state of your app in url querystrings
+      url: querystrings.html
+    - output: web,pdf
       title: Deploying with gunicorn
       url: GunicornDeployment.html
     output: web

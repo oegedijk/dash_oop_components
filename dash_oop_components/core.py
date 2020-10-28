@@ -310,13 +310,7 @@ class DashComponent(DashComponentBase):
         self._stored_params["name"] = self.name
 
         self._components = []
-
-        self._querystring_params = []
-
-        try:
-            self.layout(params="_store_querystring_params")
-        except:
-            pass
+        self._compute_querystring_params(whole_tree=False)
 
     def _convert_ff_config_params(self):
         """convert any DashFigureFactory in the ._stored_params dict to its config"""
@@ -365,13 +359,24 @@ class DashComponent(DashComponentBase):
 
         """
         def move_value_to_front(attrs):
+            """the value attribute gets encoded with a single querystring, e.g. '?param=1'
+                    gets parsed as param.value=1.
+                All other attributes get encoded with two querystrings,  e.g.
+                    '?param=max&param=10' gets parsed as param.max=10.
+                Therefore an uneven number of attributes implies that the value attribute
+                has been encoded. By always putting value first, we can simply take the
+                first querystring param as value, and then parse the rest."""
             if not attrs:
+                # if not attributes passed: encode value attribute
                 return tuple(['value'])
             if not 'value' in attrs:
+                # if 'value' not in attributes then can keep the order as passed
                 return attrs
-            attrs_list = list(attrs)
-            attrs_list.insert(0, attrs_list.pop(attrs_list.index('value')))
-            return tuple(attrs_list)
+            else:
+                # if 'value' in attributes, then make sure it's first in the list:
+                attrs_list = list(attrs)
+                attrs_list.insert(0, attrs_list.pop(attrs_list.index('value')))
+                return tuple(attrs_list)
 
         if params=="_store_querystring_params":
             attrs = move_value_to_front(attrs)
@@ -402,25 +407,68 @@ class DashComponent(DashComponentBase):
     def get_querystring_params(self):
         """
         Returns a list of tuple(id, attribute) of all element attributes
-        in all (sub-)components that have been wrapper by self.querystring()
-        and should be tracked in the url querystring.
-        """
-        self.register_components()
+        in all (sub-)components that have been wrapped by self.querystring()
+        and should be tracked in the url querystring."""
+
         _params = []
+        _params.extend(self._querystring_params)
+
+        self.register_components()
+        for comp in self._components:
+            _params.extend(comp.get_querystring_params())
+        return _params
+
+    def _clear_querystring_params(self, whole_tree=True):
+        """clears the querystring params.
+
+        Args:
+            whole_tree (bool): if True, clear all _querystring_prams\
+                in all subcomponents."""
+        self._querystring_params = []
+
+        if whole_tree:
+            self.register_components()
+            for comp in self._components:
+                comp._clear_querystring_params(whole_tree)
+
+    def _compute_querystring_params(self, whole_tree=True):
+        """compute ._querystring_params.
+
+        Args:
+            whole_tree (bool): if True, compute all _querystring_prams\
+                in all subcomponents."""
+        self._querystring_params = []
+
         try:
-            self._querystring_params = []
             self.layout("_store_querystring_params")
         except:
             pass
-        _params.extend(self._querystring_params)
-        for comp in self._components:
-            try:
-                comp._querystring_params = []
-                comp.layout("_store_querystring_params")
-            except:
-                pass
-            _params.extend(comp._querystring_params)
-        return _params
+
+        if whole_tree:
+            self.register_components()
+            for comp in self._components:
+                comp._compute_querystring_params(whole_tree)
+
+    def get_unreachable_querystring_params(self):
+        """returns all element (id, attr) querystring parameters
+        that have a self.querystring() wrapper but because params
+        has not been passed correctly down to subcomponents .layout()
+        function, will not actually get updated.
+        """
+        try:
+            _ = self.layout(None)
+        except:
+            return self.get_querystring_params()
+
+        all_params = self.get_querystring_params()
+
+        self._clear_querystring_params(whole_tree=True)
+        _ = self.layout("_store_querystring_params")
+        reachable_params = self.get_querystring_params()
+
+        unreachable_params = [param for param in all_params if param not in reachable_params]
+        self._compute_querystring_params(whole_tree=True)
+        return unreachable_params
 
     def register_components(self):
         """register subcomponents so that their callbacks will be registered
@@ -650,6 +698,15 @@ class DashApp(DashComponentBase):
             except:
                 raise ValueError("The layout method method of dashboard_component does not take "
                                  "a params parameter. Please rewrite as `def layout(self, params=None):` !")
+
+            unreachable_params = self.dashboard_component.get_unreachable_querystring_params()
+            if unreachable_params:
+                print("Warning: The following elements will be tracked in the querystring, "
+                     "but do not get passed as params to the (subcomponent) .layout(params) function, and so "
+                      "will not be rebuilt when reloading from the url querystring! Please "
+                      "make sure that you pass params down to the layout of all subcomponents! "
+                      "e.g. def layout(self, params=None): return html.Div([self.sub_component.layout(params)]) \n\n",
+                      unreachable_params)
             app.layout = html.Div([
                         dcc.Location(id='url', refresh=False),
                         html.Div(id='page-layout')

@@ -872,7 +872,7 @@ But remember to add <code>+self.name</code> to all id's.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.make_hideable" class="doc_header"><code>DashComponent.make_hideable</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L327" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.make_hideable</code>(<strong><code>element</code></strong>, <strong><code>hide</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="DashComponent.make_hideable" class="doc_header"><code>DashComponent.make_hideable</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L321" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.make_hideable</code>(<strong><code>element</code></strong>, <strong><code>hide</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>helper function to optionally not display an element in a layout.</p>
 <p>Example:
@@ -890,7 +890,7 @@ But remember to add <code>+self.name</code> to all id's.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.querystring" class="doc_header"><code>DashComponent.querystring</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L347" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.querystring</code>(<strong><code>params</code></strong>, <strong>*<code>attrs</code></strong>)</p>
+<h4 id="DashComponent.querystring" class="doc_header"><code>DashComponent.querystring</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L341" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.querystring</code>(<strong><code>params</code></strong>, <strong>*<code>attrs</code></strong>)</p>
 </blockquote>
 <p>wrapper function that applies params loaded from querystrings
 to the underlying dash layout function's attributes attrs. By
@@ -917,10 +917,10 @@ default it only applies to the "value" attribute.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.get_querystring_params" class="doc_header"><code>DashComponent.get_querystring_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L402" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.get_querystring_params</code>()</p>
+<h4 id="DashComponent.get_querystring_params" class="doc_header"><code>DashComponent.get_querystring_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L407" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.get_querystring_params</code>()</p>
 </blockquote>
 <p>Returns a list of tuple(id, attribute) of all element attributes
-in all (sub-)components that have been wrapper by self.querystring()
+in all (sub-)components that have been wrapped by self.querystring()
 and should be tracked in the url querystring.</p>
 
 </div>
@@ -931,7 +931,22 @@ and should be tracked in the url querystring.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.layout" class="doc_header"><code>DashComponent.layout</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L436" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.layout</code>(<strong><code>params</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="DashComponent.get_unreachable_querystring_params" class="doc_header"><code>DashComponent.get_unreachable_querystring_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L452" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.get_unreachable_querystring_params</code>()</p>
+</blockquote>
+<p>returns all element (id, attr) querystring parameters
+that have a self.querystring() wrapper but because params
+has not been passed correctly down to subcomponents .layout()
+function, will not actually get updated.</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="DashComponent.layout" class="doc_header"><code>DashComponent.layout</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L484" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.layout</code>(<strong><code>params</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>layout to be defined by the particular ExplainerComponent instance.
 All element id's should append +self.name to make sure they are unique.</p>
@@ -944,7 +959,7 @@ All element id's should append +self.name to make sure they are unique.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent._register_callbacks" class="doc_header"><code>DashComponent._register_callbacks</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L441" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent._register_callbacks</code>(<strong><code>app</code></strong>)</p>
+<h4 id="DashComponent._register_callbacks" class="doc_header"><code>DashComponent._register_callbacks</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L489" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent._register_callbacks</code>(<strong><code>app</code></strong>)</p>
 </blockquote>
 <p>register callbacks specific to this ExplainerComponent.</p>
 
@@ -956,7 +971,7 @@ All element id's should append +self.name to make sure they are unique.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.register_callbacks" class="doc_header"><code>DashComponent.register_callbacks</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L445" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.register_callbacks</code>(<strong><code>app</code></strong>)</p>
+<h4 id="DashComponent.register_callbacks" class="doc_header"><code>DashComponent.register_callbacks</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L493" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.register_callbacks</code>(<strong><code>app</code></strong>)</p>
 </blockquote>
 <p>First register callbacks of all subcomponents, then call
 _register_callbacks(app)</p>
@@ -1032,6 +1047,58 @@ _register_callbacks(app)</p>
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">T</span><span class="p">(</span><span class="n">DashComponent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">querystring</span><span class="p">(</span><span class="n">params</span><span class="p">)(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Input</span><span class="p">)(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;input1-&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">querystring</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">)(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Input</span><span class="p">)(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;input2-&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">querystring</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Input</span><span class="p">)(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;input3-&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="p">])</span>
+            
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span><span class="o">=</span> <span class="n">T</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">get_querystring_params</span><span class="p">()</span>
+<span class="n">input1_attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">qs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">qs</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">get_querystring_params</span><span class="p">()</span> <span class="k">if</span> <span class="n">qs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;input1-0&quot;</span><span class="p">]</span>
+<span class="n">input2_attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">qs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">qs</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">get_querystring_params</span><span class="p">()</span> <span class="k">if</span> <span class="n">qs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;input2-0&quot;</span><span class="p">]</span>
+<span class="n">input3_attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">qs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">qs</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">get_querystring_params</span><span class="p">()</span> <span class="k">if</span> <span class="n">qs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;input3-0&quot;</span><span class="p">]</span>
+
+<span class="k">assert</span> <span class="n">input1_attributes</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">],</span> <span class="s2">&quot;if no attributes explicitly listen, default to track &#39;value&#39;&quot;</span>
+<span class="k">assert</span> <span class="ow">not</span> <span class="s1">&#39;value&#39;</span> <span class="ow">in</span> <span class="n">input2_attributes</span><span class="p">,</span> <span class="s2">&quot;value should not be in attributes if other attributes are explicitly listed&quot;</span>
+<span class="k">assert</span> <span class="n">input3_attributes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="s2">&quot;value should always be the first attributes in the list!&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">ListComponent</span><span class="p">(</span><span class="n">DashComponent</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_factory</span><span class="p">,</span> <span class="n">first_n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -1090,6 +1157,39 @@ _register_callbacks(app)</p>
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_component</span><span class="o">.</span><span class="n">get_querystring_params</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;input-first-n-1&#39;, &#39;value&#39;)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_component</span><span class="o">.</span><span class="n">_stored_params</span>
 </pre></div>
 
@@ -1110,39 +1210,6 @@ _register_callbacks(app)</p>
    &#39;params&#39;: {&#39;list_input&#39;: [&#39;this&#39;, &#39;is&#39;, &#39;a&#39;, &#39;dumb&#39;, &#39;example&#39;]}}},
  &#39;first_n&#39;: 2,
  &#39;name&#39;: &#39;1&#39;}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_component</span><span class="o">.</span><span class="n">get_querystring_params</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[(&#39;input-first-n-1&#39;, &#39;value&#39;)]</pre>
 </div>
 
 </div>
@@ -1372,7 +1439,44 @@ _register_callbacks(app)</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_composite</span><span class="o">.</span><span class="n">get_querystring_params</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">list_composite</span><span class="o">.</span><span class="n">_querystring_params</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">list_composite</span><span class="o">.</span><span class="n">list1</span><span class="o">.</span><span class="n">_querystring_params</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">list_composite</span><span class="o">.</span><span class="n">list2</span><span class="o">.</span><span class="n">_querystring_params</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[]
+[(&#39;input-first-n-1&#39;, &#39;value&#39;)]
+[(&#39;input-first-n-2&#39;, &#39;value&#39;)]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">querystring_params</span> <span class="o">=</span> <span class="n">list_composite</span><span class="o">.</span><span class="n">get_querystring_params</span><span class="p">()</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">querystring_params</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;should be two querystring params, one from each subcomponent!&quot;</span>
+<span class="n">querystring_params</span>
 </pre></div>
 
     </div>
@@ -1392,6 +1496,24 @@ _register_callbacks(app)</p>
 
 </div>
 
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">unreachable_querystring_params</span> <span class="o">=</span> <span class="n">list_composite</span><span class="o">.</span><span class="n">get_unreachable_querystring_params</span><span class="p">()</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">unreachable_querystring_params</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;should be no unreachable params in this component!&quot;</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
@@ -1524,7 +1646,9 @@ _register_callbacks(app)</p>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="n">dash</span><span class="o">.</span><span class="n">Dash</span><span class="p">()</span>
 <span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">list_composite</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
 <span class="n">list_composite</span><span class="o">.</span><span class="n">register_callbacks</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
-<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">callback_map</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">callback_map</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> \
+    <span class="p">(</span><span class="s2">&quot;Should be three callbacks (one for the composite, and one each for each &quot;</span>
+     <span class="s2">&quot;subcomponent) have indeed been registered)&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1551,7 +1675,7 @@ _register_callbacks(app)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="concat_docstring" class="doc_header"><code>concat_docstring</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L456" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>concat_docstring</code>(<strong><code>source</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="concat_docstring" class="doc_header"><code>concat_docstring</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L504" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>concat_docstring</code>(<strong><code>source</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Decorator: <code>__doc__</code> from <code>source</code> to <strong>doc</strong></p>
 
@@ -1583,7 +1707,7 @@ _register_callbacks(app)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_url_to_params" class="doc_header"><code>parse_url_to_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L479" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_url_to_params</code>(<strong><code>url</code></strong>)</p>
+<h4 id="parse_url_to_params" class="doc_header"><code>parse_url_to_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L527" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_url_to_params</code>(<strong><code>url</code></strong>)</p>
 </blockquote>
 <p>Returns a dict that summarizes the state of the app at the time that the
 querystring url was generated. Lists are (somewhat hackily) detected
@@ -1624,7 +1748,7 @@ appropriately cast as either int or float.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_url_to_qs_and_vals" class="doc_header"><code>parse_url_to_qs_and_vals</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L528" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_url_to_qs_and_vals</code>(<strong><code>url</code></strong>)</p>
+<h4 id="parse_url_to_qs_and_vals" class="doc_header"><code>parse_url_to_qs_and_vals</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L576" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_url_to_qs_and_vals</code>(<strong><code>url</code></strong>)</p>
 </blockquote>
 <p>Returns a dict that summarizes the state of the app at the time that the
 querystring url was generated. Lists are (somewhat hackily) detected
@@ -1665,7 +1789,7 @@ appropriately cast as either int or float.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="encode_querystring_params_to_url" class="doc_header"><code>encode_querystring_params_to_url</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L578" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>encode_querystring_params_to_url</code>(<strong><code>querystring_params</code></strong>, <strong><code>values</code></strong>)</p>
+<h4 id="encode_querystring_params_to_url" class="doc_header"><code>encode_querystring_params_to_url</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L626" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>encode_querystring_params_to_url</code>(<strong><code>querystring_params</code></strong>, <strong><code>values</code></strong>)</p>
 </blockquote>
 <p>encodes a list of querystring_params and a list of values to
 a url.</p>
@@ -1705,7 +1829,7 @@ a url.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="update_url_with_new_params" class="doc_header"><code>update_url_with_new_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L598" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>update_url_with_new_params</code>(<strong><code>old_url</code></strong>, <strong><code>qs_params</code></strong>, <strong><code>vals</code></strong>)</p>
+<h4 id="update_url_with_new_params" class="doc_header"><code>update_url_with_new_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L646" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>update_url_with_new_params</code>(<strong><code>old_url</code></strong>, <strong><code>qs_params</code></strong>, <strong><code>vals</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -1743,7 +1867,7 @@ a url.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DashApp" class="doc_header"><code>class</code> <code>DashApp</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L611" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashApp</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong><code>querystrings</code></strong>=<em><code>False</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
+<h2 id="DashApp" class="doc_header"><code>class</code> <code>DashApp</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L659" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashApp</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong><code>querystrings</code></strong>=<em><code>False</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
 </blockquote>
 <p>Wrapper class for dash apps. Assigns layout and callbacks from
 a DashComponent to a Dash app, and runs it.</p>
@@ -1757,7 +1881,7 @@ a DashComponent to a Dash app, and runs it.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashApp.__init__" class="doc_header"><code>DashApp.__init__</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L618" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.__init__</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong><code>querystrings</code></strong>=<em><code>False</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+<h4 id="DashApp.__init__" class="doc_header"><code>DashApp.__init__</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L666" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.__init__</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong><code>querystrings</code></strong>=<em><code>False</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 <pre><code>    Args:
@@ -1915,7 +2039,7 @@ clientside callback.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashApp.flask_server" class="doc_header"><code>DashApp.flask_server</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L692" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.flask_server</code>()</p>
+<h4 id="DashApp.flask_server" class="doc_header"><code>DashApp.flask_server</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L749" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.flask_server</code>()</p>
 </blockquote>
 <p>returns flask server inside self.app, for building wsgi apps</p>
 
@@ -1927,7 +2051,7 @@ clientside callback.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashApp.run" class="doc_header"><code>DashApp.run</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L696" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.run</code>(<strong><code>port</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="DashApp.run" class="doc_header"><code>DashApp.run</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L753" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.run</code>(<strong><code>port</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Run the dash app</p>
 
@@ -1980,6 +2104,7 @@ clientside callback.</code></pre>
 <li>default is <code>mode='dash'</code></li>
 </ul>
 </li>
+<li>Track parameters in the url querystring with querystrings=True</li>
 <li>Any additional parameters will be passed on the to <code>dash.Dash()</code> constructor</li>
 </ul>
 
@@ -2119,20 +2244,6 @@ clientside callback.</code></pre>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Dash app running on http://127.0.0.1:9000/
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -2159,7 +2270,8 @@ clientside callback.</code></pre>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Converted 00_core.ipynb.
 Converted 01_Example.ipynb.
-Converted 02_GunicornDeployment.ipynb.
+Converted 02_querystrings.ipynb.
+Converted 03_GunicornDeployment.ipynb.
 Converted index.ipynb.
 </pre>
 </div>
