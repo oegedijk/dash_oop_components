@@ -147,3 +147,9 @@ t.pkl
 T.yaml
 ff.yaml
 list_factory.yaml
+list_factory.pkl
+list_factory2.yaml
+None.pkl
+*.yaml
+*.pkl
+
