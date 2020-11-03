@@ -300,6 +300,42 @@ with the <code>querystrings=True</code> parameter, e.g.:</p>
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Addendum:-Tracking-querystring-params-of-current-tab-only">Addendum: Tracking querystring params of current tab only<a class="anchor-link" href="#Addendum:-Tracking-querystring-params-of-current-tab-only"> </a></h2><p>When you define dashboard with lots of tabs, lots of components and lots of elements, the size of the querystring can explode rapidly, resulting in clumsy long urls to copy-paste. One solution if to only keep track of the parameters in the current open tab.</p>
+<p>The downside is that the rest of the dashboard will take default values, but the upside is significantly smaller querystrings.</p>
+<p>In order to implement this, you can make sure of the <a href="/dash_oop_components/core.html#DashComponentTabs"><code>DashComponentTabs</code></a> as a stand-in replacement for <code>dcc.Tabs</code>.</p>
+<p>You simply replace</p>
+<div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">querystring</span><span class="p">(</span><span class="n">params</span><span class="p">)(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Tabs</span><span class="p">)(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;tabs&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">europe</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
+                        <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                            <span class="n">dcc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">europe</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> 
+                                    <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">europe</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
+                                    <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">europe</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="n">children</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">europe</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">params</span><span class="p">)),</span>
+                            <span class="n">dcc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">asia</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> 
+                                    <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">asia</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
+                                    <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">asia</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="n">children</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">asia</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">params</span><span class="p">)),</span>
+                            <span class="n">dcc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cases_only</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> 
+                                    <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cases_only</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
+                                    <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cases_only</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="n">children</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cases_only</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">params</span><span class="p">)),</span>
+                            <span class="n">dcc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">deaths_only</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> 
+                                    <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">deaths_only</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
+                                    <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">deaths_only</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="n">children</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">deaths_only</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">params</span><span class="p">)),</span>
+                        <span class="p">]),</span>
+</pre></div>
+<p>with</p>
+<div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">querystring</span><span class="p">(</span><span class="n">params</span><span class="p">)(</span><span class="n">DashComponentTabs</span><span class="p">)(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;tabs&quot;</span><span class="p">,</span> 
+                        <span class="n">tabs</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">europe</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">asia</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cases_only</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">deaths_only</span><span class="p">],</span>
+                        <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">single_tab_querystrings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+<p>And automatically all parameters from tabs other than the current tab will be excluded from the url querystring</p>
+
+</div>
+</div>
+</div>
 </div>
  
 

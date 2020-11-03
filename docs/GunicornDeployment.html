@@ -144,7 +144,7 @@ nb_path: "03_GunicornDeployment.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In some cases you might be doing some expensive calculations inside your <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> that you do not want to run everytime you restart a dashboard as it would break the gunicorn timeout window. The solution is to build the plot_factory, pickle it, and then load it form the pickle file when you start the dashboard:</p>
+<p>In some cases you might be doing some expensive calculations inside your <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> that you do not want to run everytime you restart a dashboard as it would break the gunicorn timeout window. The solution is to build the plot_factory, indicate the <code>filepath</code> of the dumped pickle file, dump it, and then load it from the pickle file when you start the dashboard, by passing <code>try_pickles=True</code>:</p>
 
 </div>
 </div>
@@ -156,12 +156,10 @@ nb_path: "03_GunicornDeployment.ipynb"
 <span class="kn">from</span> <span class="nn">dash_bootstrap_components.themes</span> <span class="kn">import</span> <span class="n">FLATLY</span>
 <span class="kn">from</span> <span class="nn">dash_oop_components</span> <span class="kn">import</span> <span class="n">DashApp</span>
 
-<span class="n">plot_factory</span> <span class="o">=</span> <span class="n">CovidPlots</span><span class="p">(</span><span class="n">datafile</span><span class="o">=</span><span class="s2">&quot;covid.csv&quot;</span><span class="p">)</span>
-<span class="n">plot_factory</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s1">&#39;plot_factory.yaml&#39;</span><span class="p">)</span>
-<span class="n">plot_factory</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;plot_factory.pkl&quot;</span><span class="p">)</span>
+<span class="n">plot_factory</span> <span class="o">=</span> <span class="n">CovidPlots</span><span class="p">(</span><span class="n">datafile</span><span class="o">=</span><span class="s2">&quot;covid.csv&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;plot_factory.pkl&quot;</span><span class="p">)</span>
+<span class="n">plot_factory</span><span class="o">.</span><span class="n">dump</span><span class="p">()</span> <span class="c1"># stores to plot_factory.pkl</span>
 
 <span class="n">dashboard_component</span> <span class="o">=</span> <span class="n">CovidDashboard</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">)</span>
-<span class="n">dashboard</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dash_component.yaml&quot;</span><span class="p">)</span>
 
 <span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard_component</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="p">[</span><span class="n">FLATLY</span><span class="p">])</span>
 <span class="n">db</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard.yaml&quot;</span><span class="p">)</span>
@@ -172,7 +170,8 @@ nb_path: "03_GunicornDeployment.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now you can load the plot_factory from disk. And you can use the fact that you can override parameters when loading with <code>.from_yaml()</code> by passing them as <code>**kwargs</code>:</p>
+<p>When you pass <code>try_pickles=True</code> if the <code>filepath</code> cannot be found, then the <code>DashPlotFactory</code> will get rebuilt from
+config. If you pass <code>force_pickles=True</code>, then <a href="/dash_oop_components/core.html#DashApp"><code>DashApp</code></a> will raise an exception instead:</p>
 
 </div>
 </div>
@@ -182,9 +181,7 @@ nb_path: "03_GunicornDeployment.ipynb"
 <p><strong>dashboard.py:</strong></p>
 <div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash_oop_components</span> <span class="kn">import</span> <span class="n">DashFigureFactory</span><span class="p">,</span> <span class="n">DashComponent</span><span class="p">,</span> <span class="n">DashApp</span>
 
-<span class="n">plot_factory</span> <span class="o">=</span> <span class="n">DashFigureFactory</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;plot_factory.pkl&quot;</span><span class="p">)</span>
-<span class="n">dashboard_component</span> <span class="o">=</span> <span class="n">DashComponent</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;dash_component.yaml&quot;</span><span class="p">,</span> <span class="n">plot_factory</span><span class="o">=</span><span class="n">plot_factory</span><span class="p">)</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard.yaml&quot;</span><span class="p">,</span> <span class="n">dashboard_component</span><span class="o">=</span><span class="n">dashboard_component</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard.yaml&quot;</span><span class="p">,</span> <span class="n">try_pickles</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">app</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">server</span>
 </pre></div>
 
@@ -228,7 +225,6 @@ and then rebuild the dashboard whenever there is a change to <code>plot_factory.
 <span class="n">dashboard_component</span> <span class="o">=</span> <span class="n">CovidDashboard</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">)</span>
 <span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard_component</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="p">[</span><span class="n">FLATLY</span><span class="p">])</span>
 
-<span class="n">dashboard</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dash_component.yaml&quot;</span><span class="p">)</span>
 <span class="n">db</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard.yaml&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -240,9 +236,7 @@ and then rebuild the dashboard whenever there is a change to <code>plot_factory.
 <p><strong>dashboard.py:</strong></p>
 <div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash_oop_components</span> <span class="kn">import</span> <span class="n">DashFigureFactory</span><span class="p">,</span> <span class="n">DashComponent</span><span class="p">,</span> <span class="n">DashApp</span>
 
-<span class="n">plot_factory</span> <span class="o">=</span> <span class="n">DashFigureFactory</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;plot_factory.pkl&quot;</span><span class="p">)</span>
-<span class="n">dashboard_component</span> <span class="o">=</span> <span class="n">DashComponent</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;dash_component.yaml&quot;</span><span class="p">,</span> <span class="n">plot_factory</span><span class="o">=</span><span class="n">plot_factory</span><span class="p">)</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard.yaml&quot;</span><span class="p">,</span> <span class="n">dashboard_component</span><span class="o">=</span><span class="n">dashboard_component</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard.yaml&quot;</span><span class="p">,</span> <span class="n">try_pickles</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">app</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">server</span>
 </pre></div>
 
@@ -281,14 +275,14 @@ and then rebuild the dashboard whenever there is a change to <code>plot_factory.
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>And restart the gunicorn server everytime you detect a change to <code>plot_factory.pkl</code>, <code>dashboard_component.yaml</code> or <code>dashboard.yaml</code>:</p>
+<p>And restart the gunicorn server everytime you detect a change to <code>plot_factory.pkl</code>, or <code>dashboard.yaml</code>:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span>$ watchmedo shell-command -p <span class="s2">&quot;./plot_factory.pkl;./dashboard_component.yaml;./dashboard.yaml&quot;</span> -c <span class="s1">&#39;kill -HUP $(cat gunicorn.pid)&#39;</span>
+<div class="highlight"><pre><span></span>$ watchmedo shell-command -p <span class="s2">&quot;./plot_factory.pkl;./dashboard.yaml&quot;</span> -c <span class="s1">&#39;kill -HUP $(cat gunicorn.pid)&#39;</span>
 </pre></div>
 
 </div>

@@ -1,5 +1,5 @@
 # dash_oop_components
-> `dash_oop_components` is a small helper library with OOP dashboard building blocks for the plotly dash library
+> `dash_oop_components` is a small helper library with object-oriented dashboard building blocks for the plotly dash library
 
 
 ## Install
@@ -10,18 +10,34 @@
 
 Documentation can be found at: [https://oegedijk.github.io/dash_oop_components/](https://oegedijk.github.io/dash_oop_components/)
 
+## Example
+
+An example covid tracking dashboard has been deployed to [dash-oop-demo.herokuapp.com](http://dash-oop-demo.herokuapp.com) (code at [github.com/oegedijk/dash_oop_demo](https://github.com/oegedijk/dash_oop_demo)), showcasing:
+
+- The use of re-usable components
+- Keeping track of state in the querystring
+- Seperating data from dashboard logic
+- Loading the dashboard from a config yaml file
+
+![](dash_oop_demo.gif)
+
 ## Purpose
 
-Plotly's [dash](dash.plotly.com) is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps is quite declarative, which for large projects can lead to code that becomes unwieldy and hard to maintain.
+Plotly's [dash](dash.plotly.com) is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps is quite declarative, which for large projects can lead to code that becomes unwieldy, hard to maintain, and hard to collaborate on.
 
 This library provides three object-oriented wrappers for organizing your dash code that allow you to write clean, modular, composable, re-usable and fully configurable dash code.
 
 It includes:
-- `DashFigureFactory`: a wrapper for your data/plotting functionality.
+- `DashFigureFactory`: a wrapper for your data/plotting functionality, keeping data/plotting logic 
+    seperate from your dashboard interaction logic.
 - `DashComponent`: a self-contained, modular, configurable unit that combines a dash layout with dash callbacks.
+    - Keeps layout and callbacks in one place, grouped together.
     - Makes use of a `DashFigureFactory` for plots or other data output
     - `DashComponents` are composable, meaning that you can nest them into new composite components.
-- `DashApp`: Build a dashboard out of `DashComponent` and run it.
+    - You can store component configuration to yaml, and then rebuild from yaml.
+- `DashApp`: Build a dashboard out of a `DashComponent` and run it.
+    - Includes the possibility of tracking dashboard state in the querystring url, 
+        allowing for shareable stateful urls.
 
 All three wrappers:
 - Automatically store all params to attributes and to a ._stored_params dict
@@ -30,7 +46,8 @@ All three wrappers:
 
 This allows you to:
 - Seperate the data/plotting logic from the dashboard interactions logic, by putting all 
-    the plotting functionality inside a `DashFigureFactory` and all the dashboard layout and callback logic into `DashComponents`.
+    the plotting functionality inside a `DashFigureFactory` and all the dashboard layout 
+    and callback logic into `DashComponents`.
 - Build self-contained, configurable, re-usable `DashComponents`
 - Compose dashboards that consists of multiple `DashComponents` that each may 
     consists of multiple nested `DashComponents`, etc.
@@ -48,9 +65,9 @@ from dash_oop_components import DashFigureFactory, DashComponent, DashApp
 
 ## Example:
 
-An example dashboard can be found at [github.com/oegedijk/dash_oop_demo](https://github.com/oegedijk/dash_oop_demo) and has been deployed to [https://dash-oop-demo.herokuapp.com/](https://dash-oop-demo.herokuapp.com/)
+A full example dashboard can be found at [github.com/oegedijk/dash_oop_demo](https://github.com/oegedijk/dash_oop_demo) and has been deployed to [https://dash-oop-demo.herokuapp.com/](https://dash-oop-demo.herokuapp.com/)
 
-Below is the code for similar but slightly simpler example. Full explanation for the `dash_oop_demo` dashboard can be found [in the documentation](https://oegedijk.github.io/dash_oop_components/Example.html).
+Below is the code for similar but slightly simpler example. Full explanation for the `dash_oop_demo` dashboard can be found [in the example documentation](https://oegedijk.github.io/dash_oop_components/Example.html).
 
 The example is a rewrite of this [Charming Data dash instruction video](https://www.youtube.com/watch?v=dgV3GGFMcTc) (go check out his other vids, they're awesome!).
 
@@ -200,7 +217,7 @@ print(dashboard.to_yaml())
             module: __main__
             params:
               datafile: covid.csv
-        name: 7HmT3rgLrM
+        name: FBhmLSses6
     
 
 
@@ -233,7 +250,7 @@ print(app.to_yaml())
                   module: __main__
                   params:
                     datafile: covid.csv
-              name: 7HmT3rgLrM
+              name: FBhmLSses6
         port: 8050
         mode: dash
         querystrings: true
@@ -280,7 +297,7 @@ print(app2.to_yaml())
                   module: __main__
                   params:
                     datafile: covid.csv
-              name: 69CtSVuHee
+              name: Jq9frNnUiA
         port: 8050
         mode: dash
         querystrings: true

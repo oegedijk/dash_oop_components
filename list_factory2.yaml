@@ -1,0 +1,11 @@
+dash_figure_factory:
+  class_name: ListFactory
+  module: __main__
+  params:
+    list_input:
+    - this
+    - is
+    - a
+    - dumb
+    - example
+    filepath: list_factory2.pkl

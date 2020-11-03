@@ -5,6 +5,8 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 index = {"DashComponentBase": "00_core.ipynb",
          "DashFigureFactory": "00_core.ipynb",
          "DashComponent": "00_core.ipynb",
+         "DashComponentTabs": "00_core.ipynb",
+         "DashConnector": "00_core.ipynb",
          "concat_docstring": "00_core.ipynb",
          "parse_url_to_params": "00_core.ipynb",
          "parse_url_to_qs_and_vals": "00_core.ipynb",

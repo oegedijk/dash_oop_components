@@ -340,7 +340,15 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
 <ul>
 <li>The <code>plot_factory</code> gets passed down to the subcomponents</li>
 <li>The subcomponents are included in the layout with <code>self.timeseries.layout()</code> and <code>self.piechart.layout()</code>.</li>
-<li>An additional callback is added with <code>def _register_components(self, app)</code> (<strong>note the underscore!</strong>) that connects the dropdowns of the <code>CovidComposite</code> to the dropdowns of the subcomponents. (therefore the subcomponent dropdowns are also hidden by setting <code>hide_country_dropdown=True</code> and <code>hide_metric_dropdown=True</code>)</li>
+<li>A <a href="/dash_oop_components/core.html#DashConnector"><code>DashConnector</code></a> called <code>DropDownConnector</code> is defined that equalizes the dropdown values of the timeseries
+  and piechart components to that of the <code>CovidComposite</code> dropdowns. This <code>DropdownConnector</code> is then 
+  instantiated in the init.<ul>
+<li>An alternative would have been to define the <code>DropdownConnector</code> callbacks directly in the
+  <code>def _register_components(self, app)</code> of <code>CovidComposite</code> </li>
+</ul>
+</li>
+<li>The dropdowns of the subcomponents are hidden by setting <code>hide_country_dropdown=True</code> 
+  and <code>hide_metric_dropdown=True</code></li>
 </ul>
 
 </div>
@@ -353,7 +361,49 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">DropdownConnector</span><span class="p">(</span><span class="n">DashConnector</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Connects the country and metric dropdown menus of a</span>
+<span class="sd">    CovidComposite with the dropdowns of a CovidTimeSeries </span>
+<span class="sd">    and CovidPieChart respectively&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">composite</span><span class="p">,</span> <span class="n">timeseries</span><span class="p">,</span> <span class="n">piechart</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        
+    <span class="k">def</span> <span class="nf">_register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
+        <span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
+            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;timeseries-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">timeseries</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;piechart-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">piechart</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+            <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;dashboard-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">composite</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">def</span> <span class="nf">update_timeseries_plot</span><span class="p">(</span><span class="n">countries</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">countries</span><span class="p">,</span> <span class="n">countries</span>
+        
+        <span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
+            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;timeseries-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">timeseries</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;piechart-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">piechart</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+            <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;dashboard-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">composite</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">def</span> <span class="nf">update_timeseries_plot</span><span class="p">(</span><span class="n">metric</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">metric</span><span class="p">,</span> <span class="n">metric</span>
+        
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">CovidComposite</span><span class="p">(</span><span class="n">DashComponent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A composite DashComponent of a CovidTimeSeries and CovidPieChart, with a dropdown</span>
+<span class="sd">    added that controls both subcomponents.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_factory</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Covid Analysis&quot;</span><span class="p">,</span>
                  <span class="n">hide_country_dropdown</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
                  <span class="n">include_countries</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">countries</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
@@ -380,6 +430,8 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
                 <span class="n">plot_factory</span><span class="p">,</span> 
                 <span class="n">hide_country_dropdown</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">countries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">countries</span><span class="p">,</span>
                 <span class="n">hide_metric_dropdown</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">connector</span> <span class="o">=</span> <span class="n">DropdownConnector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeseries</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">piechart</span><span class="p">)</span>
         
     <span class="k">def</span> <span class="nf">layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">([</span>
@@ -410,23 +462,6 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
                 <span class="p">],</span> <span class="n">md</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
             <span class="p">])</span>
         <span class="p">],</span> <span class="n">fluid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">_register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
-        <span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
-            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;timeseries-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">timeseries</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
-            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;piechart-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">piechart</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
-            <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;dashboard-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="k">def</span> <span class="nf">update_timeseries_plot</span><span class="p">(</span><span class="n">countries</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">countries</span><span class="p">,</span> <span class="n">countries</span>
-        
-        <span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
-            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;timeseries-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">timeseries</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
-            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;piechart-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">piechart</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
-            <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;dashboard-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="k">def</span> <span class="nf">update_timeseries_plot</span><span class="p">(</span><span class="n">metric</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">metric</span><span class="p">,</span> <span class="n">metric</span>
         
 </pre></div>
 
@@ -467,7 +502,7 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">CovidDashboard</span><span class="p">(</span><span class="n">DashComponent</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_factory</span><span class="p">,</span> 
-                 <span class="n">europe_countries</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Italy&#39;</span><span class="p">,</span>  <span class="s1">&#39;Spain&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;France&#39;</span><span class="p">,</span> <span class="s1">&#39;Iran&#39;</span><span class="p">,</span> 
+                 <span class="n">europe_countries</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Italy&#39;</span><span class="p">,</span>  <span class="s1">&#39;Spain&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;France&#39;</span><span class="p">,</span> 
                                      <span class="s1">&#39;United_Kingdom&#39;</span><span class="p">,</span> <span class="s1">&#39;Switzerland&#39;</span><span class="p">,</span> <span class="s1">&#39;Netherlands&#39;</span><span class="p">,</span>  
                                      <span class="s1">&#39;Belgium&#39;</span><span class="p">,</span> <span class="s1">&#39;Austria&#39;</span><span class="p">,</span> <span class="s1">&#39;Portugal&#39;</span><span class="p">,</span> <span class="s1">&#39;Norway&#39;</span><span class="p">],</span>
                 <span class="n">asia_countries</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Vietnam&#39;</span><span class="p">,</span> <span class="s1">&#39;Malaysia&#39;</span><span class="p">,</span> <span class="s1">&#39;Philippines&#39;</span><span class="p">,</span> 
@@ -494,25 +529,9 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
             <span class="p">]),</span>
             <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
                 <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">([</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">querystring</span><span class="p">(</span><span class="n">params</span><span class="p">)(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Tabs</span><span class="p">)(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;tabs&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">europe</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
-                        <span class="n">children</span><span class="o">=</span><span class="p">[</span>
-                            <span class="n">dcc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">europe</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> 
-                                    <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">europe</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
-                                    <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">europe</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                                    <span class="n">children</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">europe</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">params</span><span class="p">)),</span>
-                            <span class="n">dcc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">asia</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> 
-                                    <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">asia</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
-                                    <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">asia</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                                    <span class="n">children</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">asia</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">params</span><span class="p">)),</span>
-                            <span class="n">dcc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cases_only</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> 
-                                    <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cases_only</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
-                                    <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cases_only</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                                    <span class="n">children</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cases_only</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">params</span><span class="p">)),</span>
-                            <span class="n">dcc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">deaths_only</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> 
-                                    <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">deaths_only</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
-                                    <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">deaths_only</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                                    <span class="n">children</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">deaths_only</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">params</span><span class="p">)),</span>
-                        <span class="p">]),</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">querystring</span><span class="p">(</span><span class="n">params</span><span class="p">)(</span><span class="n">DashComponentTabs</span><span class="p">)(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;tabs&quot;</span><span class="p">,</span> 
+                        <span class="n">tabs</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">europe</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">asia</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cases_only</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">deaths_only</span><span class="p">],</span>
+                        <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">single_tab_querystrings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="p">])</span>
             <span class="p">])</span>
         <span class="p">],</span> <span class="n">fluid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -547,7 +566,6 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
     - Spain
     - Germany
     - France
-    - Iran
     - United_Kingdom
     - Switzerland
     - Netherlands
@@ -565,7 +583,7 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
     - Thailand
     - South_Korea
     - Japan
-    name: 3wPMV28jvJ
+    name: Epw8hXUn4C
 
 </pre>
 </div>
@@ -584,7 +602,8 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dashboard</span><span class="o">.</span><span class="n">get_querystring_params</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dashboard</span><span class="o">.</span><span class="n">compute_querystring_params</span><span class="p">()</span>
+<span class="n">dashboard</span><span class="o">.</span><span class="n">get_querystring_params</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -670,180 +689,6 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Dash is running on http://127.0.0.1:9050/
-
-Dash is running on http://127.0.0.1:9050/
-
- * Serving Flask app &#34;__main__&#34; (lazy loading)
- * Environment: production
-<span class="ansi-red-fg">   WARNING: This is a development server. Do not use it in a production deployment.</span>
-   Use a production WSGI server instead.
- * Debug mode: off
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre> * Running on http://127.0.0.1:9050/ (Press CTRL+C to quit)
-127.0.0.1 - - [27/Oct/2020 12:41:03] &#34;<span class="ansi-white-fg">GET / HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">GET /_dash-layout HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">GET /_dash-dependencies HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:04] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:05] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:05] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:05] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:06] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:07] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:08] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:09] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:09] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:10] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:11] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:12] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:12] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:13] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:14] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:41:14] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:36] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:36] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:36] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:36] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:37] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:37] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:37] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:37] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:37] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:37] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:37] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:37] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:37] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:37] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:37] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:38] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:38] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:38] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:38] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:38] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:38] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:38] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:38] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:38] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:39] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:40] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:40] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:40] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:40] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:40] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:40] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:41] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:41] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:41] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:42] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:44] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:44] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:44] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:44] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:47] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:50] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:54] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:54] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:54] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:54] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:55] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:59] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:59] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:59] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:42:59] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:13] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:14] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:15] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:19] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:20] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">GET /?tabs=eur HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">GET /_dash-layout HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">GET /_dash-dependencies HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:25] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:26] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:26] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:26] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:26] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:26] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:26] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:26] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:30] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">GET /?tabs=asia HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">GET /_dash-layout HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">GET /_dash-dependencies HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:34] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:35] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:35] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:35] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 12:43:35] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -916,7 +761,6 @@ This includes:</p>
           - Spain
           - Germany
           - France
-          - Iran
           - United_Kingdom
           - Switzerland
           - Netherlands
@@ -934,7 +778,7 @@ This includes:</p>
           - Thailand
           - South_Korea
           - Japan
-          name: 3wPMV28jvJ
+          name: Epw8hXUn4C
     port: 9050
     mode: dash
     querystrings: true
@@ -1054,7 +898,6 @@ This includes:</p>
           - Spain
           - Germany
           - France
-          - Iran
           - United_Kingdom
           - Switzerland
           - Netherlands
@@ -1072,7 +915,7 @@ This includes:</p>
           - Thailand
           - South_Korea
           - Japan
-          name: AB8UrFEery
+          name: 9LWnePSGr2
     port: 9050
     mode: dash
     querystrings: true
@@ -1110,65 +953,6 @@ This includes:</p>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Dash is running on http://127.0.0.1:9050/
-
-Dash is running on http://127.0.0.1:9050/
-
-Dash is running on http://127.0.0.1:9050/
-
- * Serving Flask app &#34;__main__&#34; (lazy loading)
- * Environment: production
-<span class="ansi-red-fg">   WARNING: This is a development server. Do not use it in a production deployment.</span>
-   Use a production WSGI server instead.
- * Debug mode: off
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre> * Running on http://127.0.0.1:9050/ (Press CTRL+C to quit)
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">GET / HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">GET /_dash-layout HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">GET /_dash-dependencies HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:16] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:17] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:17] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:17] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:17] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:17] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:17] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:20] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:21] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:21] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:22] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:23] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-127.0.0.1 - - [27/Oct/2020 15:18:24] &#34;<span class="ansi-white-fg">POST /_dash-update-component HTTP/1.1</span>&#34; 200 -
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
