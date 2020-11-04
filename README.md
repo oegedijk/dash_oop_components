@@ -14,7 +14,7 @@ Documentation can be found at: [https://oegedijk.github.io/dash_oop_components/]
 
 Plotly's [dash](dash.plotly.com) is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps is quite declarative, which for large projects can lead to code that becomes unwieldy, hard to maintain, and hard to collaborate on.
 
-This library provides three object-oriented wrappers for organizing your dash code that allow you to write clean, modular, composable, re-usable and fully configurable dash code.
+This library provides a number object-oriented wrappers for organizing your dash code that allow you to write clean, modular, composable, re-usable and fully configurable dash code.
 
 It includes:
 - `DashFigureFactory`: a wrapper for your data/plotting functionality, keeping data/plotting logic 
@@ -24,11 +24,13 @@ It includes:
     - Makes use of a `DashFigureFactory` for plots or other data output
     - `DashComponents` are composable, meaning that you can nest them into new composite components.
     - You can store component configuration to yaml, and then rebuild from yaml.
+    - You can use `DashConnectors` to connect callbacks between components
 - `DashApp`: Build a dashboard out of a `DashComponent` and run it.
     - Includes the possibility of tracking dashboard state in the querystring url, 
         allowing for shareable stateful urls.
+        - Using `DashComponentTabs` you can also track state for current tab only 
 
-All three wrappers:
+All wrappers:
 - Automatically store all params to attributes and to a ._stored_params dict
 - Allow you to store its' config to a `.yaml` file, including import details, and can then  
     be fully reloaded from a config file.

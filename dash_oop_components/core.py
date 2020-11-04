@@ -222,7 +222,14 @@ class DashComponentBase(ABC):
                 else:
                     params[k] = DashComponentBase.from_config(v)
 
-        component_class = getattr(import_module(config['module']), config['class_name'])
+        try:
+            component_class = getattr(import_module(config['module']), config['class_name'])
+        except ModuleNotFoundError:
+            import sys
+            from pathlib import Path
+            sys.path.append(str(Path.cwd()))
+            component_class = getattr(import_module(config['module']), config['class_name'])
+
         if 'kwargs' in params:
             kwargs = params.pop('kwargs')
         else:
@@ -766,7 +773,8 @@ class DashApp(DashComponentBase):
     """
     @concat_docstring(dash.Dash)
     def __init__(self, dashboard_component,
-                 port=8050, mode='dash', querystrings=False, **kwargs):
+                 port=8050, mode='dash', querystrings=False, bootstrap=False,
+                 **kwargs):
         """
 
         Args:
@@ -774,6 +782,7 @@ class DashApp(DashComponentBase):
             port (int): port to run the server
             mode ({'dash', 'external', 'inline', 'jupyterlab'}): type of dash server to start
             querystrings (bool): save state to querystring and load from querystring
+            bootstrap: include default bootstrap css
             kwargs: all kwargs will be passed down to dash.Dash. See below the docstring of dash.Dash
 
         Returns:
@@ -784,6 +793,13 @@ class DashApp(DashComponentBase):
         self.app = self._get_dash_app()
 
     def _get_dash_app(self):
+        if self.bootstrap:
+            bootstrap_theme = self.bootstrap if isinstance(self.bootstrap, str) else dbc.themes.BOOTSTRAP
+            if 'external_stylesheets' not in self.kwargs:
+                self.kwargs['external_stylesheets'] = [bootstrap_theme]
+            else:
+                self.kwargs['external_stylesheets'].append(bootstrap_theme)
+
         if self.querystrings:
             self.kwargs["suppress_callback_exceptions"] = True
         if self.mode == 'dash':
