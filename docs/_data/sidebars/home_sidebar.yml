@@ -13,6 +13,9 @@ entries:
       title: Library Documentation
       url: core.html
     - output: web,pdf
+      title: '`dashapp` CLI'
+      url: cli.html
+    - output: web,pdf
       title: Covid Dashboard Example
       url: Example.html
     - output: web,pdf

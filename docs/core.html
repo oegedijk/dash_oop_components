@@ -587,7 +587,7 @@ Proved .to_config(), to_yaml(), .from_config() and .from_yaml() methods</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DashFigureFactory" class="doc_header"><code>class</code> <code>DashFigureFactory</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L297" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashFigureFactory</code>(<strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
+<h2 id="DashFigureFactory" class="doc_header"><code>class</code> <code>DashFigureFactory</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L304" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashFigureFactory</code>(<strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
 </blockquote>
 <p>Helper class to store data for a dashboard and provide e.g. plotting functions.</p>
 <p>You should seperate the datastorage/plotting logic from the dashboard logic.
@@ -918,7 +918,7 @@ All data/plotting logic goes into a DashFigureFactory.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DashComponent" class="doc_header"><code>class</code> <code>DashComponent</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L320" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashComponent</code>(<strong><code>title</code></strong>=<em><code>'Dash'</code></em>, <strong><code>name</code></strong>=<em><code>None</code></em>, <strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
+<h2 id="DashComponent" class="doc_header"><code>class</code> <code>DashComponent</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L327" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashComponent</code>(<strong><code>title</code></strong>=<em><code>'Dash'</code></em>, <strong><code>name</code></strong>=<em><code>None</code></em>, <strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
 </blockquote>
 <p>DashComponent is a bundle of a dash layout and callbacks that
 can make use of DashFigureFactory objects.</p>
@@ -947,7 +947,7 @@ But remember to add <code>+self.name</code> to all id's.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.make_hideable" class="doc_header"><code>DashComponent.make_hideable</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L372" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.make_hideable</code>(<strong><code>element</code></strong>, <strong><code>hide</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="DashComponent.make_hideable" class="doc_header"><code>DashComponent.make_hideable</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L379" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.make_hideable</code>(<strong><code>element</code></strong>, <strong><code>hide</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>helper function to optionally not display an element in a layout.</p>
 <p>Example:
@@ -965,7 +965,7 @@ But remember to add <code>+self.name</code> to all id's.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.querystring" class="doc_header"><code>DashComponent.querystring</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L392" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.querystring</code>(<strong><code>params</code></strong>, <strong>*<code>attrs</code></strong>)</p>
+<h4 id="DashComponent.querystring" class="doc_header"><code>DashComponent.querystring</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L399" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.querystring</code>(<strong><code>params</code></strong>, <strong>*<code>attrs</code></strong>)</p>
 </blockquote>
 <p>wrapper function that applies params loaded from querystrings
 to the underlying dash layout function's attributes attrs. By
@@ -992,7 +992,7 @@ default it only applies to the "value" attribute.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.get_querystring_params" class="doc_header"><code>DashComponent.get_querystring_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L458" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.get_querystring_params</code>()</p>
+<h4 id="DashComponent.get_querystring_params" class="doc_header"><code>DashComponent.get_querystring_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L465" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.get_querystring_params</code>()</p>
 </blockquote>
 <p>Returns a list of tuple(id, attribute) of all element attributes
 in all (sub-)components that have been wrapped by self.querystring()
@@ -1006,7 +1006,7 @@ and should be tracked in the url querystring.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.get_unreachable_querystring_params" class="doc_header"><code>DashComponent.get_unreachable_querystring_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L503" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.get_unreachable_querystring_params</code>()</p>
+<h4 id="DashComponent.get_unreachable_querystring_params" class="doc_header"><code>DashComponent.get_unreachable_querystring_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L510" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.get_unreachable_querystring_params</code>()</p>
 </blockquote>
 <p>returns all element (id, attr) querystring parameters
 that have a self.querystring() wrapper but because params
@@ -1021,7 +1021,7 @@ function, will not actually get updated.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.layout" class="doc_header"><code>DashComponent.layout</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L543" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.layout</code>(<strong><code>params</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="DashComponent.layout" class="doc_header"><code>DashComponent.layout</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L550" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.layout</code>(<strong><code>params</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>layout to be defined by the particular ExplainerComponent instance.
 All element id's should append +self.name to make sure they are unique.</p>
@@ -1034,7 +1034,7 @@ All element id's should append +self.name to make sure they are unique.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent._register_callbacks" class="doc_header"><code>DashComponent._register_callbacks</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L548" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent._register_callbacks</code>(<strong><code>app</code></strong>)</p>
+<h4 id="DashComponent._register_callbacks" class="doc_header"><code>DashComponent._register_callbacks</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L555" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent._register_callbacks</code>(<strong><code>app</code></strong>)</p>
 </blockquote>
 <p>register callbacks specific to this ExplainerComponent.</p>
 
@@ -1046,7 +1046,7 @@ All element id's should append +self.name to make sure they are unique.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashComponent.register_callbacks" class="doc_header"><code>DashComponent.register_callbacks</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L552" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.register_callbacks</code>(<strong><code>app</code></strong>)</p>
+<h4 id="DashComponent.register_callbacks" class="doc_header"><code>DashComponent.register_callbacks</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L559" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashComponent.register_callbacks</code>(<strong><code>app</code></strong>)</p>
 </blockquote>
 <p>First register callbacks of all subcomponents, then call
 _register_callbacks(app)</p>
@@ -1095,7 +1095,7 @@ a</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DashComponentTabs" class="doc_header"><code>class</code> <code>DashComponentTabs</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L562" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashComponentTabs</code>(<strong><code>id</code></strong>=<em><code>None</code></em>, <strong><code>tabs</code></strong>=<em><code>None</code></em>, <strong><code>params</code></strong>=<em><code>None</code></em>, <strong><code>value</code></strong>=<em><code>None</code></em>, <strong><code>component</code></strong>=<em><code>None</code></em>, <strong><code>single_tab_querystrings</code></strong>=<em><code>True</code></em>, <strong>**<code>kwargs</code></strong>) :: <code>Tabs</code></p>
+<h2 id="DashComponentTabs" class="doc_header"><code>class</code> <code>DashComponentTabs</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L569" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashComponentTabs</code>(<strong><code>id</code></strong>=<em><code>None</code></em>, <strong><code>tabs</code></strong>=<em><code>None</code></em>, <strong><code>params</code></strong>=<em><code>None</code></em>, <strong><code>value</code></strong>=<em><code>None</code></em>, <strong><code>component</code></strong>=<em><code>None</code></em>, <strong><code>single_tab_querystrings</code></strong>=<em><code>True</code></em>, <strong>**<code>kwargs</code></strong>) :: <code>Tabs</code></p>
 </blockquote>
 <p>A Tabs component.
 A Dash component that lets you render pages with tabs - the Tabs component's children
@@ -1188,7 +1188,7 @@ session: window.sessionStorage, data is cleared once the browser quit.</li>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DashConnector" class="doc_header"><code>class</code> <code>DashConnector</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L592" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashConnector</code>(<strong><code>title</code></strong>=<em><code>'Dash'</code></em>, <strong><code>name</code></strong>=<em><code>None</code></em>, <strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a></p>
+<h2 id="DashConnector" class="doc_header"><code>class</code> <code>DashConnector</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L599" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashConnector</code>(<strong><code>title</code></strong>=<em><code>'Dash'</code></em>, <strong><code>name</code></strong>=<em><code>None</code></em>, <strong><code>no_store</code></strong>=<em><code>None</code></em>, <strong><code>no_attr</code></strong>=<em><code>None</code></em>, <strong><code>no_config</code></strong>=<em><code>None</code></em>) :: <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a></p>
 </blockquote>
 <p>DashComponent is a bundle of a dash layout and callbacks that
 can make use of DashFigureFactory objects.</p>
@@ -2136,7 +2136,7 @@ You can do this because you have access to the <code>.name</code> property of ea
           filepath: file_factory.pkl
     first_n1: 2
     first_n2: 3
-    name: 89swACqmX9
+    name: KGu5YF3Vc2
 
 </pre>
 </div>
@@ -2159,7 +2159,7 @@ You can do this because you have access to the <code>.name</code> property of ea
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="concat_docstring" class="doc_header"><code>concat_docstring</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L605" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>concat_docstring</code>(<strong><code>source</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="concat_docstring" class="doc_header"><code>concat_docstring</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L612" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>concat_docstring</code>(<strong><code>source</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Decorator: <code>__doc__</code> from <code>source</code> to <strong>doc</strong></p>
 
@@ -2191,7 +2191,7 @@ You can do this because you have access to the <code>.name</code> property of ea
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_url_to_params" class="doc_header"><code>parse_url_to_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L628" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_url_to_params</code>(<strong><code>url</code></strong>)</p>
+<h4 id="parse_url_to_params" class="doc_header"><code>parse_url_to_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L635" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_url_to_params</code>(<strong><code>url</code></strong>)</p>
 </blockquote>
 <p>Returns a dict that summarizes the state of the app at the time that the
 querystring url was generated. Lists are (somewhat hackily) detected
@@ -2232,7 +2232,7 @@ appropriately cast as either int or float.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_url_to_qs_and_vals" class="doc_header"><code>parse_url_to_qs_and_vals</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L677" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_url_to_qs_and_vals</code>(<strong><code>url</code></strong>)</p>
+<h4 id="parse_url_to_qs_and_vals" class="doc_header"><code>parse_url_to_qs_and_vals</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L684" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_url_to_qs_and_vals</code>(<strong><code>url</code></strong>)</p>
 </blockquote>
 <p>Returns a dict that summarizes the state of the app at the time that the
 querystring url was generated. Lists are (somewhat hackily) detected
@@ -2273,7 +2273,7 @@ appropriately cast as either int or float.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="encode_querystring_params_to_url" class="doc_header"><code>encode_querystring_params_to_url</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L727" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>encode_querystring_params_to_url</code>(<strong><code>querystring_params</code></strong>, <strong><code>values</code></strong>)</p>
+<h4 id="encode_querystring_params_to_url" class="doc_header"><code>encode_querystring_params_to_url</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L734" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>encode_querystring_params_to_url</code>(<strong><code>querystring_params</code></strong>, <strong><code>values</code></strong>)</p>
 </blockquote>
 <p>encodes a list of querystring_params and a list of values to
 a url.</p>
@@ -2313,7 +2313,7 @@ a url.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="update_url_with_new_params" class="doc_header"><code>update_url_with_new_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L747" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>update_url_with_new_params</code>(<strong><code>old_url</code></strong>, <strong><code>qs_params</code></strong>, <strong><code>vals</code></strong>)</p>
+<h4 id="update_url_with_new_params" class="doc_header"><code>update_url_with_new_params</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L754" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>update_url_with_new_params</code>(<strong><code>old_url</code></strong>, <strong><code>qs_params</code></strong>, <strong><code>vals</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -2374,7 +2374,7 @@ a url.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DashApp" class="doc_header"><code>class</code> <code>DashApp</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L760" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashApp</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong><code>querystrings</code></strong>=<em><code>False</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
+<h2 id="DashApp" class="doc_header"><code>class</code> <code>DashApp</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L767" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DashApp</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong><code>querystrings</code></strong>=<em><code>False</code></em>, <strong><code>bootstrap</code></strong>=<em><code>False</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/dash_oop_components/core.html#DashComponentBase"><code>DashComponentBase</code></a></p>
 </blockquote>
 <p>Wrapper class for dash apps. Assigns layout and callbacks from
 a DashComponent to a Dash app, and runs it.</p>
@@ -2388,7 +2388,7 @@ a DashComponent to a Dash app, and runs it.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashApp.__init__" class="doc_header"><code>DashApp.__init__</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L767" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.__init__</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong><code>querystrings</code></strong>=<em><code>False</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+<h4 id="DashApp.__init__" class="doc_header"><code>DashApp.__init__</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L774" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.__init__</code>(<strong><code>dashboard_component</code></strong>, <strong><code>port</code></strong>=<em><code>8050</code></em>, <strong><code>mode</code></strong>=<em><code>'dash'</code></em>, <strong><code>querystrings</code></strong>=<em><code>False</code></em>, <strong><code>bootstrap</code></strong>=<em><code>False</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 <pre><code>    Args:
@@ -2396,6 +2396,7 @@ a DashComponent to a Dash app, and runs it.</p>
         port (int): port to run the server
         mode ({'dash', 'external', 'inline', 'jupyterlab'}): type of dash server to start
         querystrings (bool): save state to querystring and load from querystring
+        bootstrap: include default bootstrap css
         kwargs: all kwargs will be passed down to dash.Dash. See below the docstring of dash.Dash
 
     Returns:
@@ -2546,7 +2547,7 @@ clientside callback.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashApp.flask_server" class="doc_header"><code>DashApp.flask_server</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L872" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.flask_server</code>()</p>
+<h4 id="DashApp.flask_server" class="doc_header"><code>DashApp.flask_server</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L888" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.flask_server</code>()</p>
 </blockquote>
 <p>returns flask server inside self.app, for building wsgi apps</p>
 
@@ -2558,7 +2559,7 @@ clientside callback.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="DashApp.run" class="doc_header"><code>DashApp.run</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L876" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.run</code>(<strong><code>port</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="DashApp.run" class="doc_header"><code>DashApp.run</code><a href="https://github.com/oegedijk/dash_oop_components/tree/master/dash_oop_components/core.py#L892" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>DashApp.run</code>(<strong><code>port</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Run the dash app</p>
 
@@ -2592,7 +2593,7 @@ clientside callback.</code></pre>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">list_composite</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;external&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">9000</span><span class="p">,</span> <span class="n">querystrings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">list_composite</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;external&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">9000</span><span class="p">,</span> <span class="n">querystrings</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bootstrap</span><span class="o">=</span><span class="n">dbc</span><span class="o">.</span><span class="n">themes</span><span class="o">.</span><span class="n">FLATLY</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2686,11 +2687,14 @@ clientside callback.</code></pre>
                 filepath: file_factory.pkl
           first_n1: 2
           first_n2: 3
-          name: 89swACqmX9
+          name: KGu5YF3Vc2
     port: 9000
     mode: external
     querystrings: true
+    bootstrap: https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css
     kwargs:
+      external_stylesheets:
+      - https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css
       suppress_callback_exceptions: true
 
 </pre>
@@ -2767,24 +2771,6 @@ clientside callback.</code></pre>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Converted 00_core.ipynb.
-Converted 01_Example.ipynb.
-Converted 02_querystrings.ipynb.
-Converted 03_GunicornDeployment.ipynb.
-Converted index.ipynb.
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 

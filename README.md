@@ -14,7 +14,7 @@ Documentation can be found at: [https://oegedijk.github.io/dash_oop_components/]
 
 Plotly's [dash](dash.plotly.com) is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps is quite declarative, which for large projects can lead to code that becomes unwieldy, hard to maintain, and hard to collaborate on.
 
-This library provides three object-oriented wrappers for organizing your dash code that allow you to write clean, modular, composable, re-usable and fully configurable dash code.
+This library provides a number object-oriented wrappers for organizing your dash code that allow you to write clean, modular, composable, re-usable and fully configurable dash code.
 
 It includes:
 - `DashFigureFactory`: a wrapper for your data/plotting functionality, keeping data/plotting logic 
@@ -24,11 +24,13 @@ It includes:
     - Makes use of a `DashFigureFactory` for plots or other data output
     - `DashComponents` are composable, meaning that you can nest them into new composite components.
     - You can store component configuration to yaml, and then rebuild from yaml.
+    - You can use `DashConnectors` to connect callbacks between components
 - `DashApp`: Build a dashboard out of a `DashComponent` and run it.
     - Includes the possibility of tracking dashboard state in the querystring url, 
         allowing for shareable stateful urls.
+        - Using `DashComponentTabs` you can also track state for current tab only 
 
-All three wrappers:
+All wrappers:
 - Automatically store all params to attributes and to a ._stored_params dict
 - Allow you to store its' config to a `.yaml` file, including import details, and can then  
     be fully reloaded from a config file.
@@ -45,6 +47,7 @@ This allows you to:
 - Parametrize your dashboard so that you (or others) can make change to the dashboard
     without having to edit the code.
 - Plus: track the state of your dashboard with querystrings and reload the state from url!
+- And: launch from the commandline with the `dashapp` CLI!
 
 ## Example
 
@@ -236,10 +239,11 @@ Pass the `dashboard` to the `DashApp` to create a dash flask application.
 - You can pass `mode='inline'`, `'external'` or `'jupyterlab'` when you are working in a notebook in order to keep
     the notebook interactive while the app is running
 - By passing `querystrings=True` you automatically keep track of the state of the dashboard int the url querystring
-- You can pass a `port` and any other dash parameters in the `**kwargs` (e.g. here we include the bootstrap css from `dash_bootstrap_components`)
+- By passing `bootstrap=True` the default bootstrap css gets automatically included. You can also choose particular themes, e.g. `bootstrap=dbc.themes.FLATLY`
+- You can pass other dash parameters in the `**kwargs`
 
 ```python
-app = DashApp(dashboard, querystrings=True, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = DashApp(dashboard, querystrings=True, bootstrap=True)
 print(app.to_yaml())
 ```
 
@@ -274,11 +278,19 @@ if run_app:
     app.run()
 ```
 
-### reload dashboard from config:
-
 ```python
 app.to_yaml("covid_dashboard.yaml")
 ```
+
+### launch from the commandline with `dashapp` CLI
+
+Now we could launch the dashboard from the command line with the `dashapp` CLI tool:
+
+```sh
+$ dashapp covid_dashboard.yaml
+```
+
+### reload dashboard from config:
 
 ```python
 app2 = DashApp.from_yaml("covid_dashboard.yaml")

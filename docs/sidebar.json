@@ -2,6 +2,7 @@
   "dash_oop_components": {
     "Overview": "/",
     "Library Documentation": "core.html",
+    "`dashapp` CLI": "cli.html",
     "Covid Dashboard Example": "Example.html",
     "Tracking state of your app in url querystrings": "querystrings.html",
     "Deploying with gunicorn": "GunicornDeployment.html"
