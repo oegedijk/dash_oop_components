@@ -59,7 +59,7 @@ nb_path: "04_GunicornDeployment.ipynb"
 
 <span class="n">plot_factory</span> <span class="o">=</span> <span class="n">CovidPlots</span><span class="p">(</span><span class="n">datafile</span><span class="o">=</span><span class="s2">&quot;covid.csv&quot;</span><span class="p">)</span>
 <span class="n">dashboard_component</span> <span class="o">=</span> <span class="n">CovidDashboard</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">)</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard_component</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="p">[</span><span class="n">FLATLY</span><span class="p">])</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard_component</span><span class="p">,</span> <span class="n">querystrings</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bootstrap</span><span class="o">=</span><span class="n">FLATLY</span><span class="p">)</span>
 <span class="n">db</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard.yaml&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -95,6 +95,15 @@ nb_path: "04_GunicornDeployment.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <div class="highlight"><pre><span></span>$ gunicorn --preload -b localhost:8050 dashboard:app
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Alternatively you can ofcourse simply use the <a href="/dash_oop_components/cli.html#dashapp"><code>dashapp</code></a> CLI for starting the dashboard outside production environments:</p>
+<div class="highlight"><pre><span></span>$ dashapp dashboard.yaml
 </pre></div>
 
 </div>
@@ -161,7 +170,7 @@ nb_path: "04_GunicornDeployment.ipynb"
 
 <span class="n">dashboard_component</span> <span class="o">=</span> <span class="n">CovidDashboard</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">)</span>
 
-<span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard_component</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="p">[</span><span class="n">FLATLY</span><span class="p">])</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard_component</span><span class="p">,</span> <span class="n">bootstrap</span><span class="o">=</span><span class="n">FLATLY</span><span class="p">)</span>
 <span class="n">db</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard.yaml&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -207,8 +216,8 @@ and then rebuild the dashboard whenever there is a change to <code>plot_factory.
 <p><strong>build_plot_factory.py</strong>:</p>
 <div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash_oop_component</span> <span class="kn">import</span> <span class="n">DashFigureFactory</span>
 
-<span class="n">plot_factory</span> <span class="o">=</span> <span class="n">DashFigureFactory</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;plot_factory.yaml&quot;</span><span class="p">)</span>
-<span class="n">plot_factory</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;plot_factory.pkl&quot;</span><span class="p">)</span>
+<span class="n">plot_factory</span> <span class="o">=</span> <span class="n">DashFigureFactory</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;plot_factory.yaml&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;plot_factory.pkl&quot;</span><span class="p">)</span>
+<span class="n">plot_factory</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -223,7 +232,7 @@ and then rebuild the dashboard whenever there is a change to <code>plot_factory.
 
 <span class="n">plot_factory</span> <span class="o">=</span> <span class="n">DashFigureFactory</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;plot_factory.pkl&quot;</span><span class="p">)</span>
 <span class="n">dashboard_component</span> <span class="o">=</span> <span class="n">CovidDashboard</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">)</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard_component</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="p">[</span><span class="n">FLATLY</span><span class="p">])</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard_component</span><span class="p">,</span> <span class="n">bootstrap</span><span class="o">=</span><span class="n">FLATLY</span><span class="p">)</span>
 
 <span class="n">db</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard.yaml&quot;</span><span class="p">)</span>
 </pre></div>
@@ -275,6 +284,15 @@ and then rebuild the dashboard whenever there is a change to <code>plot_factory.
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Now run the <code>build_dashboard.py</code> script everytime you detect a change in either <code>plot_factory.pkl</code> or <code>plot_factory.yaml</code>:</p>
+<div class="highlight"><pre><span></span>$ watchmedo shell-command -p <span class="s2">&quot;./plot_factory.pkl;./plot_factory.yaml&quot;</span> -c <span class="s1">&#39;python build_dashboard.py&#39;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>And restart the gunicorn server everytime you detect a change to <code>plot_factory.pkl</code>, or <code>dashboard.yaml</code>:</p>
 
 </div>
@@ -283,6 +301,25 @@ and then rebuild the dashboard whenever there is a change to <code>plot_factory.
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <div class="highlight"><pre><span></span>$ watchmedo shell-command -p <span class="s2">&quot;./plot_factory.pkl;./dashboard.yaml&quot;</span> -c <span class="s1">&#39;kill -HUP $(cat gunicorn.pid)&#39;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Or-in-a-single-shell-script:">Or in a single shell script:<a class="anchor-link" href="#Or-in-a-single-shell-script:"> </a></h3><p><strong>start_server.sh</strong>:</p>
+<div class="highlight"><pre><span></span><span class="nb">trap</span> <span class="s2">&quot;kill 0&quot;</span> EXIT  <span class="c1"># ensures that all four process are killed upon exit</span>
+
+<span class="nb">source</span> venv/bin/activate <span class="c1"># activate virtual environment first</span>
+
+gunicorn --pid gunicorn.pid dashboard:app <span class="p">&amp;</span>
+watchmedo shell-command -p <span class="s2">&quot;./covid.csv;./plot_factory.yaml&quot;</span> -c <span class="s1">&#39;python build_plot_factory.py&#39;</span> <span class="p">&amp;</span>
+watchmedo shell-command -p <span class="s2">&quot;./plot_factory.pkl;./plot_factory.yaml&quot;</span> -c <span class="s1">&#39;python build_dashboard.py&#39;</span> <span class="p">&amp;</span>
+watchmedo shell-command -p <span class="s2">&quot;./plot_factory.pkl;./dashboard.yaml&quot;</span> -c <span class="s1">&#39;kill -HUP $(cat gunicorn.pid)&#39;</span>
+
+
+<span class="nb">wait</span> <span class="c1"># wait till user hits ctrl-c to exit and kill all three processes</span>
 </pre></div>
 
 </div>

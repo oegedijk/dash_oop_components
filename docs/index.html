@@ -99,6 +99,7 @@ nb_path: "index.ipynb"
 <li>Parametrize your dashboard so that you (or others) can make change to the dashboard
   without having to edit the code.</li>
 <li>Plus: track the state of your dashboard with querystrings and reload the state from url!</li>
+<li>And: launch from the commandline with the <a href="/dash_oop_components/cli.html#dashapp"><code>dashapp</code></a> CLI!</li>
 </ul>
 
 </div>
@@ -406,7 +407,8 @@ Both subcomponents are passed the same <code>plot_factory</code> but assigned di
 <li>You can pass <code>mode='inline'</code>, <code>'external'</code> or <code>'jupyterlab'</code> when you are working in a notebook in order to keep
   the notebook interactive while the app is running</li>
 <li>By passing <code>querystrings=True</code> you automatically keep track of the state of the dashboard int the url querystring</li>
-<li>You can pass a <code>port</code> and any other dash parameters in the <code>**kwargs</code> (e.g. here we include the bootstrap css from <code>dash_bootstrap_components</code>)</li>
+<li>By passing <code>bootstrap=True</code> the default bootstrap css gets automatically included. You can also choose particular themes, e.g. <code>bootstrap=dbc.themes.FLATLY</code></li>
+<li>You can pass other dash parameters in the <code>**kwargs</code></li>
 </ul>
 
 </div>
@@ -419,7 +421,7 @@ Both subcomponents are passed the same <code>plot_factory</code> but assigned di
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard</span><span class="p">,</span> <span class="n">querystrings</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">themes</span><span class="o">.</span><span class="n">BOOTSTRAP</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard</span><span class="p">,</span> <span class="n">querystrings</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bootstrap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">())</span>
 </pre></div>
 
@@ -485,12 +487,6 @@ Both subcomponents are passed the same <code>plot_factory</code> but assigned di
 </div>
     {% endraw %}
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="reload-dashboard-from-config:">reload dashboard from config:<a class="anchor-link" href="#reload-dashboard-from-config:"> </a></h3>
-</div>
-</div>
-</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -508,6 +504,21 @@ Both subcomponents are passed the same <code>plot_factory</code> but assigned di
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="launch-from-the-commandline-with-dashapp-CLI">launch from the commandline with <a href="/dash_oop_components/cli.html#dashapp"><code>dashapp</code></a> CLI<a class="anchor-link" href="#launch-from-the-commandline-with-dashapp-CLI"> </a></h3><p>Now we could launch the dashboard from the command line with the <a href="/dash_oop_components/cli.html#dashapp"><code>dashapp</code></a> CLI tool:</p>
+<div class="highlight"><pre><span></span>$ dashapp covid_dashboard.yaml
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="reload-dashboard-from-config:">reload dashboard from config:<a class="anchor-link" href="#reload-dashboard-from-config:"> </a></h3>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">

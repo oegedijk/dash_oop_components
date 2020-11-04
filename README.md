@@ -47,6 +47,7 @@ This allows you to:
 - Parametrize your dashboard so that you (or others) can make change to the dashboard
     without having to edit the code.
 - Plus: track the state of your dashboard with querystrings and reload the state from url!
+- And: launch from the commandline with the `dashapp` CLI!
 
 ## Example
 
@@ -238,10 +239,11 @@ Pass the `dashboard` to the `DashApp` to create a dash flask application.
 - You can pass `mode='inline'`, `'external'` or `'jupyterlab'` when you are working in a notebook in order to keep
     the notebook interactive while the app is running
 - By passing `querystrings=True` you automatically keep track of the state of the dashboard int the url querystring
-- You can pass a `port` and any other dash parameters in the `**kwargs` (e.g. here we include the bootstrap css from `dash_bootstrap_components`)
+- By passing `bootstrap=True` the default bootstrap css gets automatically included. You can also choose particular themes, e.g. `bootstrap=dbc.themes.FLATLY`
+- You can pass other dash parameters in the `**kwargs`
 
 ```python
-app = DashApp(dashboard, querystrings=True, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = DashApp(dashboard, querystrings=True, bootstrap=True)
 print(app.to_yaml())
 ```
 
@@ -276,11 +278,19 @@ if run_app:
     app.run()
 ```
 
-### reload dashboard from config:
-
 ```python
 app.to_yaml("covid_dashboard.yaml")
 ```
+
+### launch from the commandline with `dashapp` CLI
+
+Now we could launch the dashboard from the command line with the `dashapp` CLI tool:
+
+```sh
+$ dashapp covid_dashboard.yaml
+```
+
+### reload dashboard from config:
 
 ```python
 app2 = DashApp.from_yaml("covid_dashboard.yaml")
