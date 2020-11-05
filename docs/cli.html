@@ -29,6 +29,20 @@ nb_path: "01_cli.ipynb"
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>With <code>dash_oop_components</code> you can easily dump the configuration for a <code>dash</code> dashboard to a configuration <code>.yaml</code> file. Along with the library a <a href="/dash_oop_components/cli.html#dashapp"><code>dashapp</code></a> command line tool (CLI) gets installed to make it easy to directly launch a dashboard from the commandline.</p>
@@ -53,7 +67,6 @@ nb_path: "01_cli.ipynb"
 <div class="highlight"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard_component</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8000</span><span class="p">,</span> <span class="n">querystrings</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bootstrap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">db</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard.yaml&quot;</span><span class="p">)</span>
 </pre></div>
-<<<<<<< HEAD
 <p>You can then run the app directly from the commandline and have it opened in a browser:</p>
 <div class="highlight"><pre><span></span>$ dashapp dashboard.yaml
 </pre></div>
@@ -61,15 +74,6 @@ nb_path: "01_cli.ipynb"
 <div class="highlight"><pre><span></span>$ dashapp --try-pickles dashboard.yaml
 </pre></div>
 <p>You can also store a <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a> and run it from the command-line, by saving it to yaml:</p>
-=======
-<p>You can then run the app directly from the commandline with and open it in a browser:</p>
-<div class="highlight"><pre><span></span>$ dashapp dashboard.yaml
-</pre></div>
-<p>or try the load figure factory from pickle:</p>
-<div class="highlight"><pre><span></span>$ dashapp --try-pickles dashboard.yaml
-</pre></div>
-<p>You can also store and run a DashComponent, by saving it to yaml:</p>
->>>>>>> 6edc08f5215838481e0391206941f6ceba256443
 <div class="highlight"><pre><span></span><span class="n">dashboard_component</span> <span class="o">=</span> <span class="n">CovidDashboard</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">)</span>
 <span class="n">dashboard_component</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard_component.yaml&quot;</span><span class="p">)</span>
 </pre></div>
