@@ -10,6 +10,17 @@
 
 Documentation can be found at: [https://oegedijk.github.io/dash_oop_components/](https://oegedijk.github.io/dash_oop_components/)
 
+## Example
+
+An example covid tracking dashboard has been deployed to [dash-oop-demo.herokuapp.com](http://dash-oop-demo.herokuapp.com) (code at [github.com/oegedijk/dash_oop_demo](https://github.com/oegedijk/dash_oop_demo)), showcasing:
+
+- The use of re-usable components
+- Keeping track of state in the querystring
+- Seperating data from dashboard logic
+- Loading the dashboard from a config yaml file
+
+![](dash_oop_demo.gif)
+
 ## Purpose
 
 Plotly's [dash](dash.plotly.com) is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps is quite declarative, which for large projects can lead to code that becomes unwieldy, hard to maintain, and hard to collaborate on.
@@ -48,17 +59,6 @@ This allows you to:
     without having to edit the code.
 - Plus: track the state of your dashboard with querystrings and reload the state from url!
 - And: launch from the commandline with the `dashapp` CLI!
-
-## Example
-
-An example covid tracking dashboard has been deployed to [dash-oop-demo.herokuapp.com](http://dash-oop-demo.herokuapp.com) (code at [github.com/oegedijk/dash_oop_demo](https://github.com/oegedijk/dash_oop_demo)), showcasing:
-
-- The use of re-usable components
-- Keeping track of state in the querystring
-- Seperating data from dashboard logic
-- Loading the dashboard from a config yaml file
-
-![](dash_oop_demo.gif)
 
 ## Example Code
 
