@@ -88,43 +88,26 @@ nb_path: "01_cli.ipynb"
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You first need to store your dash app to a config yaml file using e.g</p>
 <div class="highlight"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">DashApp</span><span class="p">(</span><span class="n">dashboard_component</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8000</span><span class="p">,</span> <span class="n">querystrings</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bootstrap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">db</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard.yaml&quot;</span><span class="p">)</span>
+<span class="n">db</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard.yaml&quot;</span><span class="p">)</span>
 </pre></div>
-
-<pre><code>You can then run the app directly from the commandline with and open it in a browser:
-</code></pre>
+<p>You can then run the app directly from the commandline and have it opened in a browser:</p>
 <div class="highlight"><pre><span></span>$ dashapp dashboard.yaml
 </pre></div>
-
-<pre><code>or try the load figure factory from pickle:
-
-</code></pre>
+<p>To try loading the figure factory from pickle, add the <code>--try-pickles</code> flag:</p>
 <div class="highlight"><pre><span></span>$ dashapp --try-pickles dashboard.yaml
 </pre></div>
-
-<pre><code>You can also store and run a DashComponent, by saving it to yaml:
-
-</code></pre>
+<p>You can also store a <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a> and run it from the command-line, by saving it to yaml:</p>
 <div class="highlight"><pre><span></span><span class="n">dashboard_component</span> <span class="o">=</span> <span class="n">CovidDashboard</span><span class="p">(</span><span class="n">plot_factory</span><span class="p">)</span>
-        <span class="n">dashboard_component</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard_component.yaml&quot;</span><span class="p">)</span>
+<span class="n">dashboard_component</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s2">&quot;dashboard_component.yaml&quot;</span><span class="p">)</span>
 </pre></div>
-
-<pre><code>And running it:
-
-</code></pre>
+<p>And running it:</p>
 <div class="highlight"><pre><span></span>$ dashapp dashboard_component.yaml
 </pre></div>
-
-<pre><code>To include the bootstrap css and store parameters in url querystring and set port to 9000:
-
-</code></pre>
+<p>To include the bootstrap css and store parameters in url querystring and set port to 9000:</p>
 <div class="highlight"><pre><span></span>$ dashapp dashboard_component.yaml --querystrings --bootstrap --port <span class="m">9000</span>
 </pre></div>
-
-<pre><code>If you follow the naming convention of storing the yaml to `dashboard.yaml`, 
-or `dashboard_component.yaml`, you can omit the argument and simply run:
-
-</code></pre>
+<p>If you follow the naming convention of storing the yaml to <code>dashboard.yaml</code>, 
+or <code>dashboard_component.yaml</code>, you can omit the argument and simply run:</p>
 <div class="highlight"><pre><span></span>$ dashapp
 </pre></div>
 
