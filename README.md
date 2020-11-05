@@ -68,7 +68,7 @@ Below is the code for similar but slightly simpler example. Full explanation for
 
 The example is a rewrite of this [Charming Data dash instruction video](https://www.youtube.com/watch?v=dgV3GGFMcTc) (go check out his other vids, they're awesome!).
 
-```python
+```
 import dash_html_components as html
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
@@ -86,7 +86,7 @@ import plotly.express as px
 
 First we define a basic `DashFigureFactory` that loads a covid dataset, and provides a single plotting functionality, namely `plot_time_series(countries, metric)`. Make sure to call `super().__init__()` in order to store params to attributes (that's how the datafile parameters gets automatically assigned to self.datafile for example), and store them to a `._stored_params` dict so that they can later be exported to a config file.
 
-```python
+```
 class CovidPlots(DashFigureFactory):
     def __init__(self, datafile="covid.csv"):
         super().__init__()
@@ -131,7 +131,7 @@ Then we define a `DashComponent` that takes a plot_factory and build a layout wi
 - Note that the callbacks are registered using `_register_callbacks(self, app)` (**note the underscore!**)
 - Note that the callback uses the `plot_factory` for the plotting logic.
 
-```python
+```
 class CovidTimeSeries(DashComponent):
     def __init__(self, plot_factory, 
                  hide_country_dropdown=False, countries=None, 
@@ -191,7 +191,7 @@ Both subcomponents are passed the same `plot_factory` but assigned different ini
     pass `name="left"` and `name="right"`.
 - Make sure to pass the params parameter of the layout down to the subcomponent layouts!
 
-```python
+```
 class DuoPlots(DashComponent):
     def __init__(self, plot_factory):
         super().__init__()
@@ -242,7 +242,7 @@ Pass the `dashboard` to the `DashApp` to create a dash flask application.
 - By passing `bootstrap=True` the default bootstrap css gets automatically included. You can also choose particular themes, e.g. `bootstrap=dbc.themes.FLATLY`
 - You can pass other dash parameters in the `**kwargs`
 
-```python
+```
 app = DashApp(dashboard, querystrings=True, bootstrap=True)
 print(app.to_yaml())
 ```
@@ -273,12 +273,12 @@ print(app.to_yaml())
     
 
 
-```python
+```
 if run_app:
     app.run()
 ```
 
-```python
+```
 app.to_yaml("covid_dashboard.yaml")
 ```
 
@@ -292,13 +292,13 @@ $ dashapp covid_dashboard.yaml
 
 ### reload dashboard from config:
 
-```python
+```
 app2 = DashApp.from_yaml("covid_dashboard.yaml")
 ```
 
 We can check that the configuration of this new `app2` is indeed the same as `app`:
 
-```python
+```
 print(app2.to_yaml())
 ```
 
@@ -331,7 +331,7 @@ print(app2.to_yaml())
 And if we run it it still works!
 
 
-```python
+```
 if run_app: 
     app2.run()
 ```
