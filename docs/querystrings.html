@@ -279,7 +279,7 @@ with the <code>querystrings=True</code> parameter, e.g.:</p>
             <span class="p">])</span>
         <span class="p">],</span> <span class="n">fluid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">component_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
         <span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
             <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;timeseries-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">timeseries</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
             <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;piechart-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">piechart</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>

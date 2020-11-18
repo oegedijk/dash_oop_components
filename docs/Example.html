@@ -204,27 +204,27 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
                     <span class="n">html</span><span class="o">.</span><span class="n">H3</span><span class="p">(</span><span class="s2">&quot;Covid Time Series&quot;</span><span class="p">),</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">make_hideable</span><span class="p">(</span>
                         <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
-                            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;timeseries-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;timeseries-metric-dropdown&#39;</span><span class="p">),</span>
                             <span class="n">options</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">metric</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">metric</span><span class="p">}</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_metrics</span><span class="p">],</span>
                             <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span>
                         <span class="p">),</span> <span class="n">hide</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hide_metric_dropdown</span><span class="p">),</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">make_hideable</span><span class="p">(</span>
                         <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
-                            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;timeseries-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;timeseries-country-dropdown&#39;</span><span class="p">),</span>
                             <span class="n">options</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">}</span> <span class="k">for</span> <span class="n">country</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_countries</span><span class="p">],</span>
                             <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">countries</span><span class="p">,</span>
                             <span class="n">multi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                         <span class="p">),</span> <span class="n">hide</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hide_country_dropdown</span><span class="p">),</span>
-                    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;timeseries-figure-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;timeseries-figure&#39;</span><span class="p">))</span>
                 <span class="p">]),</span>
             <span class="p">])</span>
         <span class="p">])</span>
     
-    <span class="k">def</span> <span class="nf">_register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">component_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
         <span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
-            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;timeseries-figure-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
-            <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;timeseries-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
-            <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;timeseries-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;timeseries-figure&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;timeseries-country-dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;timeseries-metric-dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="k">def</span> <span class="nf">update_timeseries_plot</span><span class="p">(</span><span class="n">countries</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">countries</span> <span class="ow">and</span> <span class="n">metric</span><span class="p">:</span>
@@ -293,13 +293,13 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
                     <span class="n">html</span><span class="o">.</span><span class="n">H3</span><span class="p">(</span><span class="s2">&quot;Covid Pie Chart&quot;</span><span class="p">),</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">make_hideable</span><span class="p">(</span>
                         <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
-                            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;piechart-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;piechart-metric-dropdown&#39;</span><span class="p">),</span>
                             <span class="n">options</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">metric</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">metric</span><span class="p">}</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_metrics</span><span class="p">],</span>
                             <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span>
                         <span class="p">),</span> <span class="n">hide</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hide_metric_dropdown</span><span class="p">),</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">make_hideable</span><span class="p">(</span>
                         <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
-                            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;piechart-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;piechart-country-dropdown&#39;</span><span class="p">),</span>
                             <span class="n">options</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">}</span> <span class="k">for</span> <span class="n">country</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_countries</span><span class="p">],</span>
                             <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">countries</span><span class="p">,</span>
                             <span class="n">multi</span><span class="o">=</span><span class="kc">True</span>
@@ -309,11 +309,11 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
             <span class="p">])</span>
         <span class="p">])</span>
     
-    <span class="k">def</span> <span class="nf">_register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">component_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
         <span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
-            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;piechart-figure-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
-            <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;piechart-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
-            <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;piechart-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;piechart-figure&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;piechart-country-dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;piechart-metric-dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="k">def</span> <span class="nf">update_timeseries_plot</span><span class="p">(</span><span class="n">countries</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">countries</span> <span class="ow">and</span> <span class="n">metric</span><span class="p">:</span>
@@ -344,7 +344,7 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
   and piechart components to that of the <code>CovidComposite</code> dropdowns. This <code>DropdownConnector</code> is then 
   instantiated in the init.<ul>
 <li>An alternative would have been to define the <code>DropdownConnector</code> callbacks directly in the
-  <code>def _register_components(self, app)</code> of <code>CovidComposite</code> </li>
+  <code>def component_callbacks(self, app)</code> of <code>CovidComposite</code> </li>
 </ul>
 </li>
 <li>The dropdowns of the subcomponents are hidden by setting <code>hide_country_dropdown=True</code> 
@@ -368,19 +368,19 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">composite</span><span class="p">,</span> <span class="n">timeseries</span><span class="p">,</span> <span class="n">piechart</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         
-    <span class="k">def</span> <span class="nf">_register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">component_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
         <span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
-            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;timeseries-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">timeseries</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
-            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;piechart-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">piechart</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
-            <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;dashboard-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">composite</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timeseries</span><span class="o">.</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;timeseries-country-dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">piechart</span><span class="o">.</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;piechart-country-dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">composite</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;dashboard-country-dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="k">def</span> <span class="nf">update_timeseries_plot</span><span class="p">(</span><span class="n">countries</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">countries</span><span class="p">,</span> <span class="n">countries</span>
         
         <span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
-            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;timeseries-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">timeseries</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
-            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;piechart-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">piechart</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
-            <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;dashboard-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">composite</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timeseries</span><span class="o">.</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;timeseries-metric-dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">piechart</span><span class="o">.</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;piechart-metric-dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">composite</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;dashboard-metric-dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="k">def</span> <span class="nf">update_timeseries_plot</span><span class="p">(</span><span class="n">metric</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">metric</span><span class="p">,</span> <span class="n">metric</span>
@@ -440,13 +440,13 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
                     <span class="n">html</span><span class="o">.</span><span class="n">H1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">),</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">make_hideable</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">querystring</span><span class="p">(</span><span class="n">params</span><span class="p">)(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">)(</span>
-                            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;dashboard-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;dashboard-metric-dropdown&#39;</span><span class="p">),</span>
                             <span class="n">options</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">metric</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">metric</span><span class="p">}</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_metrics</span><span class="p">],</span>
                             <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span>
                         <span class="p">),</span> <span class="n">hide</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hide_metric_dropdown</span><span class="p">),</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">make_hideable</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">querystring</span><span class="p">(</span><span class="n">params</span><span class="p">)(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">)(</span>
-                            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;dashboard-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;dashboard-country-dropdown&#39;</span><span class="p">),</span>
                             <span class="n">options</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">metric</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">metric</span><span class="p">}</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_countries</span><span class="p">],</span>
                             <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">countries</span><span class="p">,</span>
                             <span class="n">multi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -583,7 +583,7 @@ by using the <code>make_hideable()</code> staticmethod from the <a href="/dash_o
     - Thailand
     - South_Korea
     - Japan
-    name: 4ZreevaHEc
+    name: Dth4uYnM6R
 
 </pre>
 </div>
@@ -778,7 +778,7 @@ This includes:</p>
           - Thailand
           - South_Korea
           - Japan
-          name: 4ZreevaHEc
+          name: GqoAJVV5mh
     port: 9050
     mode: dash
     querystrings: true
@@ -845,6 +845,24 @@ This includes:</p>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Warning: the use of _register_callbacks() will be deprecated! Use component_callbacks() from now on.
+Warning: the use of _register_callbacks() will be deprecated! Use component_callbacks() from now on.
+Warning: the use of _register_callbacks() will be deprecated! Use component_callbacks() from now on.
+Warning: the use of _register_callbacks() will be deprecated! Use component_callbacks() from now on.
+Warning: the use of _register_callbacks() will be deprecated! Use component_callbacks() from now on.
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -916,12 +934,14 @@ This includes:</p>
           - Thailand
           - South_Korea
           - Japan
-          name: 9LWnePSGr2
+          name: FpEgUgzXDj
     port: 9050
     mode: dash
     querystrings: true
+    bootstrap: true
     kwargs:
       external_stylesheets:
+      - https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css
       - https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css
       suppress_callback_exceptions: true
 

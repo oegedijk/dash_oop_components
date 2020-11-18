@@ -2,11 +2,24 @@
 
 ## Version 0.0.7:
 ### Breaking Changes
-- 
+- component callbacks should now be declared in `def component_callbacks(self, app)` instead of `_register_callbacks()`. Although for now
+    the old `_register_callbacks()` will still work.
 - 
 
 ### New Features
--
+- added .id(), .Input(), .Output() and .State() methods to DashComponent
+    - basically just tags +'-'+self.name to the end of a component_id
+    - results in somewhat cleaner callbacks:
+        ```
+        html.Div(id=self.id("output-div")
+        
+        @app.callback(
+            self.Output("output-div", "children"),
+            self.Input("input-first-n", "value")
+        )
+        def update_div(first_n):
+            ...
+        ```
 -
 
 ### Bug Fixes

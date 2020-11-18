@@ -53,7 +53,7 @@ nb_path: "index.ipynb"
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Example">Example<a class="anchor-link" href="#Example"> </a></h2><p>An example covid tracking dashboard has been deployed to <a href="http://dash-oop-demo.herokuapp.com">dash-oop-demo.herokuapp.com</a> (code at <a href="https://github.com/oegedijk/dash_oop_demo">github.com/oegedijk/dash_oop_demo</a>), showcasing:</p>
 <ul>
-<li>The use of re-usable components</li>
+<li>The use of re-usable, nestable components</li>
 <li>Keeping track of state in the querystring</li>
 <li>Seperating data from dashboard logic</li>
 <li>Loading the dashboard from a config yaml file</li>
@@ -71,7 +71,16 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Plotly's <a href="dash.plotly.com">dash</a> is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps is quite declarative, which for large projects can lead to code that becomes unwieldy, hard to maintain, and hard to collaborate on.</p>
+<p>Plotly's <a href="dash.plotly.com">dash</a> is an awesome library that allows you to build rich interactive data driven web apps with pure python code. However the default style of dash apps is quite declarative, which for large projects can lead to code that becomes unwieldy, hard to maintain, and hard to collaborate on:</p>
+<ul>
+<li>Data wrangling and plot generating logic is mixed up with dashboard interactivity logic 
+  and is spread all over the layout and callback functions.</li>
+<li>Configuration of the dashboard is hardcoded somewhere deep in the layout or callbacks, 
+  instead of with tunable hyperparameters.</li>
+<li>Callbacks definitions are all mixed up, often far from the relevant layout, instead of being grouped together</li>
+<li>To reuse similar components multiple time in your dashboard you need to copy-paste layout and callbacks, violating the DRY principle.</li>
+<li>You need to be able to read and edit python in order to reconfigure and restart the dashboard</li>
+</ul>
 <p>This library provides a number object-oriented wrappers for organizing your dash code that allow you to write clean, modular, composable, re-usable and fully configurable dash code.</p>
 <p>It includes:</p>
 <ul>
@@ -91,29 +100,20 @@ nb_path: "index.ipynb"
 <li>Using <a href="/dash_oop_components/core.html#DashComponentTabs"><code>DashComponentTabs</code></a> you can also track state for current tab only </li>
 </ul>
 </li>
+<li>You can launch a dashboard from the commandline from a dashboard.yaml file,
+  meaning that anyone can reconfigure the dashboard and relaunch it, even
+  without coding experience.</li>
 </ul>
 </li>
 </ul>
 <p>All wrappers:</p>
+<p>Cool extras:</p>
 <ul>
-<li>Automatically store all params to attributes and to a ._stored_params dict</li>
-<li>Allow you to store its' config to a <code>.yaml</code> file, including import details, and can then<br>
-  be fully reloaded from a config file.</li>
-</ul>
-<p>This allows you to:</p>
-<ul>
-<li>Seperate the data/plotting logic from the dashboard interactions logic, by putting all 
-  the plotting functionality inside a <a href="/dash_oop_components/core.html#DashFigureFactory"><code>DashFigureFactory</code></a> and all the dashboard layout 
-  and callback logic into <code>DashComponents</code>.</li>
-<li>Build self-contained, configurable, re-usable <code>DashComponents</code></li>
-<li>Compose dashboards that consists of multiple <code>DashComponents</code> that each may 
-  consists of multiple nested <code>DashComponents</code>, etc.</li>
-<li>Store all the configuration needed to rebuild and run a particular dashboard to 
-  a single configuration <code>.yaml</code> file</li>
-<li>Parametrize your dashboard so that you (or others) can make change to the dashboard
-  without having to edit the code.</li>
-<li>Plus: track the state of your dashboard with querystrings and reload the state from url!</li>
-<li>And: launch from the commandline with the <a href="/dash_oop_components/cli.html#dashapp"><code>dashapp</code></a> CLI!</li>
+<li>All wrappers automagically store all params to attributes</li>
+<li>Component and dashboard configuration can be exported to <code>.yaml</code> file, 
+  including import details, and be fully reloaded from this config file.</li>
+<li>You can track the state of your dashboard with querystrings and reload the state from url!</li>
+<li>Launch from the commandline with the <a href="/dash_oop_components/cli.html#dashapp"><code>dashapp</code></a> CLI!</li>
 </ul>
 
 </div>
@@ -128,33 +128,6 @@ nb_path: "index.ipynb"
 </div>
 </div>
 </div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">dash_html_components</span> <span class="k">as</span> <span class="nn">html</span>
-<span class="kn">import</span> <span class="nn">dash_core_components</span> <span class="k">as</span> <span class="nn">dcc</span>
-<span class="kn">import</span> <span class="nn">dash_bootstrap_components</span> <span class="k">as</span> <span class="nn">dbc</span>
-
-<span class="kn">from</span> <span class="nn">dash.dependencies</span> <span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">State</span>
-<span class="kn">from</span> <span class="nn">dash.exceptions</span> <span class="kn">import</span> <span class="n">PreventUpdate</span>
-
-<span class="kn">from</span> <span class="nn">dash_oop_components</span> <span class="kn">import</span> <span class="n">DashFigureFactory</span><span class="p">,</span> <span class="n">DashComponent</span><span class="p">,</span> <span class="n">DashApp</span>
-
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="CovidPlots:-a-DashFigureFactory">CovidPlots: a DashFigureFactory<a class="anchor-link" href="#CovidPlots:-a-DashFigureFactory"> </a></h3>
@@ -233,16 +206,20 @@ nb_path: "index.ipynb"
 <p>Then we define a <a href="/dash_oop_components/core.html#DashComponent"><code>DashComponent</code></a> that takes a plot_factory and build a layout with two dropdowns and a graph.</p>
 <ul>
 <li>By calling <code>super().__init__()</code> all parameters are automatically stored to attributes (so that we can access 
-  e.g. <code>self.hide_country_dropdown</code>), and to a <code>._stored_params</code> dict.</li>
+  e.g. <code>self.hide_country_dropdown</code>), and to a <code>._stored_params</code> dict (which can then be exported to <code>.yaml</code>)</li>
 <li>This layout makes use of the <code>make_hideable()</code> staticmethod, to conditionally 
   wrap certain layout elements in a hidden div.</li>
-<li>We track the state of the dropdowns "value" attribute by wrapping it in 
-  <code>self.querystring(params)(dcc.Dropdown)(..)</code>, and passing the params down to the layout function.</li>
-<li>Note that the layout element id's add <code>+self.name</code> to ensure they are unique in every layout<ul>
-<li><code>self.name</code> gets assigned a uuid random string of length 10 by <code>super().__init__()</code>.</li>
+<li>We track the state of the dropdowns <code>'value'</code> attribute by wrapping it in 
+  <code>self.querystring(params)(dcc.Dropdown)(..)</code>, and passing the urls's querystring params 
+  down to the layout function upon pageload.</li>
+<li>You can make sure that all <code>component_id</code>'s are unique by adding <code>+self.name</code>. However if you use 
+  <code>self.id(component_id)</code>, then <code>self.name</code> gets automatically tagged on, and you can use 
+  <code>self.Input()</code>, <code>self.Output()</code> and <code>self.State()</code> instead of the regular <code>dash</code> <code>Input()</code>, 
+  <code>Output()</code> and <code>State()</code> functions.<ul>
+<li>If you don't explicitly pass a <code>name</code>,  gets a random uuid string automatically gets assigned.</li>
 </ul>
 </li>
-<li>Note that the callbacks are registered using <code>_register_callbacks(self, app)</code> (<strong>note the underscore!</strong>)</li>
+<li>Note that the callbacks are registered using <code>component_callbacks(self, app)</code> method</li>
 <li>Note that the callback uses the <code>plot_factory</code> for the plotting logic.</li>
 </ul>
 
@@ -272,27 +249,27 @@ nb_path: "index.ipynb"
                     <span class="n">html</span><span class="o">.</span><span class="n">H3</span><span class="p">(</span><span class="s2">&quot;Covid Time Series&quot;</span><span class="p">),</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">make_hideable</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">querystring</span><span class="p">(</span><span class="n">params</span><span class="p">)(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">)(</span>
-                            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;timeseries-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;timeseries-metric-dropdown&#39;</span><span class="p">),</span>
                             <span class="n">options</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">metric</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">metric</span><span class="p">}</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;cases&#39;</span><span class="p">,</span> <span class="s1">&#39;deaths&#39;</span><span class="p">]],</span>
                             <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span>
                         <span class="p">),</span> <span class="n">hide</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hide_metric_dropdown</span><span class="p">),</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">make_hideable</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">querystring</span><span class="p">(</span><span class="n">params</span><span class="p">)(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">)(</span>
-                            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;timeseries-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;timeseries-country-dropdown&#39;</span><span class="p">),</span>
                             <span class="n">options</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">}</span> <span class="k">for</span> <span class="n">country</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_factory</span><span class="o">.</span><span class="n">countries</span><span class="p">],</span>
                             <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">countries</span><span class="p">,</span>
                             <span class="n">multi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                         <span class="p">),</span> <span class="n">hide</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hide_country_dropdown</span><span class="p">),</span>
-                    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;timeseries-figure-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;timeseries-figure&#39;</span><span class="p">))</span>
                 <span class="p">]),</span>
             <span class="p">])</span>
         <span class="p">])</span>
     
-    <span class="k">def</span> <span class="nf">_register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">component_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
         <span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
-            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;timeseries-figure-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
-            <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;timeseries-country-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
-            <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;timeseries-metric-dropdown-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;timeseries-figure&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;timeseries-country-dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;timeseries-metric-dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="k">def</span> <span class="nf">update_timeseries_plot</span><span class="p">(</span><span class="n">countries</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">countries</span> <span class="ow">and</span> <span class="n">metric</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -314,9 +291,9 @@ Both subcomponents are passed the same <code>plot_factory</code> but assigned di
 <ul>
 <li>The layouts of subcomponents can be included in the composite layout with 
   <code>self.plot_left.layout(params)</code> and <code>self.plot_right.layout(params)</code></li>
-<li>Composite callbacks should again be defined under <code>self._register_callbacks(app)</code> (<strong>note the underscore!</strong>)<ul>
+<li>Composite callbacks should again be defined under <code>self.component_callbacks(app)</code><ul>
 <li>calling <code>.register_callbacks(app)</code> first registers all callbacks of subcomponents, 
-  and then calls <code>_register_callbacks(app)</code>.</li>
+  and then calls <code>component_callbacks(app)</code>.</li>
 <li>composite callbacks can access elements of subcomponents by using the <code>subcomponent.name</code> fields in the ids.</li>
 </ul>
 </li>
@@ -348,6 +325,7 @@ Both subcomponents are passed the same <code>plot_factory</code> but assigned di
         
     <span class="k">def</span> <span class="nf">layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">([</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">H1</span><span class="p">(</span><span class="s2">&quot;Covid Dashboard&quot;</span><span class="p">),</span>
             <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
                 <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">([</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">plot_left</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
@@ -382,7 +360,7 @@ Both subcomponents are passed the same <code>plot_factory</code> but assigned di
         module: __main__
         params:
           datafile: covid.csv
-    name: FBhmLSses6
+    name: DAtVxQgozo
 
 </pre>
 </div>
@@ -450,10 +428,11 @@ Both subcomponents are passed the same <code>plot_factory</code> but assigned di
               module: __main__
               params:
                 datafile: covid.csv
-          name: FBhmLSses6
+          name: DAtVxQgozo
     port: 8050
     mode: dash
     querystrings: true
+    bootstrap: true
     kwargs:
       external_stylesheets:
       - https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css
@@ -477,7 +456,7 @@ Both subcomponents are passed the same <code>plot_factory</code> but assigned di
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">run_app</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">9051</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -578,12 +557,14 @@ Both subcomponents are passed the same <code>plot_factory</code> but assigned di
               module: __main__
               params:
                 datafile: covid.csv
-          name: Jq9frNnUiA
+          name: 95vGiZRAt2
     port: 8050
     mode: dash
     querystrings: true
+    bootstrap: true
     kwargs:
       external_stylesheets:
+      - https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css
       - https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css
       suppress_callback_exceptions: true
 

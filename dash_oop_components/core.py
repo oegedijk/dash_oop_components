@@ -364,11 +364,17 @@ class DashComponent(DashComponentBase):
         if not hasattr(self, "name"):
             self.name = name
         if self.name is None:
-            self.name = str(shortuuid.ShortUUID().random(length=10))
+            self._generate_uuid_name()
         self._stored_params["name"] = self.name
 
         self._components = []
         self.compute_querystring_params(whole_tree=False)
+
+
+
+    def _generate_uuid_name(self):
+        self.name = str(shortuuid.ShortUUID().random(length=10))
+
 
     def _convert_ff_config_params(self):
         """convert any DashFigureFactory in the ._stored_params dict to its config"""
@@ -528,6 +534,26 @@ class DashComponent(DashComponentBase):
         unreachable_params = [param for param in all_params if param not in reachable_params]
         return unreachable_params
 
+    def id(self, component_id):
+        if self.name is None:
+            self._generate_uuid_name()
+        return component_id + '-' + self.name
+
+    def Input(self, component_id, component_property):
+        if self.name is None:
+            self._generate_uuid_name()
+        return Input(component_id + '-' + self.name, component_property)
+
+    def Output(self, component_id, component_property):
+        if self.name is None:
+            self._generate_uuid_name()
+        return Output(component_id + '-' + self.name, component_property)
+
+    def State(self, component_id, component_property):
+        if self.name is None:
+            self._generate_uuid_name()
+        return State(component_id + '-' + self.name, component_property)
+
     def register_components(self):
         """register subcomponents so that their callbacks will be registered
 
@@ -552,9 +578,12 @@ class DashComponent(DashComponentBase):
         All element id's should append +self.name to make sure they are unique."""
         return None
 
-    def _register_callbacks(self, app):
+    def component_callbacks(self, app):
         """register callbacks specific to this ExplainerComponent."""
-        pass
+        if hasattr(self, "_register_callbacks"):
+            print("Warning: the use of _register_callbacks() will be deprecated!"
+                  " Use component_callbacks() from now on.")
+            self._register_callbacks(app)
 
     def register_callbacks(self, app):
         """First register callbacks of all subcomponents, then call
@@ -563,7 +592,7 @@ class DashComponent(DashComponentBase):
         self.register_components()
         for comp in self._components:
             comp.register_callbacks(app)
-        self._register_callbacks(app)
+        self.component_callbacks(app)
 
 # Cell
 class DashComponentTabs(dcc.Tabs):
@@ -839,7 +868,6 @@ class DashApp(DashComponentBase):
                 if not href:
                     return html.Div()
                 params = parse_url_to_params(href)
-                print(params)
                 return self.dashboard_component.layout(params)
 
             @app.callback(Output('url', 'search'),
