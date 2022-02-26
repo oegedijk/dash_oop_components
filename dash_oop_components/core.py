@@ -18,14 +18,12 @@ from urllib.parse import urlparse, parse_qs, urlencode
 import ast
 
 import dash
+from dash import html, dcc
 import jupyter_dash
 
 import dash_bootstrap_components as dbc
 
 # Cell
-import dash_core_components as dcc
-import dash_html_components as html
-
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
@@ -395,7 +393,7 @@ class DashComponent(DashComponentBase):
                         a hidden html.Div instead. Defaults to False.
         """
         if hide:
-            if isinstance(element, dbc.Col) or isinstance(element, dbc.FormGroup):
+            if isinstance(element, dbc.Col) or isinstance(element, dbc.Row):
                 return html.Div(element.children, style=dict(display="none"))
             else:
                 return html.Div(element, style=dict(display="none"))
