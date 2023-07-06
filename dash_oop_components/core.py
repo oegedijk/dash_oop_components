@@ -915,6 +915,37 @@ class DashApp(DashComponentBase):
         """returns flask server inside self.app, for building wsgi apps"""
         return self.app.server
 
-    def run(self, port=None):
+    def run(
+        self, 
+        port=None, 
+        host='127.0.0.1',
+        proxy=None,
+        debug=None,
+        dev_tools_ui=None,
+        dev_tools_props_check=None,
+        dev_tools_serve_dev_bundles=None,
+        dev_tools_hot_reload=None,
+        dev_tools_hot_reload_interval=None,
+        dev_tools_hot_reload_watch_interval=None,
+        dev_tools_hot_reload_max_retry=None,
+        dev_tools_silence_routes_logging=None,
+        dev_tools_prune_errors=None,
+        **flask_run_options):
         """Run the dash app"""
-        self.app.run_server(port=port if port is not None else self.port)
+
+        self.app.run(
+            host=host,
+            port=port if port is not None else self.port,
+            proxy=proxy,
+            debug=debug,
+            dev_tools_ui=dev_tools_ui,
+            dev_tools_props_check=dev_tools_props_check,
+            dev_tools_serve_dev_bundles=dev_tools_serve_dev_bundles,
+            dev_tools_hot_reload=dev_tools_hot_reload,
+            dev_tools_hot_reload_interval=dev_tools_hot_reload_interval,
+            dev_tools_hot_reload_watch_interval=dev_tools_hot_reload_watch_interval,
+            dev_tools_hot_reload_max_retry=dev_tools_hot_reload_max_retry,
+            dev_tools_silence_routes_logging=dev_tools_silence_routes_logging,
+            dev_tools_prune_errors=dev_tools_prune_errors,
+            **flask_run_options   
+        )
